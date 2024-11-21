@@ -3,13 +3,14 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.2/firebas
 import { getAuth, RecaptchaVerifier, signInWithPhoneNumber } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-auth.js";
 
 const firebaseConfig = {
-    apiKey: "YOUR_API_KEY",
-    authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
-    projectId: "YOUR_PROJECT_ID",
-    storageBucket: "YOUR_PROJECT_ID.appspot.com",
-    messagingSenderId: "YOUR_SENDER_ID",
-    appId: "YOUR_APP_ID",
-    measurementId: "YOUR_MEASUREMENT_ID"
+   const firebaseConfig = {
+  apiKey: "AIzaSyD30sxoHhSnpH7xMwGj55SSjRkMRa0oRX8",
+  authDomain: "inai95.firebaseapp.com",
+  projectId: "inai95",
+  storageBucket: "inai95.firebasestorage.app",
+  messagingSenderId: "418002209728",
+  appId: "1:418002209728:web:dc034e538d3bf0fae15625",
+  measurementId: "G-58LP3ZDTLJ"
 };
 
 const app = initializeApp(firebaseConfig);
