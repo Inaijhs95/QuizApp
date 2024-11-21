@@ -3,11 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Inai95</title>
+    <title>電話番号ログイン</title>
 </head>
 <body>
-    <h1>サイトが公開されました！</h1>
-    <p>今後、このページを自由に編集してください。</p>
+    <h1>電話番号でログイン</h1>
+    <form id="login-form">
+        <label for="phone-number">電話番号:</label>
+        <input type="tel" id="phone-number" placeholder="+81XXXXXXXXXX" required>
+        <button type="button" id="send-otp">認証コードを送信</button>
+    </form>
+
+    <form id="verify-form" style="display:none;">
+        <label for="verification-code">認証コード:</label>
+        <input type="text" id="verification-code" required>
+        <button type="button" id="verify-code">コードを確認</button>
+    </form>
+
+    <div id="recaptcha-container"></div>
+
+    <script type="module" src="script.js"></script>
 </body>
 </html>
-
