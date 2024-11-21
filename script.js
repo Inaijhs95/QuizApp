@@ -22,7 +22,11 @@ const recaptchaVerifier = new RecaptchaVerifier('recaptcha-container', {
 
 // 認証コード送信
 document.getElementById('send-otp').addEventListener('click', async () => {
+    console.log("送信ボタンが押されました");
     const phoneNumber = document.getElementById('phone-number').value;
+    console.log("入力された電話番号:", phoneNumber);
+
+    // 以下のコードでエラーが発生する場合はキャッチされます
     try {
         const confirmationResult = await signInWithPhoneNumber(auth, phoneNumber, recaptchaVerifier);
         window.confirmationResult = confirmationResult;
@@ -31,7 +35,7 @@ document.getElementById('send-otp').addEventListener('click', async () => {
         document.getElementById('verify-form').style.display = 'block';
     } catch (error) {
         console.error("エラー:", error);
-        alert("認証コードの送信に失敗しました。");
+        alert("認証コードの送信に失敗しました。エラー内容: " + error.message);
     }
 });
 
