@@ -14,13 +14,14 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
-console.log("Firebase Auth Object:", auth);
-
+console.log("Firebase Auth Object:", auth); // ここでauthの内容を確認
 
 // reCAPTCHAの設定
 const recaptchaVerifier = new RecaptchaVerifier('recaptcha-container', {
     size: 'invisible'
 }, auth);
+
+console.log("reCAPTCHA Verifier initialized:", recaptchaVerifier); // ここでreCAPTCHAの初期化確認
 
 // 認証コード送信
 document.getElementById('send-otp').addEventListener('click', async () => {
@@ -28,7 +29,6 @@ document.getElementById('send-otp').addEventListener('click', async () => {
     const phoneNumber = document.getElementById('phone-number').value;
     console.log("入力された電話番号:", phoneNumber);
 
-    // 以下のコードでエラーが発生する場合はキャッチされます
     try {
         const confirmationResult = await signInWithPhoneNumber(auth, phoneNumber, recaptchaVerifier);
         window.confirmationResult = confirmationResult;
