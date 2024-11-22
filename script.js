@@ -64,3 +64,19 @@ document.getElementById("register").addEventListener("click", async () => {
     alert("登録中にエラーが発生しました。もう一度お試しください。");
   }
 });
+
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /usedNames/{name} {
+      allow create: if !exists(/databases/{database}/documents/usedNames/{name}); // 名前の重複を防ぐ
+      allow read: if true;
+      allow update, delete: if false; // 更新・削除を禁止
+    }
+    match /users/{userId} {
+      allow create: if request.auth != null;
+      allow read, update, delete: if false; // 読み取り・削除を禁止
+    }
+  }
+}
+
