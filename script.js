@@ -19,8 +19,12 @@ console.log("Firebase Auth Object:", auth); // ここでauthの内容を確認
 
 // reCAPTCHAの設定
 const recaptchaVerifier = new RecaptchaVerifier('recaptcha-container', {
-    size: 'invisible'
+    size: 'normal', // デバッグ用に 'normal' に変更
+    callback: (response) => {
+        console.log("reCAPTCHA成功:", response);
+    }
 }, auth);
+
 
 console.log("reCAPTCHA Verifier initialized:", recaptchaVerifier); // ここでreCAPTCHAの初期化確認
 
