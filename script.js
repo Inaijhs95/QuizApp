@@ -3,7 +3,7 @@ import { getFirestore, doc, getDoc, setDoc } from "https://www.gstatic.com/fireb
 
 // Firebase設定
 const firebaseConfig = {
-  apiKey: "AIzaSyD30sxoHhSnpH7xMwGj55SSjRkMRa0oRX8",
+  apiKey: "YOUR_API_KEY",
   authDomain: "inai95.firebaseapp.com",
   projectId: "inai95",
   storageBucket: "inai95.firebasestorage.app",
@@ -14,34 +14,24 @@ const firebaseConfig = {
 
 // Firebase初期化
 const app = initializeApp(firebaseConfig);
-const db = getFirestore(app); // Firestoreの初期化
+const db = getFirestore(app);
 console.log("Firebase Firestore Initialized:", db);
 
+// 名前が使用済みか確認
 async function isNameUsed(name) {
   const nameRef = doc(db, "usedNames", name);
   const nameDoc = await getDoc(nameRef);
-
-  if (nameDoc.exists()) {
-    console.log("名前はすでに使用されています:", name);
-    return true; // 名前がすでに使用されている
-  } else {
-    console.log("名前は未使用です:", name);
-    return false; // 名前は未使用
-  }
+  return nameDoc.exists(); // true: 使用済み, false: 未使用
 }
 
-async function registerName(name, email) {
-  // 名前をusedNamesコレクションに保存
+// 名前とメールを登録
+async function registerUser(name, email) {
   const nameRef = doc(db, "usedNames", name);
   await setDoc(nameRef, { email: email });
-
-  // ユーザー情報をusersコレクションに保存
-  const userId = name + "_" + Date.now(); // ユニークなユーザーIDを生成
-  const userRef = doc(db, "users", userId);
-  await setDoc(userRef, { name: name, email: email });
-
-  console.log("登録が完了しました: 名前:", name, "メールアドレス:", email);
+  console.log("登録成功:", { name, email });
 }
+
+// ボタンクリック時の処理
 document.getElementById("register").addEventListener("click", async () => {
   const name = document.getElementById("name").value.trim();
   const email = document.getElementById("email").value.trim();
@@ -56,27 +46,11 @@ document.getElementById("register").addEventListener("click", async () => {
     if (used) {
       alert("この名前は既に使用されています。");
     } else {
-      await registerName(name, email);
+      await registerUser(name, email);
       alert("登録が完了しました！");
     }
   } catch (error) {
     console.error("エラー:", error);
-    alert("登録中にエラーが発生しました。もう一度お試しください。");
+    alert("登録中にエラーが発生しました。");
   }
 });
-
-rules_version = '2';
-service cloud.firestore {
-  match /databases/{database}/documents {
-    match /usedNames/{name} {
-      allow create: if !exists(/databases/{database}/documents/usedNames/{name}); // 名前の重複を防ぐ
-      allow read: if true;
-      allow update, delete: if false; // 更新・削除を禁止
-    }
-    match /users/{userId} {
-      allow create: if request.auth != null;
-      allow read, update, delete: if false; // 読み取り・削除を禁止
-    }
-  }
-}
-
