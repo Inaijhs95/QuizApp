@@ -1,7 +1,9 @@
 // Firebaseの初期化
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-app.js";
 import { getAuth, RecaptchaVerifier, signInWithPhoneNumber } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-auth.js";
+import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-analytics.js";
 
+// Firebase設定
 const firebaseConfig = {
   apiKey: "AIzaSyD30sxoHhSnpH7xMwGj55SSjRkMRa0oRX8",
   authDomain: "inai95.firebaseapp.com",
@@ -14,17 +16,18 @@ const firebaseConfig = {
 
 // Firebase初期化
 const app = initializeApp(firebaseConfig);
+const analytics = getAnalytics(app);
 const auth = getAuth(app);
+
+// デバッグ用ログ
+console.log("Firebase App Initialized:", app);
 console.log("Auth Initialized:", auth);
 
-// テストモード用 (本番環境では削除)
-auth.settings.appVerificationDisabledForTesting = true;
-
-// reCAPTCHA初期化
+// reCAPTCHAの初期化
 let recaptchaVerifier;
 try {
   recaptchaVerifier = new RecaptchaVerifier('recaptcha-container', {
-    size: 'normal',
+    size: 'normal', // 'invisible'に変更可能
     callback: (response) => {
       console.log("reCAPTCHA成功:", response);
     },
@@ -32,6 +35,7 @@ try {
       console.warn("reCAPTCHAが期限切れです。");
     }
   }, auth);
+  recaptchaVerifier.render(); // 必要に応じてreCAPTCHAをレンダリング
   console.log("reCAPTCHA Verifier initialized:", recaptchaVerifier);
 } catch (error) {
   console.error("reCAPTCHA初期化エラー:", error);
@@ -48,6 +52,6 @@ document.getElementById('send-otp').addEventListener('click', async () => {
     alert("認証コードが送信されました。");
   } catch (error) {
     console.error("認証コード送信エラー:", error);
-    alert("認証コードの送信に失敗しました。");
+    alert("認証コードの送信に失敗しました。エラー内容: " + error.message);
   }
 });
