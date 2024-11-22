@@ -1,28 +1,14 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-    <script src="https://static.line-scdn.net/liff/2/sdk.js"></script>
-
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>電話番号認証</title>
+    <title>LINEログイン</title>
+    <script src="https://static.line-scdn.net/liff/2/sdk.js"></script>
+    <script type="module" src="script.js"></script>
 </head>
 <body>
-    <h1>電話番号認証</h1>
-    <form id="login-form">
-        <label for="phone-number">電話番号:</label>
-        <input type="tel" id="phone-number" placeholder="+81XXXXXXXXXX" required>
-        <button type="button" id="send-otp">認証コードを送信</button>
-    </form>
-
-    <form id="verify-form" style="display:none;">
-        <label for="verification-code">認証コード:</label>
-        <input type="text" id="verification-code" required>
-        <button type="button" id="verify-code">コードを確認</button>
-    </form>
-
-    <div id="recaptcha-container"></div>
-
-    <script type="module" src="script.js"></script>
+    <h1>LINEログインデモ</h1>
+    <div id="user-info">ログイン中のユーザー情報がここに表示されます。</div>
 </body>
 </html>
