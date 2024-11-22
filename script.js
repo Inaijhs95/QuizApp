@@ -35,25 +35,22 @@ document.addEventListener('DOMContentLoaded', () => {
     recaptchaVerifier.render(); // reCAPTCHAをレンダリング
     console.log("reCAPTCHA Verifier initialized:", recaptchaVerifier);
 
-    // 認証コード送信ボタン
-    document.getElementById('send-otp').addEventListener('click', async () => {
-      const phoneNumber = document.getElementById('phone-number').value.trim();
-      if (!phoneNumber) {
-        alert("電話番号を入力してください。");
-        return;
-      }
-      console.log("入力された電話番号:", phoneNumber);
+   document.getElementById('send-otp').addEventListener('click', async () => {
+  const phoneNumber = document.getElementById('phone-number').value.trim();
+  console.log("入力された電話番号:", phoneNumber);
 
-      try {
-        const confirmationResult = await signInWithPhoneNumber(auth, phoneNumber, recaptchaVerifier);
-        window.confirmationResult = confirmationResult;
-        alert("認証コードが送信されました。");
-      } catch (error) {
-        console.error("認証コード送信エラー:", error);
-        alert(`認証コードの送信に失敗しました。エラー: ${error.message}`);
-      }
-    });
+  if (!phoneNumber.startsWith('+') || phoneNumber.length < 10) {
+    alert("正しい国際電話番号形式で入力してください（例: +81XXXXXXXXXX）");
+    return;
+  }
+
+  try {
+    const confirmationResult = await signInWithPhoneNumber(auth, phoneNumber, recaptchaVerifier);
+    window.confirmationResult = confirmationResult;
+    alert("認証コードが送信されました。");
   } catch (error) {
-    console.error("reCAPTCHA初期化エラー:", error);
+    console.error("認証コード送信エラー:", error);
+    alert(`認証コードの送信に失敗しました。エラー: ${error.message}`);
   }
 });
+
