@@ -1,13 +1,31 @@
+// DOMが読み込まれたときに実行する
 document.addEventListener('DOMContentLoaded', () => {
-    console.log("DOMが読み込まれました");
-    document.getElementById('send-otp').addEventListener('click', async () => {
+    // ボタン要素を取得
+    const sendOtpButton = document.getElementById('send-otp');
+    const verifyCodeButton = document.getElementById('verify-code');
+
+    // ボタンが取得できたかを確認
+    console.log("send-otpボタン:", sendOtpButton);
+    console.log("verify-codeボタン:", verifyCodeButton);
+
+    if (sendOtpButton && verifyCodeButton) {
+        console.log("ボタンが正しく取得されました");
+    } else {
+        console.error("ボタンが取得できませんでした");
+    }
+
+    // ボタンのイベントリスナーを設定
+    sendOtpButton?.addEventListener('click', async () => {
         console.log("送信ボタンが押されました");
+        // 認証コード送信の処理を書く
     });
 
-    document.getElementById('verify-code').addEventListener('click', async () => {
+    verifyCodeButton?.addEventListener('click', async () => {
         console.log("確認ボタンが押されました");
+        // 認証コード確認の処理を書く
     });
 });
+
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-app.js";
 import { getAuth, RecaptchaVerifier, signInWithPhoneNumber } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-auth.js";
 
