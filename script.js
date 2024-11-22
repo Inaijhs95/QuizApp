@@ -1,3 +1,13 @@
+document.addEventListener('DOMContentLoaded', () => {
+    console.log("DOMが読み込まれました");
+    document.getElementById('send-otp').addEventListener('click', async () => {
+        console.log("送信ボタンが押されました");
+    });
+
+    document.getElementById('verify-code').addEventListener('click', async () => {
+        console.log("確認ボタンが押されました");
+    });
+});
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-app.js";
 import { getAuth, RecaptchaVerifier, signInWithPhoneNumber } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-auth.js";
 
