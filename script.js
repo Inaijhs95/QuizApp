@@ -1,56 +1,67 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-app.js";
-import { getFirestore, doc, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-firestore.js";
+import { getAuth, RecaptchaVerifier, signInWithPhoneNumber } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-auth.js";
 
 // Firebase設定
 const firebaseConfig = {
-  apiKey: "YOUR_API_KEY",
+  apiKey: "AIzaSyD30sxoHhSnpH7xMwGj55SSjRkMRa0oRX8",
   authDomain: "inai95.firebaseapp.com",
   projectId: "inai95",
   storageBucket: "inai95.firebasestorage.app",
   messagingSenderId: "418002209728",
   appId: "1:418002209728:web:dc034e538d3bf0fae15625",
-  measurementId: "G-58LP3ZDTLJ",
 };
 
 // Firebase初期化
 const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
-console.log("Firebase Firestore Initialized:", db);
+const auth = getAuth(app);
 
-// 名前が使用済みか確認
-async function isNameUsed(name) {
-  const nameRef = doc(db, "usedNames", name);
-  const nameDoc = await getDoc(nameRef);
-  return nameDoc.exists(); // true: 使用済み, false: 未使用
-}
+// reCAPTCHA初期化
+const recaptchaVerifier = new RecaptchaVerifier('recaptcha-container', {
+  size: 'normal',
+  callback: (response) => {
+    console.log("reCAPTCHA成功:", response);
+  },
+  'expired-callback': () => {
+    console.warn("reCAPTCHAが期限切れです。再度実行してください。");
+  },
+}, auth);
 
-// 名前とメールを登録
-async function registerUser(name, email) {
-  const nameRef = doc(db, "usedNames", name);
-  await setDoc(nameRef, { email: email });
-  console.log("登録成功:", { name, email });
-}
+// 認証コード送信
+document.getElementById('send-otp').addEventListener('click', async () => {
+  const phoneNumber = document.getElementById('phone-number').value.trim();
 
-// ボタンクリック時の処理
-document.getElementById("register").addEventListener("click", async () => {
-  const name = document.getElementById("name").value.trim();
-  const email = document.getElementById("email").value.trim();
-
-  if (!name || !email) {
-    alert("名前とメールアドレスを入力してください。");
+  if (!phoneNumber) {
+    alert("電話番号を入力してください。");
     return;
   }
 
   try {
-    const used = await isNameUsed(name);
-    if (used) {
-      alert("この名前は既に使用されています。");
-    } else {
-      await registerUser(name, email);
-      alert("登録が完了しました！");
-    }
+    const confirmationResult = await signInWithPhoneNumber(auth, phoneNumber, recaptchaVerifier);
+    window.confirmationResult = confirmationResult;
+    alert("認証コードが送信されました。");
+    document.getElementById('login-form').style.display = 'none';
+    document.getElementById('verify-form').style.display = 'block';
   } catch (error) {
-    console.error("エラー:", error);
-    alert("登録中にエラーが発生しました。");
+    console.error("認証コード送信エラー:", error);
+    alert("認証コード送信に失敗しました。エラー内容: " + error.message);
+  }
+});
+
+// 認証コード確認
+document.getElementById('verify-code').addEventListener('click', async () => {
+  const verificationCode = document.getElementById('verification-code').value.trim();
+
+  if (!verificationCode) {
+    alert("認証コードを入力してください。");
+    return;
+  }
+
+  try {
+    const result = await window.confirmationResult.confirm(verificationCode);
+    const user = result.user;
+    alert(`ログイン成功！ ユーザーID: ${user.uid}`);
+  } catch (error) {
+    console.error("認証コード確認エラー:", error);
+    alert("認証コードが正しくありません。");
   }
 });
