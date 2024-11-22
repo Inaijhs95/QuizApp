@@ -1,7 +1,6 @@
 // Firebaseの初期化
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-app.js";
 import { getAuth, RecaptchaVerifier, signInWithPhoneNumber } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-auth.js";
-import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-analytics.js";
 
 // Firebase設定
 const firebaseConfig = {
@@ -14,44 +13,47 @@ const firebaseConfig = {
   measurementId: "G-58LP3ZDTLJ"
 };
 
-// Firebase初期化
+// Firebaseアプリの初期化
 const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
 const auth = getAuth(app);
 
-// デバッグ用ログ
-console.log("Firebase App Initialized:", app);
-console.log("Auth Initialized:", auth);
+document.addEventListener('DOMContentLoaded', () => {
+  console.log("DOM Content Loaded");
 
-// reCAPTCHAの初期化
-let recaptchaVerifier;
-try {
-  recaptchaVerifier = new RecaptchaVerifier('recaptcha-container', {
-    size: 'normal', // 'invisible'に変更可能
-    callback: (response) => {
-      console.log("reCAPTCHA成功:", response);
-    },
-    'expired-callback': () => {
-      console.warn("reCAPTCHAが期限切れです。");
-    }
-  }, auth);
-  recaptchaVerifier.render(); // 必要に応じてreCAPTCHAをレンダリング
-  console.log("reCAPTCHA Verifier initialized:", recaptchaVerifier);
-} catch (error) {
-  console.error("reCAPTCHA初期化エラー:", error);
-}
-
-// 認証コード送信
-document.getElementById('send-otp').addEventListener('click', async () => {
-  const phoneNumber = document.getElementById('phone-number').value.trim();
-  console.log("送信ボタンが押されました:", phoneNumber);
-
+  // reCAPTCHAの初期化
   try {
-    const confirmationResult = await signInWithPhoneNumber(auth, phoneNumber, recaptchaVerifier);
-    window.confirmationResult = confirmationResult;
-    alert("認証コードが送信されました。");
+    const recaptchaVerifier = new RecaptchaVerifier('recaptcha-container', {
+      size: 'normal', // UIで表示確認用
+      callback: (response) => {
+        console.log("reCAPTCHA成功:", response);
+      },
+      'expired-callback': () => {
+        console.warn("reCAPTCHAが期限切れです。");
+      }
+    }, auth);
+
+    recaptchaVerifier.render(); // reCAPTCHAをレンダリング
+    console.log("reCAPTCHA Verifier initialized:", recaptchaVerifier);
+
+    // 認証コード送信ボタン
+    document.getElementById('send-otp').addEventListener('click', async () => {
+      const phoneNumber = document.getElementById('phone-number').value.trim();
+      if (!phoneNumber) {
+        alert("電話番号を入力してください。");
+        return;
+      }
+      console.log("入力された電話番号:", phoneNumber);
+
+      try {
+        const confirmationResult = await signInWithPhoneNumber(auth, phoneNumber, recaptchaVerifier);
+        window.confirmationResult = confirmationResult;
+        alert("認証コードが送信されました。");
+      } catch (error) {
+        console.error("認証コード送信エラー:", error);
+        alert(`認証コードの送信に失敗しました。エラー: ${error.message}`);
+      }
+    });
   } catch (error) {
-    console.error("認証コード送信エラー:", error);
-    alert("認証コードの送信に失敗しました。エラー内容: " + error.message);
+    console.error("reCAPTCHA初期化エラー:", error);
   }
 });
