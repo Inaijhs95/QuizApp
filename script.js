@@ -1,6 +1,5 @@
-// Firebaseの初期化
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-app.js";
-import { getAuth, RecaptchaVerifier, signInWithPhoneNumber } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-auth.js";
+import { getFirestore, doc, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-firestore.js";
 
 // Firebase設定
 const firebaseConfig = {
@@ -10,47 +9,58 @@ const firebaseConfig = {
   storageBucket: "inai95.firebasestorage.app",
   messagingSenderId: "418002209728",
   appId: "1:418002209728:web:dc034e538d3bf0fae15625",
-  measurementId: "G-58LP3ZDTLJ"
+  measurementId: "G-58LP3ZDTLJ",
 };
 
-// Firebaseアプリの初期化
+// Firebase初期化
 const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
+const db = getFirestore(app); // Firestoreの初期化
+console.log("Firebase Firestore Initialized:", db);
 
-document.addEventListener('DOMContentLoaded', () => {
-  console.log("DOM Content Loaded");
+async function isNameUsed(name) {
+  const nameRef = doc(db, "usedNames", name);
+  const nameDoc = await getDoc(nameRef);
 
-  // reCAPTCHAの初期化
-  try {
-    const recaptchaVerifier = new RecaptchaVerifier('recaptcha-container', {
-      size: 'normal', // UIで表示確認用
-      callback: (response) => {
-        console.log("reCAPTCHA成功:", response);
-      },
-      'expired-callback': () => {
-        console.warn("reCAPTCHAが期限切れです。");
-      }
-    }, auth);
+  if (nameDoc.exists()) {
+    console.log("名前はすでに使用されています:", name);
+    return true; // 名前がすでに使用されている
+  } else {
+    console.log("名前は未使用です:", name);
+    return false; // 名前は未使用
+  }
+}
 
-    recaptchaVerifier.render(); // reCAPTCHAをレンダリング
-    console.log("reCAPTCHA Verifier initialized:", recaptchaVerifier);
+async function registerName(name, email) {
+  // 名前をusedNamesコレクションに保存
+  const nameRef = doc(db, "usedNames", name);
+  await setDoc(nameRef, { email: email });
 
-   document.getElementById('send-otp').addEventListener('click', async () => {
-  const phoneNumber = document.getElementById('phone-number').value.trim();
-  console.log("入力された電話番号:", phoneNumber);
+  // ユーザー情報をusersコレクションに保存
+  const userId = name + "_" + Date.now(); // ユニークなユーザーIDを生成
+  const userRef = doc(db, "users", userId);
+  await setDoc(userRef, { name: name, email: email });
 
-  if (!phoneNumber.startsWith('+') || phoneNumber.length < 10) {
-    alert("正しい国際電話番号形式で入力してください（例: +81XXXXXXXXXX）");
+  console.log("登録が完了しました: 名前:", name, "メールアドレス:", email);
+}
+document.getElementById("register").addEventListener("click", async () => {
+  const name = document.getElementById("name").value.trim();
+  const email = document.getElementById("email").value.trim();
+
+  if (!name || !email) {
+    alert("名前とメールアドレスを入力してください。");
     return;
   }
 
   try {
-    const confirmationResult = await signInWithPhoneNumber(auth, phoneNumber, recaptchaVerifier);
-    window.confirmationResult = confirmationResult;
-    alert("認証コードが送信されました。");
+    const used = await isNameUsed(name);
+    if (used) {
+      alert("この名前は既に使用されています。");
+    } else {
+      await registerName(name, email);
+      alert("登録が完了しました！");
+    }
   } catch (error) {
-    console.error("認証コード送信エラー:", error);
-    alert(`認証コードの送信に失敗しました。エラー: ${error.message}`);
+    console.error("エラー:", error);
+    alert("登録中にエラーが発生しました。もう一度お試しください。");
   }
 });
-
