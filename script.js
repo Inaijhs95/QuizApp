@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', async () => {
     try {
         // LIFF初期化
-        await liff.init({ liffId: 'YOUR_LIFF_ID' }); // YOUR_LIFF_ID をLINEコンソールで取得した値に置き換え
+        await liff.init({ liffId: '2006598432-qWoljXBn' }); // YOUR_LIFF_ID をLINEコンソールで取得した値に置き換え
         console.log("LIFF initialized");
 
         // ユーザーがログインしているか確認
