@@ -1,3 +1,20 @@
+// Firebaseの初期化
+import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-app.js";
+import { getAuth, RecaptchaVerifier, signInWithPhoneNumber } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-auth.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyD30sxoHhSnpH7xMwGj55SSjRkMRa0oRX8",
+  authDomain: "inai95.firebaseapp.com",
+  projectId: "inai95",
+  storageBucket: "inai95.firebasestorage.app",
+  messagingSenderId: "418002209728",
+  appId: "1:418002209728:web:dc034e538d3bf0fae15625",
+};
+
+// Firebase初期化
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+
 // DOMが読み込まれたら実行
 document.addEventListener('DOMContentLoaded', () => {
   // ボタン要素を取得
@@ -12,22 +29,6 @@ document.addEventListener('DOMContentLoaded', () => {
     console.error("ボタン要素が取得できませんでした。IDを確認してください。");
     return;
   }
-
-  // Firebaseの初期化
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-app.js";
-  import { getAuth, RecaptchaVerifier, signInWithPhoneNumber } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-auth.js";
-
-  const firebaseConfig = {
-    apiKey: "AIzaSyD30sxoHhSnpH7xMwGj55SSjRkMRa0oRX8",
-    authDomain: "inai95.firebaseapp.com",
-    projectId: "inai95",
-    storageBucket: "inai95.firebasestorage.app",
-    messagingSenderId: "418002209728",
-    appId: "1:418002209728:web:dc034e538d3bf0fae15625",
-  };
-
-  const app = initializeApp(firebaseConfig);
-  const auth = getAuth(app);
 
   // reCAPTCHAの初期化
   const recaptchaVerifier = new RecaptchaVerifier('recaptcha-container', {
