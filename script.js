@@ -1,9 +1,9 @@
-// Import the functions you need from the SDKs you need
+// Firebaseの初期化
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-app.js";
 import { getAuth, RecaptchaVerifier, signInWithPhoneNumber } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-auth.js";
 import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-analytics.js";
 
-// Your web app's Firebase configuration
+// Firebase設定
 const firebaseConfig = {
   apiKey: "AIzaSyD30sxoHhSnpH7xMwGj55SSjRkMRa0oRX8",
   authDomain: "inai95.firebaseapp.com",
@@ -14,22 +14,24 @@ const firebaseConfig = {
   measurementId: "G-58LP3ZDTLJ"
 };
 
-// Initialize Firebase
+// アプリの初期化
 const app = initializeApp(firebaseConfig);
 console.log("Firebase App Initialized:", app);
 
-const analytics = getAnalytics(app); // Analyticsを初期化
-console.log("Analytics Initialized:", analytics);
+const analytics = getAnalytics(app); // Analyticsの初期化
+const auth = getAuth(app); // Authの初期化
+console.log("Auth Object Initialized:", auth); // デバッグ用ログ
 
-const auth = getAuth(app); // Authenticationを初期化
-console.log("Auth Object Initialized:", auth);
-
-// reCAPTCHAの設定
+// reCAPTCHAの初期化
+let recaptchaVerifier;
 try {
-  const recaptchaVerifier = new RecaptchaVerifier('recaptcha-container', {
-    size: 'normal', // デバッグ用に表示
+  recaptchaVerifier = new RecaptchaVerifier('recaptcha-container', {
+    size: 'normal', // 'invisible'に変更可能
     callback: (response) => {
-      console.log("reCAPTCHA成功:", response); // reCAPTCHA成功ログ
+      console.log("reCAPTCHA成功:", response);
+    },
+    'expired-callback': () => {
+      console.warn("reCAPTCHAが期限切れです。再読み込みしてください。");
     }
   }, auth);
 
@@ -41,7 +43,7 @@ try {
 // 認証コード送信
 document.getElementById('send-otp').addEventListener('click', async () => {
   console.log("送信ボタンが押されました");
-  const phoneNumber = document.getElementById('phone-number').value.trim(); // 入力された電話番号を取得
+  const phoneNumber = document.getElementById('phone-number').value.trim(); // 電話番号を取得
   console.log("入力された電話番号:", phoneNumber);
 
   if (!phoneNumber) {
@@ -50,7 +52,7 @@ document.getElementById('send-otp').addEventListener('click', async () => {
   }
 
   try {
-    const confirmationResult = await signInWithPhoneNumber(auth, phoneNumber, window.recaptchaVerifier);
+    const confirmationResult = await signInWithPhoneNumber(auth, phoneNumber, recaptchaVerifier);
     window.confirmationResult = confirmationResult; // 確認用の結果をグローバルに保存
     alert("認証コードが送信されました。");
     document.getElementById('login-form').style.display = 'none'; // ログインフォームを隠す
@@ -63,7 +65,7 @@ document.getElementById('send-otp').addEventListener('click', async () => {
 
 // 認証コード確認
 document.getElementById('verify-code').addEventListener('click', async () => {
-  const verificationCode = document.getElementById('verification-code').value.trim(); // 入力されたコードを取得
+  const verificationCode = document.getElementById('verification-code').value.trim(); // 認証コードを取得
   console.log("入力された認証コード:", verificationCode);
 
   if (!verificationCode) {
