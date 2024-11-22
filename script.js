@@ -16,47 +16,68 @@ const firebaseConfig = {
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
+console.log("Firebase App Initialized:", app);
+
 const analytics = getAnalytics(app); // Analyticsを初期化
+console.log("Analytics Initialized:", analytics);
+
 const auth = getAuth(app); // Authenticationを初期化
-console.log("Auth Object Initialized:", auth); // デバッグ用ログ
+console.log("Auth Object Initialized:", auth);
 
 // reCAPTCHAの設定
-const recaptchaVerifier = new RecaptchaVerifier('recaptcha-container', {
-  size: 'normal', // デバッグ用に表示
-  callback: (response) => {
-    console.log("reCAPTCHA成功:", response); // reCAPTCHAの成功ログ
-  }
-}, auth);
+try {
+  const recaptchaVerifier = new RecaptchaVerifier('recaptcha-container', {
+    size: 'normal', // デバッグ用に表示
+    callback: (response) => {
+      console.log("reCAPTCHA成功:", response); // reCAPTCHA成功ログ
+    }
+  }, auth);
 
-console.log("reCAPTCHA Verifier initialized:", recaptchaVerifier); // デバッグ用ログ
+  console.log("reCAPTCHA Verifier initialized:", recaptchaVerifier);
+} catch (error) {
+  console.error("reCAPTCHA初期化エラー:", error);
+}
 
 // 認証コード送信
 document.getElementById('send-otp').addEventListener('click', async () => {
   console.log("送信ボタンが押されました");
-  const phoneNumber = document.getElementById('phone-number').value; // 入力された電話番号を取得
+  const phoneNumber = document.getElementById('phone-number').value.trim(); // 入力された電話番号を取得
   console.log("入力された電話番号:", phoneNumber);
 
+  if (!phoneNumber) {
+    alert("電話番号を入力してください。");
+    return;
+  }
+
   try {
-    const confirmationResult = await signInWithPhoneNumber(auth, phoneNumber, recaptchaVerifier);
+    const confirmationResult = await signInWithPhoneNumber(auth, phoneNumber, window.recaptchaVerifier);
     window.confirmationResult = confirmationResult; // 確認用の結果をグローバルに保存
     alert("認証コードが送信されました。");
     document.getElementById('login-form').style.display = 'none'; // ログインフォームを隠す
     document.getElementById('verify-form').style.display = 'block'; // 認証フォームを表示
   } catch (error) {
-    console.error("エラー:", error);
+    console.error("認証コード送信エラー:", error);
     alert("認証コードの送信に失敗しました。エラー内容: " + error.message);
   }
 });
 
 // 認証コード確認
 document.getElementById('verify-code').addEventListener('click', async () => {
-  const verificationCode = document.getElementById('verification-code').value; // 入力されたコードを取得
+  const verificationCode = document.getElementById('verification-code').value.trim(); // 入力されたコードを取得
+  console.log("入力された認証コード:", verificationCode);
+
+  if (!verificationCode) {
+    alert("認証コードを入力してください。");
+    return;
+  }
+
   try {
     const result = await window.confirmationResult.confirm(verificationCode);
     const user = result.user;
     alert(`ログイン成功！ ユーザーID: ${user.uid}`);
+    console.log("ログイン成功:", user);
   } catch (error) {
-    console.error("エラー:", error);
+    console.error("認証コード確認エラー:", error);
     alert("認証コードが正しくありません。");
   }
 });
