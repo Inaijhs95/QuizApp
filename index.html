@@ -113,12 +113,88 @@
         .sidebar h3 {
             margin-top: 0;
         }
+     /* サイドメニュー全体 */
+.sidebar-menu {
+    position: fixed;
+    top: 0;
+    right: -300px; /* 初期状態では隠れる */
+    width: 300px;
+    height: 100%;
+    background-color: #333; /* 炭色 */
+    color: #fff;
+    box-shadow: -2px 0 5px rgba(0, 0, 0, 0.2);
+    overflow-y: auto;
+    transition: right 0.3s ease;
+    z-index: 1000;
+}
+
+/* メニュー項目 */
+.sidebar-menu h3 {
+    margin: 20px;
+    font-size: 1.2rem;
+    border-bottom: 1px solid #555;
+    padding-bottom: 10px;
+}
+
+.sidebar-menu ul {
+    list-style: none;
+    padding: 0;
+    margin: 20px;
+}
+
+.sidebar-menu ul li {
+    margin: 10px 0;
+}
+
+.sidebar-menu ul li a {
+    color: #fff;
+    text-decoration: none;
+}
+
+/* トリガーボタン */
+.menu-toggle {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    width: 50px;
+    height: 50px;
+    background-color: #333; /* 炭色 */
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    font-size: 1.2rem;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    z-index: 1100;
+    cursor: pointer;
+}
+
+.menu-toggle:hover {
+    background-color: #555;
+}
+
+/* サイドメニュー表示時 */
+.sidebar-menu.open {
+    right: 0;
+}
+
     </style>
 </head>
 <body>
     <header>
         <img src="images/kosha.png" alt="稲井中学校ロゴ">
     </header>
+    <!-- サイドメニュートリガーボタン -->
+<button class="menu-toggle" onclick="toggleMenu()">☰</button>
+
+<!-- サイドメニュー -->
+<div class="sidebar-menu" id="sidebar-menu">
+    <h3>サイドメニュー</h3>
+    <ul>
+        <li><a href="#">参加人数</a></li>
+        <li><a href="#">稲井中学校同窓会規約</a></li>
+    </ul>
+</div>
+
 
     <div class="message">
         <p>拝啓</p>
@@ -173,5 +249,10 @@
             <li>稲井中学校同窓会規約</li>
         </ul>
     </div>
+    function toggleMenu() {
+    const menu = document.getElementById('sidebar-menu');
+    menu.classList.toggle('open');
+}
+
 </body>
 </html>
