@@ -3,11 +3,140 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>LINEログイン</title>
+  <title>稲井中学校同窓会</title>
+  <link href="https://fonts.googleapis.com/css2?family=Source+Han+Serif+JP&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Source Han Serif JP', serif;
+      line-height: 1.6;
+      margin: 20px;
+    }
+    h1, h2 {
+      text-align: center;
+    }
+    .banner, .frame {
+      text-align: center;
+      margin: 20px 0;
+    }
+    .banner img, .watermark img {
+      max-width: 100%;
+      cursor: pointer;
+    }
+    .watermark {
+      position: relative;
+      text-align: center;
+      margin: 20px 0;
+    }
+    .watermark-text {
+      position: relative;
+      z-index: 2;
+      background: rgba(255, 255, 255, 0.8);
+      padding: 20px;
+    }
+    .watermark img {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      opacity: 0.1;
+      z-index: 1;
+    }
+    iframe {
+      width: 100%;
+      height: 300px;
+      border: none;
+    }
+    a.button {
+      display: inline-block;
+      margin: 20px 0;
+      padding: 10px 20px;
+      background-color: #007BFF;
+      color: white;
+      text-decoration: none;
+      border-radius: 5px;
+    }
+    footer {
+      text-align: center;
+      margin: 20px 0;
+    }
+  </style>
   <script src="https://static.line-scdn.net/liff/edge/2.1/liff.js"></script>
-  <script src="script.js"></script>
+  <script>
+    async function initializeLiff() {
+      try {
+        await liff.init({ liffId: "2006598432-qWoljXBn" });
+        console.log("LIFF initialized");
+      } catch (error) {
+        console.error("LIFF初期化エラー:", error);
+      }
+    }
+
+    function handleBanner2Click() {
+      if (!liff.isLoggedIn()) {
+        liff.login();
+      } else {
+        alert("すでにログイン済みです！");
+        window.location.href = "quiz.html";
+      }
+    }
+
+    document.addEventListener("DOMContentLoaded", initializeLiff);
+  </script>
 </head>
 <body>
-  <h1>LINEログインデモ</h1>
+  <h1>稲井中学校同窓会</h1>
+  <main>
+    <!-- 校章と挨拶文 -->
+    <div class="watermark">
+      <div class="watermark-text">
+        <p>拝啓<br>時下、ますますご清祥のこととお慶び申し上げます。<br>
+          早いもので、稲井中学校を卒業してから15年が経ちました。<br>
+          この節目を機に、同窓会を開催する運びとなりました。<br>
+          懐かしい友人との再会を楽しみながら楽しい時間を過ごしましょう。</p>
+      </div>
+      <img src="校章.png" alt="校章">
+    </div>
+
+    <!-- 日時・場所・会費 -->
+    <div class="frame">
+      <h2>日時</h2>
+      <p>2024年12月30日 18:00〜</p>
+      <h2>場所</h2>
+      <p>〇〇ホテル 2階宴会場</p>
+      <iframe src="https://www.google.com/maps/embed?pb=!1m18!..." allowfullscreen loading="lazy"></iframe>
+      <h2>会費</h2>
+      <p>大人 5000円 / 学生 3000円</p>
+    </div>
+
+    <!-- 出欠回答リンク -->
+    <a class="button" href="申し込みフォームリンク">出欠回答はこちら</a>
+
+    <!-- 広告バナー1 -->
+    <div class="banner">
+      <h2>広告バナー1</h2>
+      <img src="バナー1.jpg" alt="広告1">
+    </div>
+
+    <!-- キャンセルポリシー -->
+    <div class="frame">
+      <h2>出席キャンセルに関するポリシー</h2>
+      <p><strong>1. キャンセル料金について:</strong><br>
+        開催日3日前まで：無料<br>
+        2日前〜前日：50％<br>
+        当日：80％<br>
+        無連絡：100％</p>
+      <p>キャンセル希望は公式LINEへご連絡ください。</p>
+    </div>
+
+    <!-- 広告バナー2 -->
+    <div class="banner">
+      <h2>広告バナー2</h2>
+      <img src="バナー2.jpg" alt="広告2" onclick="handleBanner2Click()">
+    </div>
+  </main>
+
+  <footer>
+    <p>© 2024 稲井中学校同窓会</p>
+  </footer>
 </body>
 </html>
