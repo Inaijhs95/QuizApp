@@ -1,16 +1,17 @@
-// LIFF SDKのインポート方法を変.更
-import * as liff from "https://static.line-scdn.net/liff/edge/2.1/liff.js";
-
+// LIFFの初期化とログイン処理
 async function initializeLiff() {
   try {
+    // LIFFの初期化
     await liff.init({ liffId: "2006598432-qWoljXBn" }); // LIFF IDを正しく設定
     console.log("LIFF initialized");
 
+    // ユーザーがログインしているか確認
     if (!liff.isLoggedIn()) {
       console.log("未ログイン: ログイン処理を開始します。");
       liff.login(); // ログイン画面を表示
     } else {
       console.log("ログイン済み: ユーザー情報を取得します。");
+      // プロファイル情報を取得して表示
       const profile = await liff.getProfile();
       console.log("ユーザープロファイル:", profile);
       document.body.innerHTML += `<p>こんにちは、${profile.displayName}さん！</p>`;
@@ -20,5 +21,5 @@ async function initializeLiff() {
   }
 }
 
-// ページが読み込まれたときにLIFFを初期化
+// ページ読み込み時にLIFFを初期化
 document.addEventListener("DOMContentLoaded", initializeLiff);
