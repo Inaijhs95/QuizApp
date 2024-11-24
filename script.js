@@ -1,4 +1,4 @@
-// LIFF SDKのインポート方法を変更
+// LIFF SDKのインポート方法を変.更
 import * as liff from "https://static.line-scdn.net/liff/edge/2.1/liff.js";
 
 async function initializeLiff() {
