@@ -14,7 +14,9 @@ async function initializeLiff() {
       // プロファイル情報を取得して表示
       const profile = await liff.getProfile();
       console.log("ユーザープロファイル:", profile);
-      document.body.innerHTML += `<p>こんにちは、${profile.displayName}さん！</p>`;
+
+      const userInfoDiv = document.getElementById("user-info");
+      userInfoDiv.innerHTML = `<p>こんにちは、${profile.displayName}さん！</p>`;
     }
   } catch (error) {
     console.error("LIFF初期化エラー:", error);
