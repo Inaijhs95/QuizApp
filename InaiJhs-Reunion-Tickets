@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>チケット販売</title>
-    <script src="https://js.squareupsandbox.com/v2/paymentform"></script> <!-- Sandbox用 -->
+    <title>同窓会チケット購入</title>
+    <script src="https://js.squareupsandbox.com/v2/paymentform"></script> <!-- Sandbox環境 -->
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -25,25 +25,74 @@
             border: none;
             border-radius: 5px;
             cursor: pointer;
+            margin: 10px;
         }
-        .button:hover {
+        .button.disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
+        .button:hover:not(.disabled) {
             background-color: #005bb5;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>チケット販売</h1>
-        <p>イベントチケット: 5,000円</p>
-        <form id="payment-form">
+        <h1>同窓会チケット購入</h1>
+
+        <!-- 早期割引ボタン -->
+        <button class="button" id="early-bird-button">早期割引: 6,000円</button>
+
+        <!-- 一般チケットボタン -->
+        <button class="button" id="general-ticket-button">一般: 7,000円</button>
+
+        <!-- チケット情報 -->
+        <form id="payment-form" style="margin-top: 20px;">
             <div id="sq-card"></div>
-            <button type="button" class="button" id="pay-button">購入する</button>
+            <button type="button" class="button" id="pay-button" disabled>購入する</button>
         </form>
     </div>
 
     <script>
+        const EARLY_BIRD_DEADLINE = new Date('2025-04-05T00:00:00'); // 締切日時
+
+        // 現在時刻を取得
+        const now = new Date();
+
+        // ボタン要素の取得
+        const earlyBirdButton = document.getElementById('early-bird-button');
+        const generalTicketButton = document.getElementById('general-ticket-button');
+        const payButton = document.getElementById('pay-button');
+
+        // 早期割引ボタンの有効・無効を設定
+        if (now >= EARLY_BIRD_DEADLINE) {
+            earlyBirdButton.classList.add('disabled');
+            earlyBirdButton.disabled = true;
+            earlyBirdButton.textContent = '早期割引（販売終了）';
+        }
+
+        // 選択されたチケットの価格を保持
+        let selectedPrice = null;
+
+        // 早期割引ボタンのクリックイベント
+        earlyBirdButton.addEventListener('click', () => {
+            if (!earlyBirdButton.disabled) {
+                selectedPrice = 6000;
+                payButton.disabled = false;
+                alert('早期割引チケットを選択しました。');
+            }
+        });
+
+        // 一般チケットボタンのクリックイベント
+        generalTicketButton.addEventListener('click', () => {
+            selectedPrice = 7000;
+            payButton.disabled = false;
+            alert('一般チケットを選択しました。');
+        });
+
+        // Square Payment Form の設定
         const paymentForm = new SqPaymentForm({
-            applicationId: "sandbox-sq0idb--iUeOdfFh89ZnpOZ_dGWPg", // アプリケーションIDをここに記載
+            applicationId: "sandbox-sq0idb--iUeOdfFh89ZnpOZ_dGWPg", // アプリケーションID
             inputClass: 'sq-input',
             cardNumber: { elementId: 'sq-card' },
             callbacks: {
@@ -54,14 +103,15 @@
                         return;
                     }
 
-                    // カードトークン（nonce）を送信する処理
+                    // カードトークン（nonce）をサーバーに送信する
                     console.log('カードトークン取得:', nonce);
-                    alert('購入処理を進めます...');
+                    alert(`支払い処理を進めます...\nチケット価格: ${selectedPrice}円`);
                 }
             }
         });
 
-        document.getElementById('pay-button').addEventListener('click', function(event) {
+        // 購入ボタンのクリックイベント
+        payButton.addEventListener('click', function(event) {
             event.preventDefault();
             paymentForm.requestCardNonce();
         });
