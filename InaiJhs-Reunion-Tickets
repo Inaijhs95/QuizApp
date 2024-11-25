@@ -43,7 +43,7 @@
 
     <script>
         const paymentForm = new SqPaymentForm({
-            applicationId: "sandbox-sq0idb-XXXXXXXXXXXX", // アプリケーションIDをここに記載
+            applicationId: "sandbox-sq0idb--iUeOdfFh89ZnpOZ_dGWPg", // アプリケーションIDをここに記載
             inputClass: 'sq-input',
             cardNumber: { elementId: 'sq-card' },
             callbacks: {
