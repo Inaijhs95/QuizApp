@@ -249,7 +249,10 @@
 
     <div class="section">
         <h2>会費</h2>
-        <p>早期割引　6,000円</p>
+       <p>
+    早期割引　6,000円
+    <span id="countdown" style="margin-left: 20px; font-weight: bold; color: #d2691e;"></span>
+</p>
         <p>一般　　　7,000円</p>
     </div>
 
@@ -300,6 +303,31 @@
         const menu = document.getElementById('sidebar-menu');
         menu.classList.toggle('open');
     }
+    // カウントダウンの設定
+const countdownElement = document.getElementById('countdown');
+const deadline = new Date('2025-04-04T23:59:59'); // 締切日時
+
+function updateCountdown() {
+    const now = new Date();
+    const timeRemaining = deadline - now;
+
+    if (timeRemaining <= 0) {
+        countdownElement.textContent = '販売終了';
+        return; // カウントダウン終了
+    }
+
+    const days = Math.floor(timeRemaining / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((timeRemaining % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const minutes = Math.floor((timeRemaining % (1000 * 60 * 60)) / (1000 * 60));
+    const seconds = Math.floor((timeRemaining % (1000 * 60)) / 1000);
+
+    countdownElement.textContent = `販売終了まで ${days}日 ${hours}時間 ${minutes}分 ${seconds}秒`;
+}
+
+// 毎秒カウントダウンを更新
+setInterval(updateCountdown, 1000);
+updateCountdown(); // ページ読み込み時に即時表示
+
 </script>
 </body>
 </html>
