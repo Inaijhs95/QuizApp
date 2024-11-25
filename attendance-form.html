@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>出欠回答</title>
+    <link href="https://fonts.googleapis.com/css2?family=Source+Han+Serif+JP:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Source Han Serif JP', serif;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 20px;
+            color: #444;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .container h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 8px;
+            font-size: 1rem;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .form-group input[type="radio"] {
+            width: auto;
+            margin-right: 10px;
+        }
+
+        .buttons {
+            text-align: center;
+        }
+
+        .button {
+            display: inline-block;
+            padding: 10px 20px;
+            font-size: 1rem;
+            color: #fff;
+            background-color: #333;
+            text-decoration: none;
+            border-radius: 5px;
+            margin: 10px 5px;
+            cursor: pointer;
+        }
+
+        .button:hover {
+            background-color: #555;
+        }
+
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>出欠回答</h1>
+        <form id="attendance-form">
+            <!-- お名前 -->
+            <div class="form-group">
+                <label for="name">お名前</label>
+                <input type="text" id="name" name="name" required>
+            </div>
+
+            <!-- 電話番号 -->
+            <div class="form-group">
+                <label for="phone">電話番号</label>
+                <input type="tel" id="phone" name="phone" required>
+            </div>
+
+            <!-- 出欠選択 -->
+            <div class="form-group">
+                <label>出欠</label>
+                <label><input type="radio" name="attendance" value="出席" required> 出席</label>
+                <label><input type="radio" name="attendance" value="欠席" required> 欠席</label>
+            </div>
+
+            <!-- 確認画面へボタン -->
+            <div class="buttons">
+                <button type="button" class="button" id="confirm-button">確認画面へ</button>
+            </div>
+        </form>
+
+        <!-- 確認画面 -->
+        <div id="confirmation-screen" class="hidden">
+            <h1>確認画面</h1>
+            <p><strong>お名前:</strong> <span id="confirm-name"></span></p>
+            <p><strong>電話番号:</strong> <span id="confirm-phone"></span></p>
+            <p><strong>出欠:</strong> <span id="confirm-attendance"></span></p>
+
+            <div class="buttons">
+                <button type="button" class="button" id="back-button">戻る</button>
+                <button type="submit" class="button" id="submit-button">送信する</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // DOM要素取得
+        const form = document.getElementById('attendance-form');
+        const confirmationScreen = document.getElementById('confirmation-screen');
+        const confirmButton = document.getElementById('confirm-button');
+        const backButton = document.getElementById('back-button');
+        const submitButton = document.getElementById('submit-button');
+
+        // 確認画面のフィールド
+        const confirmName = document.getElementById('confirm-name');
+        const confirmPhone = document.getElementById('confirm-phone');
+        const confirmAttendance = document.getElementById('confirm-attendance');
+
+        // 確認画面への切り替え
+        confirmButton.addEventListener('click', () => {
+            const name = form.name.value.trim();
+            const phone = form.phone.value.trim();
+            const attendance = form.attendance.value;
+
+            if (!name || !phone || !attendance) {
+                alert('すべての項目を入力してください。');
+                return;
+            }
+
+            confirmName.textContent = name;
+            confirmPhone.textContent = phone;
+            confirmAttendance.textContent = attendance;
+
+            form.classList.add('hidden');
+            confirmationScreen.classList.remove('hidden');
+        });
+
+        // 戻るボタン
+        backButton.addEventListener('click', () => {
+            form.classList.remove('hidden');
+            confirmationScreen.classList.add('hidden');
+        });
+
+        // 送信ボタン（仮処理）
+        submitButton.addEventListener('click', () => {
+            alert('送信が完了しました。');
+            location.reload(); // ページをリロードしてフォームをリセット
+        });
+    </script>
+</body>
+</html>
