@@ -4,7 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>同窓会チケット購入</title>
-    <script src="https://js.squareupsandbox.com/v2/paymentform"></script> <!-- Sandbox環境 -->
+
+    <!-- Square Payment Formのライブラリ -->
+    <script src="https://js.squareupsandbox.com/v2/paymentform"></script> <!-- サンドボックス環境 -->
+
     <style>
         body {
             font-family: Arial, sans-serif;
