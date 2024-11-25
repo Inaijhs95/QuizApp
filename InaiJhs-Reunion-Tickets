@@ -48,7 +48,7 @@
 
         <!-- チケット情報 -->
         <form id="payment-form" style="margin-top: 20px;">
-            <div id="sq-card"></div>
+            <div id="sq-card"></div> <!-- Squareのカード情報入力フィールド -->
             <button type="button" class="button" id="pay-button" disabled>購入する</button>
         </form>
     </div>
@@ -92,9 +92,9 @@
 
         // Square Payment Form の設定
         const paymentForm = new SqPaymentForm({
-            applicationId: "sandbox-sq0idb--iUeOdfFh89ZnpOZ_dGWPg", // アプリケーションID
+            applicationId: "sandbox-sq0idb--iUeOdfFh89ZnpOZ_dGWPg", // サンドボックス環境のアプリケーションID
             inputClass: 'sq-input',
-            cardNumber: { elementId: 'sq-card' },
+            cardNumber: { elementId: 'sq-card' }, // カード番号の入力フィールド
             callbacks: {
                 cardNonceResponseReceived: function(errors, nonce, cardData) {
                     if (errors) {
@@ -113,7 +113,7 @@
         // 購入ボタンのクリックイベント
         payButton.addEventListener('click', function(event) {
             event.preventDefault();
-            paymentForm.requestCardNonce();
+            paymentForm.requestCardNonce(); // カードノンスをリクエスト
         });
     </script>
 </body>
