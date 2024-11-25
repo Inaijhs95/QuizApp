@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>バナーリンク先</title>
+    <style>
+        /* 全体のスタイル */
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #ef0430; /* 背景色 */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh; /* 画面いっぱいに調整 */
+            overflow: hidden;
+        }
+
+        /* 画像のスタイル */
+        .background-img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* 画面いっぱいに調整 */
+            z-index: -1; /* 背景に配置 */
+        }
+
+        /* ボタンのスタイル */
+        .button {
+            position: absolute;
+            bottom: 20%; /* 画像の中心やや下方に配置 */
+            background-color: #32cd32; /* 明るい緑色 */
+            color: #fff;
+            padding: 15px 30px;
+            font-size: 1.5rem;
+            font-weight: bold;
+            border: none;
+            border-radius: 10px;
+            text-decoration: none;
+            text-align: center;
+            cursor: pointer;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+            transition: background-color 0.3s, transform 0.3s;
+        }
+
+        .button:hover {
+            background-color: #28a745; /* ホバー時の色 */
+            transform: scale(1.05); /* ホバー時の拡大効果 */
+        }
+    </style>
+</head>
+<body>
+    <!-- 背景画像 -->
+    <img src="images/mondaisoko.png" alt="問題そこ" class="background-img">
+
+    <!-- ボタン -->
+    <a href="https://example.com" class="button">CLICK HERE</a>
+</body>
+</html>
