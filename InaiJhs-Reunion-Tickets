@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>チケット販売</title>
+    <script src="https://js.squareupsandbox.com/v2/paymentform"></script> <!-- Sandbox用 -->
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 20px;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+        }
+        .button {
+            padding: 10px 20px;
+            background-color: #007aff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .button:hover {
+            background-color: #005bb5;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>チケット販売</h1>
+        <p>イベントチケット: 5,000円</p>
+        <form id="payment-form">
+            <div id="sq-card"></div>
+            <button type="button" class="button" id="pay-button">購入する</button>
+        </form>
+    </div>
+
+    <script>
+        const paymentForm = new SqPaymentForm({
+            applicationId: "sandbox-sq0idb-XXXXXXXXXXXX", // アプリケーションIDをここに記載
+            inputClass: 'sq-input',
+            cardNumber: { elementId: 'sq-card' },
+            callbacks: {
+                cardNonceResponseReceived: function(errors, nonce, cardData) {
+                    if (errors) {
+                        console.error('エラー:', errors);
+                        alert('支払いエラーが発生しました。');
+                        return;
+                    }
+
+                    // カードトークン（nonce）を送信する処理
+                    console.log('カードトークン取得:', nonce);
+                    alert('購入処理を進めます...');
+                }
+            }
+        });
+
+        document.getElementById('pay-button').addEventListener('click', function(event) {
+            event.preventDefault();
+            paymentForm.requestCardNonce();
+        });
+    </script>
+</body>
+</html>
