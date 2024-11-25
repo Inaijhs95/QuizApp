@@ -5,24 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>出欠回答</title>
     <link href="https://fonts.googleapis.com/css2?family=Source+Han+Serif+JP:wght@400;700&display=swap" rel="stylesheet">
-    <script src="https://www.gstatic.com/firebasejs/9.21.0/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.21.0/firebase-firestore.js"></script>
-    <script>
-        // Firebase の構成情報
-       const firebaseConfig = {
-  apiKey: "AIzaSyD30sxoHhSnpH7xMwGj55SSjRkMRa0oRX8",
-  authDomain: "inai95.firebaseapp.com",
-  projectId: "inai95",
-  storageBucket: "inai95.firebasestorage.app",
-  messagingSenderId: "418002209728",
-  appId: "1:418002209728:web:dc034e538d3bf0fae15625",
-  measurementId: "G-58LP3ZDTLJ"
-};
-
-        // Firebase 初期化
-        const app = firebase.initializeApp(firebaseConfig);
-        const db = firebase.firestore();
-    </script>
     <style>
         body {
             font-family: 'Source Han Serif JP', serif;
@@ -102,7 +84,27 @@
             </div>
         </form>
     </div>
+
+    <!-- Firebase SDK (compatバージョン) -->
+    <script src="https://www.gstatic.com/firebasejs/9.21.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.21.0/firebase-firestore-compat.js"></script>
     <script>
+        // Firebase の構成情報
+       const firebaseConfig = {
+  apiKey: "AIzaSyD30sxoHhSnpH7xMwGj55SSjRkMRa0oRX8",
+  authDomain: "inai95.firebaseapp.com",
+  projectId: "inai95",
+  storageBucket: "inai95.firebasestorage.app",
+  messagingSenderId: "418002209728",
+  appId: "1:418002209728:web:dc034e538d3bf0fae15625",
+  measurementId: "G-58LP3ZDTLJ"
+};
+
+        // Firebase 初期化
+        const app = firebase.initializeApp(firebaseConfig);
+        const db = firebase.firestore();
+
+        // 出欠回答データの保存
         const form = document.getElementById('attendance-form');
         const submitButton = document.getElementById('submit-button');
 
@@ -125,7 +127,7 @@
                 });
 
                 alert('出欠回答が送信されました！');
-                location.reload();
+                location.reload(); // ページをリロードしてフォームをリセット
             } catch (error) {
                 console.error('送信エラー:', error);
                 alert('送信に失敗しました。');
