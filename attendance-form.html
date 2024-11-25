@@ -60,11 +60,15 @@
         .button:hover {
             background-color: #555;
         }
+        .hidden {
+            display: none;
+        }
     </style>
 </head>
 <body>
     <div class="container">
         <h1>出欠回答</h1>
+        <!-- 入力フォーム -->
         <form id="attendance-form">
             <div class="form-group">
                 <label for="name">お名前</label>
@@ -80,35 +84,39 @@
                 <label><input type="radio" name="attendance" value="欠席" required> 欠席</label>
             </div>
             <div class="buttons">
-                <button type="button" class="button" id="submit-button">送信する</button>
+                <button type="button" class="button" id="confirm-button">確認画面へ</button>
             </div>
         </form>
+
+        <!-- 確認画面 -->
+        <div id="confirmation-screen" class="hidden">
+            <h1>確認画面</h1>
+            <p><strong>お名前:</strong> <span id="confirm-name"></span></p>
+            <p><strong>電話番号:</strong> <span id="confirm-phone"></span></p>
+            <p><strong>出欠:</strong> <span id="confirm-attendance"></span></p>
+
+            <div class="buttons">
+                <button type="button" class="button" id="back-button">戻る</button>
+                <button type="button" class="button" id="submit-button">送信する</button>
+            </div>
+        </div>
     </div>
 
-    <!-- Firebase SDK (compatバージョン) -->
-    <script src="https://www.gstatic.com/firebasejs/9.21.0/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.21.0/firebase-firestore-compat.js"></script>
     <script>
-        // Firebase の構成情報
-       const firebaseConfig = {
-  apiKey: "AIzaSyD30sxoHhSnpH7xMwGj55SSjRkMRa0oRX8",
-  authDomain: "inai95.firebaseapp.com",
-  projectId: "inai95",
-  storageBucket: "inai95.firebasestorage.app",
-  messagingSenderId: "418002209728",
-  appId: "1:418002209728:web:dc034e538d3bf0fae15625",
-  measurementId: "G-58LP3ZDTLJ"
-};
-
-        // Firebase 初期化
-        const app = firebase.initializeApp(firebaseConfig);
-        const db = firebase.firestore();
-
-        // 出欠回答データの保存
+        // DOM要素の取得
         const form = document.getElementById('attendance-form');
+        const confirmationScreen = document.getElementById('confirmation-screen');
+        const confirmButton = document.getElementById('confirm-button');
+        const backButton = document.getElementById('back-button');
         const submitButton = document.getElementById('submit-button');
 
-        submitButton.addEventListener('click', async () => {
+        // 確認画面のフィールド
+        const confirmName = document.getElementById('confirm-name');
+        const confirmPhone = document.getElementById('confirm-phone');
+        const confirmAttendance = document.getElementById('confirm-attendance');
+
+        // 確認画面への切り替え
+        confirmButton.addEventListener('click', () => {
             const name = form.name.value.trim();
             const phone = form.phone.value.trim();
             const attendance = form.attendance.value;
@@ -118,7 +126,28 @@
                 return;
             }
 
+            confirmName.textContent = name;
+            confirmPhone.textContent = phone;
+            confirmAttendance.textContent = attendance;
+
+            form.classList.add('hidden');
+            confirmationScreen.classList.remove('hidden');
+        });
+
+        // 戻るボタン
+        backButton.addEventListener('click', () => {
+            form.classList.remove('hidden');
+            confirmationScreen.classList.add('hidden');
+        });
+
+        // 送信ボタン（Firebaseへの送信）
+        submitButton.addEventListener('click', async () => {
+            const name = form.name.value.trim();
+            const phone = form.phone.value.trim();
+            const attendance = form.attendance.value;
+
             try {
+                // Firestoreへの送信
                 await db.collection('attendance_responses').add({
                     name: name,
                     phone: phone,
@@ -126,11 +155,11 @@
                     timestamp: new Date()
                 });
 
-                alert('出欠回答が送信されました！');
-                location.reload(); // ページをリロードしてフォームをリセット
+                alert('送信が完了しました！');
+                location.reload(); // フォームリセット
             } catch (error) {
                 console.error('送信エラー:', error);
-                alert('送信に失敗しました。');
+                alert('送信に失敗しました。再試行してください。');
             }
         });
     </script>
