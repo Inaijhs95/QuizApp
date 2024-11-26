@@ -46,32 +46,40 @@
 
 
         // ページロード時にデータを取得して反映
-        document.addEventListener("DOMContentLoaded", async () => {
-            try {
-                await liff.init({ liffId: "2006598432-qWoljXBn" });
+       document.addEventListener("DOMContentLoaded", async () => {
+    try {
+        // LIFFの初期化
+        await liff.init({ liffId: "2006598432-qWoljXBn" });
 
-                if (liff.isLoggedIn()) {
-                    const profile = await liff.getProfile();
-                    const displayName = profile.displayName;
-                    const userId = liff.getDecodedIDToken().sub;
+        if (liff.isLoggedIn()) {
+            // ユーザープロファイル取得
+            const profile = await liff.getProfile();
+            const displayName = profile.displayName; // 名前
+            const email = liff.getDecodedIDToken().email; // メール
+            const userId = liff.getDecodedIDToken().sub; // UID
 
-                    const userDoc = await firebase.firestore().collection('users').doc(userId).get();
-                    if (userDoc.exists) {
-                        const userData = userDoc.data();
-                        document.querySelector('.score').innerHTML = 
-                            `${displayName}さんの成績<br>${userData.correctAnswers || 0}問正解`;
-                        document.querySelector('.ranking').textContent = 
-                            `現在の順位: ${userData.ranking || "未定"}位`;
-                        document.querySelector('.quiz-status').innerHTML = 
-                            userData.quizStatus.map((status, index) => `<li>№${index + 1}　${status}</li>`).join('');
-                    }
-                } else {
-                    window.location.href = "quiz-start.html";
-                }
-            } catch (error) {
-                console.error("エラー:", error);
+            // Firestoreにユーザーデータを保存
+            await saveUserData(userId, displayName, email);
+
+            // UIの更新（スコアやランキング表示）
+            const userDoc = await firebase.firestore().collection('users').doc(userId).get();
+            if (userDoc.exists) {
+                const userData = userDoc.data();
+                document.querySelector('.score').innerHTML =
+                    `${displayName}さんの成績<br>${userData.correctAnswers || 0}問正解`;
+                document.querySelector('.ranking').textContent =
+                    `現在の順位: ${userData.ranking || "未定"}位`;
+                document.querySelector('.quiz-status').innerHTML =
+                    userData.quizStatus.map((status, index) => `<li>№${index + 1}　${status}</li>`).join('');
             }
-        });
+        } else {
+            // ログインしていない場合
+            window.location.href = "quiz-start.html";
+        }
+    } catch (error) {
+        console.error("エラー:", error);
+    }
+});
     </script>
 </body>
 </html>
