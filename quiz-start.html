@@ -87,7 +87,7 @@
                 // ログインしていなければログイン処理
                 if (!liff.isLoggedIn()) {
                     console.log("未ログイン: ログイン処理を開始します。");
-                    liff.login(); // LINEログイン画面を表示
+                    liff.login(); // ユーザーがボタンをタップした時にログイン画面に移動
                 } else {
                     console.log("ログイン済み: ユーザー情報を取得します。");
                     // ユーザープロファイル情報を取得
@@ -96,7 +96,7 @@
                     
                     // ユーザー情報を表示
                     const userInfoDiv = document.getElementById("user-info");
-                    userInfoDiv.innerHTML = `<p>こんにちは、${profile.displayName}さん！</p>`;
+                    userInfoDiv.innerHTML = `<p>ようこそ、${profile.displayName}さん！</p>`;
 
                     // クイズスタートボタンを表示
                     const quizStartButton = document.getElementById("quiz-start-button");
@@ -107,15 +107,15 @@
             }
         }
 
+        // LINEログインボタンのイベント
+        document.getElementById("line-login-button").addEventListener("click", function() {
+            initializeLiff();  // LIFF初期化を実行し、ログイン処理へ進む
+        });
+
         // クイズスタートボタンのイベント
         document.getElementById("start-quiz-button").addEventListener("click", function() {
             alert("クイズを開始します！");
             // クイズを開始するための処理をここに追加
-        });
-
-        // LINEログインボタンのイベント
-        document.getElementById("line-login-button").addEventListener("click", function() {
-            initializeLiff();  // LIFF初期化
         });
 
         // ページが読み込まれたときにLIFFを初期化
