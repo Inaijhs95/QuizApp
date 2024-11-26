@@ -4,184 +4,68 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>キャッシュバックチャレンジ</title>
+    <script src="https://static.line-scdn.net/liff/edge/2.1/liff.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.21.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.21.0/firebase-firestore.js"></script>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #ef0430;
-            color: white;
-            margin: 0;
-            padding: 0;
-        }
-
-        .container {
-            padding: 20px;
-            text-align: center;
-        }
-
-        h1 {
-            margin-top: 20px;
-            font-size: 2rem;
-        }
-
-        .score {
-            margin-top: 20px;
-            font-size: 1.2rem;
-        }
-
-        .quiz-status {
-            list-style-type: none;
-            padding: 0;
-            margin-top: 20px;
-        }
-
-        .quiz-status li {
-            margin: 10px 0;
-        }
-
-        .ranking {
-            margin-top: 20px;
-            font-size: 1.2rem;
-        }
-
-        /* サイドメニュー */
-        .menu-icon {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            cursor: pointer;
-            z-index: 1000;
-        }
-
-        .menu-icon div {
-            width: 30px;
-            height: 5px;
-            background-color: white;
-            margin: 5px 0;
-            border-radius: 2px;
-        }
-
-        .side-menu {
-            position: fixed;
-            top: 0;
-            right: -250px;
-            width: 250px;
-            height: 100%;
-            background-color: #333;
-            color: white;
-            padding: 20px;
-            box-shadow: -2px 0 5px rgba(0, 0, 0, 0.5);
-            transition: right 0.3s;
-        }
-
-        .side-menu.open {
-            right: 0;
-        }
-
-        .side-menu h2 {
-            margin-top: 0;
-        }
-
-        .side-menu a {
-            display: block;
-            margin: 10px 0;
-            color: white;
-            text-decoration: none;
-        }
-
-        .side-menu a:hover {
-            text-decoration: underline;
-        }
+        body { font-family: Arial, sans-serif; background-color: #ef0430; color: white; margin: 0; padding: 0; }
+        .container { padding: 20px; text-align: center; }
+        h1 { margin-top: 20px; font-size: 2rem; }
+        .score { margin-top: 20px; font-size: 1.2rem; }
+        .quiz-status { list-style-type: none; padding: 0; margin-top: 20px; }
+        .quiz-status li { margin: 10px 0; }
+        .ranking { margin-top: 20px; font-size: 1.2rem; }
     </style>
 </head>
 <body>
-
-    <!-- サイドメニューアイコン -->
-    <div class="menu-icon" id="menu-icon">
-        <div></div>
-        <div></div>
-        <div></div>
-    </div>
-
-    <!-- サイドメニュー -->
-    <div class="side-menu" id="side-menu">
-        <h2>メニュー</h2>
-        <a href="#">ルール</a>
-        <a href="#">よくある質問</a>
-        <a href="#">お問い合わせ</a>
-    </div>
-
-    <!-- メインコンテンツ -->
     <div class="container">
         <h1>ようこそ キャッシュバックチャレンジへ</h1>
-        <div id="user-name">
-    ○○さんの成績
-            <br>
-            3問正解
-        </div>
-
+        <div class="score">○○さんの成績<br>0問正解</div>
         <ul class="quiz-status">
-            <li>№１　正解（ヒント使用）</li>
+            <li>№１　未回答</li>
             <li>№２　未回答</li>
-            <li>№３　正解（ヒント未使用）</li>
-            <li>№４　正解（ヒント使用）</li>
+            <li>№３　未回答</li>
+            <li>№４　未回答</li>
         </ul>
-
-        <div class="ranking">
-            現在の順位: 3位
-        </div>
+        <div class="ranking">現在の順位: 未定</div>
     </div>
 
     <script>
-        // サイドメニューの開閉
-        const menuIcon = document.getElementById('menu-icon');
-        const sideMenu = document.getElementById('side-menu');
+        // Firebase設定
+        const firebaseConfig = {
+            apiKey: "YOUR_API_KEY",
+            authDomain: "YOUR_AUTH_DOMAIN",
+            projectId: "YOUR_PROJECT_ID"
+        };
+        firebase.initializeApp(firebaseConfig);
 
-        menuIcon.addEventListener('click', () => {
-            sideMenu.classList.toggle('open');
-        });
+        // ページロード時にデータを取得して反映
+        document.addEventListener("DOMContentLoaded", async () => {
+            try {
+                await liff.init({ liffId: "2006598432-qWoljXBn" });
 
-        // Firebaseから成績データを取得して表示
-        async function loadUserData() {
-            // ここでFirebaseからユーザーデータを取得
-            const userName = "山田"; // サンプルデータ
-            const correctAnswers = 3; // サンプルデータ
-            const ranking = 3; // サンプルデータ
+                if (liff.isLoggedIn()) {
+                    const profile = await liff.getProfile();
+                    const displayName = profile.displayName;
+                    const userId = liff.getDecodedIDToken().sub;
 
-            // UIに反映
-            document.querySelector('.score').innerHTML = `${userName}さんの成績<br>${correctAnswers}問正解`;
-            document.querySelector('.ranking').textContent = `現在の順位: ${ranking}位`;
-        }
-
-       // ページロード時にLIFFのプロファイル情報を取得
-document.addEventListener("DOMContentLoaded", async () => {
-    try {
-        // LIFFを初期化
-        await liff.init({ liffId: "2006598432-qWoljXBn" }); // LIFF IDを適切に設定
-
-        // ユーザーがログインしているか確認
-        if (liff.isLoggedIn()) {
-            // プロファイル情報を取得
-            const profile = await liff.getProfile();
-            const displayName = profile.displayName; // ユーザー名
-            console.log(`ユーザー名: ${displayName}`);
-
-            // ユーザー名を画面に反映
-            const userNameElement = document.getElementById("user-name");
-            if (userNameElement) {
-                userNameElement.textContent = `${displayName}さんの成績`;
+                    const userDoc = await firebase.firestore().collection('users').doc(userId).get();
+                    if (userDoc.exists) {
+                        const userData = userDoc.data();
+                        document.querySelector('.score').innerHTML = 
+                            `${displayName}さんの成績<br>${userData.correctAnswers || 0}問正解`;
+                        document.querySelector('.ranking').textContent = 
+                            `現在の順位: ${userData.ranking || "未定"}位`;
+                        document.querySelector('.quiz-status').innerHTML = 
+                            userData.quizStatus.map((status, index) => `<li>№${index + 1}　${status}</li>`).join('');
+                    }
+                } else {
+                    window.location.href = "quiz-start.html";
+                }
+            } catch (error) {
+                console.error("エラー:", error);
             }
-        } else {
-            console.log("ユーザーはログインしていません");
-            // ログインしていない場合、ログインページにリダイレクト
-            window.location.href = "quiz-start.html";
-        }
-    } catch (error) {
-        console.error("LIFF初期化またはプロファイル取得エラー:", error);
-    }
-});
-
+        });
     </script>
-
 </body>
 </html>
-
