@@ -10,7 +10,7 @@
 
     <style>
         body {
-            font-family: "Corporate Logo", sans-serif; /* フォント変更 */
+            font-family: Arial, sans-serif;
             text-align: center;
             margin: 0;
             padding: 0;
@@ -20,15 +20,10 @@
             background-image: url('NAZOSTART.png'); /* 画像を背景に指定 */
             background-size: cover; /* 画像を画面いっぱいに調整 */
             background-position: center center; /* 画像の中央を基準に表示 */
-        }
-
-        .container {
-            max-width: 600px;
-            margin: 0 auto;
-            padding: 20px;
-            border: 1px solid #ddd;
-            border-radius: 10px;
-            background-color: rgba(0, 0, 0, 0.5); /* 半透明の背景で文字が見やすく */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column; /* 画面中央に配置 */
         }
 
         h1 {
@@ -38,22 +33,18 @@
 
         .button {
             padding: 10px 20px;
-            background-color: #00c300; /* LINEカラー */
+            background-color: #00b900; /* LINEのカラー */
             color: #fff;
             border: none;
             border-radius: 5px;
             cursor: pointer;
             margin: 10px;
-            font-family: "Corporate Logo", sans-serif; /* フォント変更 */
+            font-family: 'コーポレートロゴ・丸', sans-serif; /* フォント */
+            font-size: 1.2rem;
         }
 
-        .button.disabled {
-            background-color: #ccc;
-            cursor: not-allowed;
-        }
-
-        .button:hover:not(.disabled) {
-            background-color: #00b200; /* クリック時のカラー変更 */
+        .button:hover {
+            background-color: #007c00; /* ホバー時の色 */
         }
 
         #user-info {
@@ -62,7 +53,7 @@
 
         #quiz-start-button {
             margin-top: 20px;
-            display: none; /* 初期状態では非表示 */
+            display: none;
         }
     </style>
 </head>
