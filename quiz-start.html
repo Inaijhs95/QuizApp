@@ -3,87 +3,132 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>クイズスタート</title>
-    
-    <!-- LINEログインのJavaScript SDK -->
-    <script src="https://static.line-scdn.net/liff/2.1/sdk.js"></script>
+    <title>LINEログイン</title>
+
+    <!-- Square Payment Formのライブラリ -->
+    <script src="https://static.line-scdn.net/liff/edge/2.1/liff.js"></script> <!-- サンドボックス環境 -->
 
     <style>
         body {
+            font-family: Arial, sans-serif;
+            text-align: center;
             margin: 0;
             padding: 0;
             background-color: #ef0430;
-            font-family: 'Corporate Logo', '丸', sans-serif; /* コーポレートロゴ・丸フォントを指定 */
+            color: white;
+            height: 100vh; /* 画面全体に広がるように */
+            background-image: url('NAZOSTART.png'); /* 画像を背景に指定 */
+            background-size: cover; /* 画像を画面いっぱいに調整 */
+            background-position: center center; /* 画像の中央を基準に表示 */
         }
 
         .container {
-            position: relative;
-            width: 100%;
-            height: 100vh; /* 画面いっぱい */
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            background-image: url('NAZOSTART.png'); /* 画像を背景に設定 */
-            background-size: cover; /* 画像を縦横いっぱいに表示 */
-            background-position: center;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            background-color: rgba(0, 0, 0, 0.5); /* 半透明の背景で文字が見やすく */
         }
 
-        .button-container {
-            position: absolute;
-            bottom: 30px; /* 画像の真ん中より下にボタンを配置 */
-            width: 100%;
-            display: flex;
-            justify-content: center;
+        h1 {
+            font-size: 2rem;
+            margin-bottom: 20px;
         }
 
-        .login-button {
-            background-color: #00C300; /* LINEの緑色 */
-            color: white;
-            font-size: 20px;
-            padding: 15px 30px;
+        .button {
+            padding: 10px 20px;
+            background-color: #007aff;
+            color: #fff;
             border: none;
-            border-radius: 50px;
+            border-radius: 5px;
             cursor: pointer;
-            font-weight: bold;
+            margin: 10px;
         }
 
-        .login-button:hover {
-            background-color: #009900;
+        .button.disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
+
+        .button:hover:not(.disabled) {
+            background-color: #005bb5;
+        }
+
+        #user-info {
+            margin-top: 20px;
+        }
+
+        #quiz-start-button {
+            margin-top: 20px;
+            display: none;
         }
     </style>
 </head>
 <body>
+
     <div class="container">
-        <div class="button-container">
-            <button class="login-button" onclick="loginWithLine()">LINEでログイン</button>
+        <h1>LINEでログイン</h1>
+        <!-- LINEログインボタン -->
+        <button class="button" id="line-login-button">LINEでログイン</button>
+
+        <!-- ユーザー情報表示エリア -->
+        <div id="user-info">
+            ログイン中のユーザー情報がここに表示されます。
+        </div>
+
+        <!-- クイズスタートボタン -->
+        <div id="quiz-start-button">
+            <button class="button" id="start-quiz-button">クイズを始める</button>
         </div>
     </div>
 
     <script>
-        // LINEログインの初期化
-        function initLineLogin() {
-            liff.init({
-                liffId: '2006598432-qWoljXBn' // ここにLINE Developersで取得したLIFF IDを設定
-            }).then(() => {
-                if (liff.isLoggedIn()) {
-                    // ログインしている場合は、クイズページにリダイレクトする
-                    window.location.href = "quiz.html";  // ここにクイズのページURLを指定
+        const LIFF_ID = "2006598432-qWoljXBn";  // ご自身のLIFFアプリIDに変更してください
+
+        // LIFFの初期化
+        async function initializeLiff() {
+            try {
+                await liff.init({ liffId: LIFF_ID });
+                console.log("LIFF Initialized");
+
+                // ログインしていなければログイン処理
+                if (!liff.isLoggedIn()) {
+                    console.log("未ログイン: ログイン処理を開始します。");
+                    liff.login(); // LINEログイン画面を表示
                 } else {
-                    // ログインしていない場合はログイン
-                    document.querySelector('.login-button').disabled = false;
+                    console.log("ログイン済み: ユーザー情報を取得します。");
+                    // ユーザープロファイル情報を取得
+                    const profile = await liff.getProfile();
+                    console.log("ユーザープロファイル:", profile);
+                    
+                    // ユーザー情報を表示
+                    const userInfoDiv = document.getElementById("user-info");
+                    userInfoDiv.innerHTML = `<p>こんにちは、${profile.displayName}さん！</p>`;
+
+                    // クイズスタートボタンを表示
+                    const quizStartButton = document.getElementById("quiz-start-button");
+                    quizStartButton.style.display = "block";
                 }
-            }).catch((err) => {
-                console.error("LINE Login Initialization Error: ", err);
-            });
+            } catch (error) {
+                console.error("LIFF初期化エラー:", error);
+            }
         }
 
-        // LINEでログインする処理
-        function loginWithLine() {
-            liff.login();  // LINEログインを開始
-        }
+        // クイズスタートボタンのイベント
+        document.getElementById("start-quiz-button").addEventListener("click", function() {
+            alert("クイズを開始します！");
+            // クイズを開始するための処理をここに追加
+        });
 
-        // ページが読み込まれた時にLINEログインを初期化
-        window.onload = initLineLogin;
+        // LINEログインボタンのイベント
+        document.getElementById("line-login-button").addEventListener("click", function() {
+            initializeLiff();  // LIFF初期化
+        });
+
+        // ページが読み込まれたときにLIFFを初期化
+        document.addEventListener("DOMContentLoaded", initializeLiff);
     </script>
+
 </body>
 </html>
