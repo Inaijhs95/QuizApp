@@ -5,8 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>電話番号ログイン</title>
 
-    <script src="https://www.gstatic.com/firebasejs/9.21.0/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.21.0/firebase-auth.js"></script>
+    <!-- Firebaseの互換バージョン -->
+    <script src="https://www.gstatic.com/firebasejs/9.21.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.21.0/firebase-auth-compat.js"></script>
 
     <style>
         body {
@@ -77,7 +78,6 @@
             measurementId: "G-58LP3ZDTLJ"
         };
         firebase.initializeApp(firebaseConfig);
-        const auth = firebase.auth();
 
         // reCAPTCHAをレンダリング
         const recaptchaVerifier = new firebase.auth.RecaptchaVerifier('recaptcha-container', {
@@ -87,7 +87,7 @@
         // 認証コードの送信
         document.getElementById('send-code').addEventListener('click', () => {
             const phoneNumber = document.getElementById('phone-number').value;
-            auth.signInWithPhoneNumber(phoneNumber, recaptchaVerifier)
+            firebase.auth().signInWithPhoneNumber(phoneNumber, recaptchaVerifier)
                 .then((confirmationResult) => {
                     window.confirmationResult = confirmationResult;
                     alert('認証コードを送信しました');
