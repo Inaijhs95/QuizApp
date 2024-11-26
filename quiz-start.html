@@ -8,6 +8,7 @@
     <!-- Firebaseの互換バージョン -->
     <script src="https://www.gstatic.com/firebasejs/9.21.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.21.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.21.0/firebase-firestore-compat.js"></script>
 
     <style>
         body {
@@ -54,13 +55,12 @@
 </head>
 <body>
 
-   <div id="login-container">
-    <input type="text" id="user-name" placeholder="名前を入力してください" />
-    <input type="text" id="phone-number" placeholder="電話番号（例: 09012345678）" />
-    <div id="recaptcha-container"></div>
-    <button id="send-code">認証コードを送信</button>
-</div>
-
+    <div id="login-container">
+        <input type="text" id="user-name" placeholder="名前を入力してください" />
+        <input type="text" id="phone-number" placeholder="電話番号（例: 09012345678）" />
+        <div id="recaptcha-container"></div>
+        <button id="send-code">認証コードを送信</button>
+    </div>
 
     <div id="verify-container" style="display: none;">
         <input type="text" id="verification-code" placeholder="認証コード" />
@@ -85,66 +85,63 @@
             size: 'invisible',
         });
 
-    // 認証コードの送信
-document.getElementById('send-code').addEventListener('click', () => {
-    const userName = document.getElementById('user-name').value.trim();
-    let phoneNumber = document.getElementById('phone-number').value.trim();
+        // 認証コードの送信
+        document.getElementById('send-code').addEventListener('click', async () => {
+            const userName = document.getElementById('user-name').value.trim();
+            let phoneNumber = document.getElementById('phone-number').value.trim();
 
-    if (!userName) {
-        alert("名前を入力してください");
-        return;
-    }
+            if (!userName) {
+                alert("名前を入力してください");
+                return;
+            }
 
-    if (/^0[789]0/.test(phoneNumber)) {
-        phoneNumber = `+81${phoneNumber.slice(1)}`;
-    }
+            // 電話番号のフォーマット変換
+            if (/^0[789]0/.test(phoneNumber)) {
+                phoneNumber = `+81${phoneNumber.slice(1)}`;
+            }
 
-    firebase.auth().signInWithPhoneNumber(phoneNumber, recaptchaVerifier)
-        .then((confirmationResult) => {
-            window.confirmationResult = confirmationResult;
+            try {
+                const confirmationResult = await firebase.auth().signInWithPhoneNumber(phoneNumber, recaptchaVerifier);
+                window.confirmationResult = confirmationResult;
 
-            // 名前をローカルストレージに保存（次の処理で使用するため）
-            localStorage.setItem("userName", userName);
+                // 名前をローカルストレージに保存
+                localStorage.setItem("userName", userName);
 
-            alert('認証コードを送信しました');
-            document.getElementById('login-container').style.display = 'none';
-            document.getElementById('verify-container').style.display = 'block';
-        })
-        .catch((error) => {
-            console.error('認証コード送信エラー:', error);
-            alert('エラーが発生しました。もう一度お試しください。');
+                alert('認証コードを送信しました');
+                document.getElementById('login-container').style.display = 'none';
+                document.getElementById('verify-container').style.display = 'block';
+            } catch (error) {
+                console.error('認証コード送信エラー:', error);
+                alert('エラーが発生しました。もう一度お試しください。');
+            }
         });
-});
-
 
         // 認証コードの確認
-      document.getElementById('verify-code').addEventListener('click', () => {
-    const code = document.getElementById('verification-code').value;
-    const userName = localStorage.getItem("userName");
+        document.getElementById('verify-code').addEventListener('click', async () => {
+            const code = document.getElementById('verification-code').value;
+            const userName = localStorage.getItem("userName");
 
-    window.confirmationResult.confirm(code)
-        .then(async (result) => {
-            const user = result.user;
+            try {
+                const result = await window.confirmationResult.confirm(code);
+                const user = result.user;
 
-            // Firestoreにデータ保存
-            const userDocRef = firebase.firestore().collection('users').doc(user.uid);
-            await userDocRef.set({
-                name: userName,
-                phoneNumber: user.phoneNumber,
-                correctAnswers: 0,
-                quizStatus: ["未回答", "未回答", "未回答", "未回答"],
-                ranking: "未定"
-            });
+                // Firestoreにデータ保存
+                const userDocRef = firebase.firestore().collection('users').doc(user.uid);
+                await userDocRef.set({
+                    name: userName,
+                    phoneNumber: user.phoneNumber,
+                    correctAnswers: 0,
+                    quizStatus: ["未回答", "未回答", "未回答", "未回答"],
+                    ranking: "未定"
+                });
 
-            alert(`ログイン成功！ようこそ、${userName}さん`);
-            window.location.href = 'quiz-home.html';
-        })
-        .catch((error) => {
-            console.error('コード確認エラー:', error);
-            alert('認証コードが無効です。');
+                alert(`ログイン成功！ようこそ、${userName}さん`);
+                window.location.href = 'quiz-home.html';
+            } catch (error) {
+                console.error('コード確認エラー:', error);
+                alert('認証コードが無効です。');
+            }
         });
-});
-
     </script>
 </body>
 </html>
