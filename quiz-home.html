@@ -4,9 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>キャッシュバックチャレンジ</title>
-    <script src="https://static.line-scdn.net/liff/edge/2.1/liff.js"></script>
-   <script src="https://www.gstatic.com/firebasejs/9.21.0/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.21.0/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.21.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.21.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.21.0/firebase-firestore-compat.js"></script>
     <style>
         body { font-family: Arial, sans-serif; background-color: #ef0430; color: white; margin: 0; padding: 0; }
         .container { padding: 20px; text-align: center; }
@@ -30,68 +30,64 @@
         <div class="ranking">現在の順位: 未定</div>
     </div>
 
-   <script>
-    // Firebase 初期化
-    const firebaseConfig = {
-        apiKey: "AIzaSyD30sxoHhSnpH7xMwGj55SSjRkMRa0oRX8",
-        authDomain: "inai95.firebaseapp.com",
-        projectId: "inai95",
-        storageBucket: "inai95.firebasestorage.app",
-        messagingSenderId: "418002209728",
-        appId: "1:418002209728:web:dc034e538d3bf0fae15625",
-        measurementId: "G-58LP3ZDTLJ",
-    };
-    firebase.initializeApp(firebaseConfig);
+    <script>
+        // Firebase 初期化
+        const firebaseConfig = {
+            apiKey: "AIzaSyD30sxoHhSnpH7xMwGj55SSjRkMRa0oRX8",
+            authDomain: "inai95.firebaseapp.com",
+            projectId: "inai95",
+            storageBucket: "inai95.firebasestorage.app",
+            messagingSenderId: "418002209728",
+            appId: "1:418002209728:web:dc034e538d3bf0fae15625",
+            measurementId: "G-58LP3ZDTLJ",
+        };
+        firebase.initializeApp(firebaseConfig);
 
- // ユーザーデータを Firestore に保存
-async function saveUserData(userId, displayName) {
-    try {
-        const userRef = firebase.firestore().collection('users').doc(userId);
-        const userDoc = await userRef.get();
+        // ユーザーデータを Firestore に保存
+        async function saveUserData(userId, userName) {
+            try {
+                const userRef = firebase.firestore().collection('users').doc(userId);
+                const userDoc = await userRef.get();
 
-        if (!userDoc.exists) {
-            // ユーザーが初めての場合、新規作成
-            await userRef.set({
-                displayName: displayName,
-                correctAnswers: 0,
-                ranking: "未定",
-                quizStatus: ["未回答", "未回答", "未回答", "未回答"]
-            });
-            console.log("新しいユーザーが作成されました:", displayName);
-        } else {
-            console.log("既存のユーザー情報:", userDoc.data());
+                if (!userDoc.exists) {
+                    // ユーザーが初めての場合、新規作成
+                    await userRef.set({
+                        name: userName,
+                        correctAnswers: 0,
+                        ranking: "未定",
+                        quizStatus: ["未回答", "未回答", "未回答", "未回答"]
+                    });
+                    console.log("新しいユーザーが作成されました:", userName);
+                } else {
+                    console.log("既存のユーザー情報:", userDoc.data());
+                }
+            } catch (error) {
+                console.error("Firestore 書き込みエラー:", error);
+            }
         }
-    } catch (error) {
-        console.error("Firestore 書き込みエラー:", error);
-    }
-}
 
+        // ページロード時に Firestore からデータを取得して UI に反映
+        document.addEventListener("DOMContentLoaded", async () => {
+            try {
+                const user = firebase.auth().currentUser;
 
- // ページロード時に LIFF 初期化とユーザーデータ保存
-document.addEventListener("DOMContentLoaded", async () => {
-    try {
-        await liff.init({ liffId: "2006598432-qWoljXBn" });
+                if (user) {
+                    const userName = localStorage.getItem("userName") || "ゲスト";
+                    const userId = user.uid;
 
-        if (liff.isLoggedIn()) {
-            const profile = await liff.getProfile();
-            const displayName = profile.displayName;
-            const userId = liff.getDecodedIDToken().sub;
+                    // Firestore にユーザーデータを保存
+                    await saveUserData(userId, userName);
 
-            // Firestore にユーザーデータを保存
-            await saveUserData(userId, displayName);
-
-            // UI に反映
-            document.querySelector('.score').innerHTML = 
-                `${displayName}さんの成績<br>0問正解`;
-        } else {
-            window.location.href = "quiz-start.html";
-        }
-    } catch (error) {
-        console.error("LIFF初期化エラー:", error);
-    }
-});
-
-</script>
-
+                    // UI に反映
+                    document.querySelector('.score').innerHTML = 
+                        `${userName}さんの成績<br>0問正解`;
+                } else {
+                    window.location.href = "quiz-start.html";
+                }
+            } catch (error) {
+                console.error("データ取得エラー:", error);
+            }
+        });
+    </script>
 </body>
 </html>
