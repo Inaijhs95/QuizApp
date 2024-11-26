@@ -5,8 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>キャッシュバックチャレンジ</title>
     <script src="https://static.line-scdn.net/liff/edge/2.1/liff.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.21.0/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.21.0/firebase-firestore.js"></script>
+   <script src="https://www.gstatic.com/firebasejs/9.21.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.21.0/firebase-firestore-compat.js"></script>
     <style>
         body { font-family: Arial, sans-serif; background-color: #ef0430; color: white; margin: 0; padding: 0; }
         .container { padding: 20px; text-align: center; }
@@ -31,13 +31,19 @@
     </div>
 
     <script>
-        // Firebase設定
-        const firebaseConfig = {
-          apiKey: "AIzaSyD30sxoHhSnpH7xMwGj55SSjRkMRa0oRX8",
+   
+  // Firebase の初期化
+  const firebaseConfig = {
+   apiKey: "AIzaSyD30sxoHhSnpH7xMwGj55SSjRkMRa0oRX8",
   authDomain: "inai95.firebaseapp.com",
   projectId: "inai95",
-        };
-        firebase.initializeApp(firebaseConfig);
+  storageBucket: "inai95.firebasestorage.app",
+  messagingSenderId: "418002209728",
+  appId: "1:418002209728:web:dc034e538d3bf0fae15625",
+  measurementId: "G-58LP3ZDTLJ"
+  };
+  firebase.initializeApp(firebaseConfig);
+
 
         // ページロード時にデータを取得して反映
         document.addEventListener("DOMContentLoaded", async () => {
