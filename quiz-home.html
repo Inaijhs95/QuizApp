@@ -66,28 +66,31 @@
             }
         }
 
-        // ページロード時に Firestore からデータを取得して UI に反映
-        document.addEventListener("DOMContentLoaded", async () => {
-            try {
-                const user = firebase.auth().currentUser;
+    // ページロード時に Firestore からデータを取得して UI に反映
+document.addEventListener("DOMContentLoaded", async () => {
+    try {
+        // ログイン状態が確定するまで待機
+        firebase.auth().onAuthStateChanged(async (user) => {
+            if (user) {
+                const userName = localStorage.getItem("userName") || "ゲスト";
+                const userId = user.uid;
 
-                if (user) {
-                    const userName = localStorage.getItem("userName") || "ゲスト";
-                    const userId = user.uid;
+                // Firestore にユーザーデータを保存
+                await saveUserData(userId, userName);
 
-                    // Firestore にユーザーデータを保存
-                    await saveUserData(userId, userName);
-
-                    // UI に反映
-                    document.querySelector('.score').innerHTML = 
-                        `${userName}さんの成績<br>0問正解`;
-                } else {
-                    window.location.href = "quiz-start.html";
-                }
-            } catch (error) {
-                console.error("データ取得エラー:", error);
+                // UI に反映
+                document.querySelector('.score').innerHTML = 
+                    `${userName}さんの成績<br>0問正解`;
+            } else {
+                // ユーザーが未ログインの場合、ログイン画面にリダイレクト
+                window.location.href = "quiz-start.html";
             }
         });
+    } catch (error) {
+        console.error("データ取得エラー:", error);
+    }
+});
+
     </script>
 </body>
 </html>
