@@ -113,8 +113,8 @@
     <!-- メインコンテンツ -->
     <div class="container">
         <h1>ようこそ キャッシュバックチャレンジへ</h1>
-        <div class="score">
-            ○○さんの成績
+        <div id="user-name">
+    ○○さんの成績
             <br>
             3問正解
         </div>
@@ -152,7 +152,34 @@
             document.querySelector('.ranking').textContent = `現在の順位: ${ranking}位`;
         }
 
-        document.addEventListener("DOMContentLoaded", loadUserData);
+       // ページロード時にLIFFのプロファイル情報を取得
+document.addEventListener("DOMContentLoaded", async () => {
+    try {
+        // LIFFを初期化
+        await liff.init({ liffId: "2006598432-qWoljXBn" }); // LIFF IDを適切に設定
+
+        // ユーザーがログインしているか確認
+        if (liff.isLoggedIn()) {
+            // プロファイル情報を取得
+            const profile = await liff.getProfile();
+            const displayName = profile.displayName; // ユーザー名
+            console.log(`ユーザー名: ${displayName}`);
+
+            // ユーザー名を画面に反映
+            const userNameElement = document.getElementById("user-name");
+            if (userNameElement) {
+                userNameElement.textContent = `${displayName}さんの成績`;
+            }
+        } else {
+            console.log("ユーザーはログインしていません");
+            // ログインしていない場合、ログインページにリダイレクト
+            window.location.href = "quiz-start.html";
+        }
+    } catch (error) {
+        console.error("LIFF初期化またはプロファイル取得エラー:", error);
+    }
+});
+
     </script>
 
 </body>
