@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>キャッシュバックチャレンジ</title>
+    <style>
+        body {
+            background-color: #ef0430; /* 赤い背景 */
+            color: white; /* 文字色を白に */
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+
+        .header {
+            font-size: 2rem;
+            margin-bottom: 20px;
+        }
+
+        .score {
+            font-size: 1.2rem;
+            margin-bottom: 40px;
+        }
+
+        .quiz-status {
+            margin: 20px 0;
+            font-size: 1rem;
+            list-style: none;
+            padding: 0;
+        }
+
+        .quiz-status li {
+            margin: 5px 0;
+        }
+
+        .ranking {
+            font-size: 1.2rem;
+            margin-top: 20px;
+        }
+
+        .side-menu {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background-color: rgba(0, 0, 0, 0.7);
+            padding: 15px;
+            border-radius: 10px;
+            display: none;
+        }
+
+        .side-menu a {
+            color: white;
+            text-decoration: none;
+            display: block;
+            margin: 10px 0;
+        }
+
+        .menu-button {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background-color: white;
+            color: #ef0430;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .menu-button:hover {
+            background-color: #ddd;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        ようこそ キャッシュバックチャレンジへ
+    </div>
+
+    <div class="score">
+        ○○さんの成績
+        <br>
+        ○問正解
+    </div>
+
+    <ul class="quiz-status">
+        <li>№１　正解（ヒント使用）</li>
+        <li>№２　未回答</li>
+        <li>№３　正解（ヒント未使用）</li>
+        <li>№４　正解（ヒント使用）</li>
+    </ul>
+
+    <div class="ranking">
+        現在の順位: 3位
+    </div>
+
+    <!-- サイドメニュー -->
+    <div class="side-menu" id="side-menu">
+        <a href="#">ルール</a>
+      <a href="#">クイズに挑戦</a>
+        <a href="#">よくある質問</a>
+        <a href="#">お問合せ</a>
+    </div>
+
+    <!-- メニュー開閉ボタン -->
+    <button class="menu-button" id="menu-button">メニュー</button>
+
+    <script>
+        // サイドメニューの表示/非表示
+        const menuButton = document.getElementById('menu-button');
+        const sideMenu = document.getElementById('side-menu');
+
+        menuButton.addEventListener('click', () => {
+            if (sideMenu.style.display === 'block') {
+                sideMenu.style.display = 'none';
+            } else {
+                sideMenu.style.display = 'block';
+            }
+        });
+    </script>
+
+</body>
+</html>
