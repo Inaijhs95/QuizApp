@@ -6,125 +6,155 @@
     <title>キャッシュバックチャレンジ</title>
     <style>
         body {
-            background-color: #ef0430; /* 赤い背景 */
-            color: white; /* 文字色を白に */
             font-family: Arial, sans-serif;
+            background-color: #ef0430;
+            color: white;
             margin: 0;
             padding: 0;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
         }
 
-        .header {
+        .container {
+            padding: 20px;
+            text-align: center;
+        }
+
+        h1 {
+            margin-top: 20px;
             font-size: 2rem;
-            margin-bottom: 20px;
         }
 
         .score {
+            margin-top: 20px;
             font-size: 1.2rem;
-            margin-bottom: 40px;
         }
 
         .quiz-status {
-            margin: 20px 0;
-            font-size: 1rem;
-            list-style: none;
+            list-style-type: none;
             padding: 0;
-        }
-
-        .quiz-status li {
-            margin: 5px 0;
-        }
-
-        .ranking {
-            font-size: 1.2rem;
             margin-top: 20px;
         }
 
-        .side-menu {
-            position: absolute;
-            top: 20px;
-            left: 20px;
-            background-color: rgba(0, 0, 0, 0.7);
-            padding: 15px;
-            border-radius: 10px;
-            display: none;
-        }
-
-        .side-menu a {
-            color: white;
-            text-decoration: none;
-            display: block;
+        .quiz-status li {
             margin: 10px 0;
         }
 
-        .menu-button {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            background-color: white;
-            color: #ef0430;
-            padding: 10px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
+        .ranking {
+            margin-top: 20px;
+            font-size: 1.2rem;
         }
 
-        .menu-button:hover {
-            background-color: #ddd;
+        /* サイドメニュー */
+        .menu-icon {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            cursor: pointer;
+            z-index: 1000;
+        }
+
+        .menu-icon div {
+            width: 30px;
+            height: 5px;
+            background-color: white;
+            margin: 5px 0;
+            border-radius: 2px;
+        }
+
+        .side-menu {
+            position: fixed;
+            top: 0;
+            right: -250px;
+            width: 250px;
+            height: 100%;
+            background-color: #333;
+            color: white;
+            padding: 20px;
+            box-shadow: -2px 0 5px rgba(0, 0, 0, 0.5);
+            transition: right 0.3s;
+        }
+
+        .side-menu.open {
+            right: 0;
+        }
+
+        .side-menu h2 {
+            margin-top: 0;
+        }
+
+        .side-menu a {
+            display: block;
+            margin: 10px 0;
+            color: white;
+            text-decoration: none;
+        }
+
+        .side-menu a:hover {
+            text-decoration: underline;
         }
     </style>
 </head>
 <body>
 
-    <div class="header">
-        ようこそ キャッシュバックチャレンジへ
-    </div>
-
-    <div class="score">
-        ○○さんの成績
-        <br>
-        ○問正解
-    </div>
-
-    <ul class="quiz-status">
-        <li>№１　正解（ヒント使用）</li>
-        <li>№２　未回答</li>
-        <li>№３　正解（ヒント未使用）</li>
-        <li>№４　正解（ヒント使用）</li>
-    </ul>
-
-    <div class="ranking">
-        現在の順位: 3位
+    <!-- サイドメニューアイコン -->
+    <div class="menu-icon" id="menu-icon">
+        <div></div>
+        <div></div>
+        <div></div>
     </div>
 
     <!-- サイドメニュー -->
     <div class="side-menu" id="side-menu">
+        <h2>メニュー</h2>
         <a href="#">ルール</a>
-      <a href="#">クイズに挑戦</a>
         <a href="#">よくある質問</a>
-        <a href="#">お問合せ</a>
+        <a href="#">お問い合わせ</a>
     </div>
 
-    <!-- メニュー開閉ボタン -->
-    <button class="menu-button" id="menu-button">メニュー</button>
+    <!-- メインコンテンツ -->
+    <div class="container">
+        <h1>ようこそ キャッシュバックチャレンジへ</h1>
+        <div class="score">
+            ○○さんの成績
+            <br>
+            3問正解
+        </div>
+
+        <ul class="quiz-status">
+            <li>№１　正解（ヒント使用）</li>
+            <li>№２　未回答</li>
+            <li>№３　正解（ヒント未使用）</li>
+            <li>№４　正解（ヒント使用）</li>
+        </ul>
+
+        <div class="ranking">
+            現在の順位: 3位
+        </div>
+    </div>
 
     <script>
-        // サイドメニューの表示/非表示
-        const menuButton = document.getElementById('menu-button');
+        // サイドメニューの開閉
+        const menuIcon = document.getElementById('menu-icon');
         const sideMenu = document.getElementById('side-menu');
 
-        menuButton.addEventListener('click', () => {
-            if (sideMenu.style.display === 'block') {
-                sideMenu.style.display = 'none';
-            } else {
-                sideMenu.style.display = 'block';
-            }
+        menuIcon.addEventListener('click', () => {
+            sideMenu.classList.toggle('open');
         });
+
+        // Firebaseから成績データを取得して表示
+        async function loadUserData() {
+            // ここでFirebaseからユーザーデータを取得
+            const userName = "山田"; // サンプルデータ
+            const correctAnswers = 3; // サンプルデータ
+            const ranking = 3; // サンプルデータ
+
+            // UIに反映
+            document.querySelector('.score').innerHTML = `${userName}さんの成績<br>${correctAnswers}問正解`;
+            document.querySelector('.ranking').textContent = `現在の順位: ${ranking}位`;
+        }
+
+        document.addEventListener("DOMContentLoaded", loadUserData);
     </script>
 
 </body>
 </html>
+
