@@ -84,21 +84,28 @@
             size: 'invisible',
         });
 
-        // 認証コードの送信
-        document.getElementById('send-code').addEventListener('click', () => {
-            const phoneNumber = document.getElementById('phone-number').value;
-            firebase.auth().signInWithPhoneNumber(phoneNumber, recaptchaVerifier)
-                .then((confirmationResult) => {
-                    window.confirmationResult = confirmationResult;
-                    alert('認証コードを送信しました');
-                    document.getElementById('login-container').style.display = 'none';
-                    document.getElementById('verify-container').style.display = 'block';
-                })
-                .catch((error) => {
-                    console.error('認証コード送信エラー:', error);
-                    alert('エラーが発生しました。もう一度お試しください。');
-                });
+    // 認証コードの送信
+document.getElementById('send-code').addEventListener('click', () => {
+    let phoneNumber = document.getElementById('phone-number').value.trim();
+
+    // 日本の電話番号を+81形式に変換
+    if (/^0[789]0/.test(phoneNumber)) {
+        phoneNumber = `+81${phoneNumber.slice(1)}`;
+    }
+
+    firebase.auth().signInWithPhoneNumber(phoneNumber, recaptchaVerifier)
+        .then((confirmationResult) => {
+            window.confirmationResult = confirmationResult;
+            alert('認証コードを送信しました');
+            document.getElementById('login-container').style.display = 'none';
+            document.getElementById('verify-container').style.display = 'block';
+        })
+        .catch((error) => {
+            console.error('認証コード送信エラー:', error);
+            alert('エラーが発生しました。もう一度お試しください。');
         });
+});
+
 
         // 認証コードの確認
         document.getElementById('verify-code').addEventListener('click', () => {
