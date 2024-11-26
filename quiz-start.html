@@ -78,6 +78,11 @@
     <script>
         const LIFF_ID = "2006598432-qWoljXBn";  // ご自身のLIFFアプリIDに変更してください
 
+        // LINEログインボタンのイベント
+        document.getElementById("line-login-button").addEventListener("click", function() {
+            initializeLiff();  // LIFF初期化を実行し、ログイン処理へ進む
+        });
+
         // LIFFの初期化
         async function initializeLiff() {
             try {
@@ -96,7 +101,7 @@
                     
                     // ユーザー情報を表示
                     const userInfoDiv = document.getElementById("user-info");
-                    userInfoDiv.innerHTML = `<p>ようこそ、${profile.displayName}さん！</p>`;
+                    userInfoDiv.innerHTML = `<p>こんにちは、${profile.displayName}さん！</p>`;
 
                     // クイズスタートボタンを表示
                     const quizStartButton = document.getElementById("quiz-start-button");
@@ -107,19 +112,11 @@
             }
         }
 
-        // LINEログインボタンのイベント
-        document.getElementById("line-login-button").addEventListener("click", function() {
-            initializeLiff();  // LIFF初期化を実行し、ログイン処理へ進む
-        });
-
         // クイズスタートボタンのイベント
         document.getElementById("start-quiz-button").addEventListener("click", function() {
             alert("クイズを開始します！");
             // クイズを開始するための処理をここに追加
         });
-
-        // ページが読み込まれたときにLIFFを初期化
-        document.addEventListener("DOMContentLoaded", initializeLiff);
     </script>
 
 </body>
