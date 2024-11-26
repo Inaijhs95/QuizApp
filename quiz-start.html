@@ -80,6 +80,15 @@
         };
         firebase.initializeApp(firebaseConfig);
 
+        // ページ読み込み時にログイン状態を確認
+        firebase.auth().onAuthStateChanged((user) => {
+            if (user) {
+                // 既にログインしている場合はホーム画面にリダイレクト
+                console.log("既にログインしています。ホーム画面に移動します。");
+                window.location.href = 'quiz-home.html';
+            }
+        });
+
         // reCAPTCHAをレンダリング
         const recaptchaVerifier = new firebase.auth.RecaptchaVerifier('recaptcha-container', {
             size: 'invisible',
