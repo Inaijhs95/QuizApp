@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LINEログイン</title>
+    <title>電話番号ログイン</title>
 
-    <!-- LIFFライブラリ -->
-    <script src="https://static.line-scdn.net/liff/edge/2.1/liff.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.21.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.21.0/firebase-auth.js"></script>
 
     <style>
         body {
@@ -17,54 +17,104 @@
             background-color: #ef0430;
             color: white;
             height: 100vh;
-            background-image: url('NAZOSTART.png');
-            background-size: cover;
-            background-position: center center;
             display: flex;
             justify-content: center;
             align-items: center;
+            flex-direction: column;
         }
 
-        .button {
+        input {
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+            border: none;
+            font-size: 1rem;
+            width: 90%;
+        }
+
+        button {
             padding: 10px 20px;
-            background-color: #00b900;
-            color: #fff;
+            font-size: 1.2rem;
             border: none;
             border-radius: 5px;
+            background-color: #00b900;
+            color: white;
             cursor: pointer;
-            font-family: 'コーポレートロゴ・丸', sans-serif;
-            font-size: 1.2rem;
         }
 
-        .button:hover {
+        button:hover {
             background-color: #007c00;
+        }
+
+        #recaptcha-container {
+            margin: 20px 0;
         }
     </style>
 </head>
 <body>
 
-    <button class="button" id="line-login-button">LINEでログイン</button>
+    <div id="login-container">
+        <h1>電話番号ログイン</h1>
+        <input type="text" id="phone-number" placeholder="電話番号（例: +819012345678）" />
+        <div id="recaptcha-container"></div>
+        <button id="send-code">認証コードを送信</button>
+    </div>
+
+    <div id="verify-container" style="display: none;">
+        <input type="text" id="verification-code" placeholder="認証コード" />
+        <button id="verify-code">ログイン</button>
+    </div>
 
     <script>
-       <script src="https://www.gstatic.com/firebasejs/9.21.0/firebase-app.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.21.0/firebase-auth.js"></script>
-<script>
-  // Firebase初期化
-  const firebaseConfig = {
-    apiKey: "AIzaSyD30sxoHhSnpH7xMwGj55SSjRkMRa0oRX8",
-    authDomain: "inai95.firebaseapp.com",
-    projectId: "inai95",
-    storageBucket: "inai95.firebasestorage.app",
-    messagingSenderId: "418002209728",
-    appId: "1:418002209728:web:dc034e538d3bf0fae15625",
-    measurementId: "G-58LP3ZDTLJ"
-  };
+        // Firebase初期化
+        const firebaseConfig = {
+            apiKey: "AIzaSyD30sxoHhSnpH7xMwGj55SSjRkMRa0oRX8",
+            authDomain: "inai95.firebaseapp.com",
+            projectId: "inai95",
+            storageBucket: "inai95.firebasestorage.app",
+            messagingSenderId: "418002209728",
+            appId: "1:418002209728:web:dc034e538d3bf0fae15625",
+            measurementId: "G-58LP3ZDTLJ"
+        };
+        firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
 
-  firebase.initializeApp(firebaseConfig);
-  const auth = firebase.auth();
-</script>
+        // reCAPTCHAをレンダリング
+        const recaptchaVerifier = new firebase.auth.RecaptchaVerifier('recaptcha-container', {
+            size: 'invisible',
+        });
 
+        // 認証コードの送信
+        document.getElementById('send-code').addEventListener('click', () => {
+            const phoneNumber = document.getElementById('phone-number').value;
+            auth.signInWithPhoneNumber(phoneNumber, recaptchaVerifier)
+                .then((confirmationResult) => {
+                    window.confirmationResult = confirmationResult;
+                    alert('認証コードを送信しました');
+                    document.getElementById('login-container').style.display = 'none';
+                    document.getElementById('verify-container').style.display = 'block';
+                })
+                .catch((error) => {
+                    console.error('認証コード送信エラー:', error);
+                    alert('エラーが発生しました。もう一度お試しください。');
+                });
+        });
+
+        // 認証コードの確認
+        document.getElementById('verify-code').addEventListener('click', () => {
+            const code = document.getElementById('verification-code').value;
+            window.confirmationResult.confirm(code)
+                .then((result) => {
+                    const user = result.user;
+                    alert(`ログイン成功！ようこそ、${user.phoneNumber}さん`);
+                    // ログイン後の処理
+                    window.location.href = 'quiz-home.html';
+                })
+                .catch((error) => {
+                    console.error('コード確認エラー:', error);
+                    alert('認証コードが無効です。');
+                });
+        });
     </script>
-
 </body>
 </html>
