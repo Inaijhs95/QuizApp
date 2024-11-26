@@ -46,27 +46,24 @@
     <button class="button" id="line-login-button">LINEでログイン</button>
 
     <script>
-        const LIFF_ID = "2006598432-qWoljXBn"; // あなたのLIFFアプリIDに変更
-        const CALLBACK_URL = "https://inai95.web.app/quiz-home.html"; // コールバックURL
+       <script src="https://www.gstatic.com/firebasejs/9.21.0/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.21.0/firebase-auth.js"></script>
+<script>
+  // Firebase初期化
+  const firebaseConfig = {
+    apiKey: "AIzaSyD30sxoHhSnpH7xMwGj55SSjRkMRa0oRX8",
+    authDomain: "inai95.firebaseapp.com",
+    projectId: "inai95",
+    storageBucket: "inai95.firebasestorage.app",
+    messagingSenderId: "418002209728",
+    appId: "1:418002209728:web:dc034e538d3bf0fae15625",
+    measurementId: "G-58LP3ZDTLJ"
+  };
 
-        // LINEログインボタンのイベント
-        document.getElementById("line-login-button").addEventListener("click", async () => {
-            try {
-                // LIFFの初期化
-                await liff.init({ liffId: LIFF_ID });
-                console.log("LIFF Initialized");
+  firebase.initializeApp(firebaseConfig);
+  const auth = firebase.auth();
+</script>
 
-                // ログインしていなければログイン処理を実行
-                if (!liff.isLoggedIn()) {
-                    liff.login({ redirectUri: CALLBACK_URL }); // コールバックURLへリダイレクト
-                } else {
-                    // ログイン済みでもリダイレクト
-                    window.location.href = CALLBACK_URL;
-                }
-            } catch (error) {
-                console.error("LIFF初期化エラー:", error);
-            }
-        });
     </script>
 
 </body>
