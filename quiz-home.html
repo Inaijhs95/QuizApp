@@ -15,12 +15,31 @@
         .quiz-status { list-style-type: none; padding: 0; margin-top: 20px; }
         .quiz-status li { margin: 10px 0; }
         .ranking { margin-top: 20px; font-size: 1.2rem; }
+
+        .quiz-button {
+    margin-top: 20px;
+    padding: 15px 30px;
+    font-size: 1.2rem;
+    border: none;
+    border-radius: 5px;
+    background-color: #00b900;
+    color: white;
+    cursor: pointer;
+    font-family: Arial, sans-serif;
+    transition: background-color 0.3s;
+}
+
+.quiz-button:hover {
+    background-color: #007c00;
+}
+
+        
     </style>
 </head>
 <body>
     <div class="container">
         <h1>ようこそ キャッシュバックチャレンジへ</h1>
-        <div class="score">○○さんの成績<br>0問正解</div>
+        <div class="score">  さんの成績<br>0問正解</div>
         <ul class="quiz-status">
             <li>№１　未回答</li>
             <li>№２　未回答</li>
@@ -28,6 +47,7 @@
             <li>№４　未回答</li>
         </ul>
         <div class="ranking">現在の順位: 未定</div>
+        <button id="start-quiz" class="quiz-button">クイズに挑戦する</button>
     </div>
 
     <script>
@@ -89,6 +109,9 @@ document.addEventListener("DOMContentLoaded", async () => {
     } catch (error) {
         console.error("データ取得エラー:", error);
     }
+});
+document.getElementById("start-quiz").addEventListener("click", () => {
+    window.location.href = "quiz-1.html";
 });
 
     </script>
