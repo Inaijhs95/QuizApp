@@ -82,7 +82,7 @@
         };
         firebase.initializeApp(firebaseConfig);
 
-       firebase.auth().onAuthStateChanged(async (user) => {
+     firebase.auth().onAuthStateChanged(async (user) => {
     if (!user) {
         // ログインしていない場合はログインページにリダイレクト
         window.location.href = "quiz-start.html";
@@ -110,46 +110,38 @@
     } catch (error) {
         console.error("Firestoreデータ取得エラー:", error);
     }
-});
 
+    // 次の処理（例: 問題の回答送信機能）
+    document.getElementById('submit-answer').addEventListener('click', async () => {
+        const answer = document.getElementById('answer').value.trim();
 
-
-                document.getElementById('progress-bar').style.width = "25%";
-            } catch (error) {
-                console.error("Firestoreデータ取得エラー:", error);
-            }
-
-           document.getElementById('submit-answer').addEventListener('click', async () => {
-    const answer = document.getElementById('answer').value.trim();
-
-    if (!answer) {
-        alert("回答を入力してください！");
-        return;
-    }
-
-    try {
-        const userDoc = await userRef.get();
-        if (userDoc.exists) {
-            const userData = userDoc.data();
-            let quizStatus = userData.quizStatus;
-
-            // 問題1の回答を更新
-            quizStatus[0] = (answer === "正解コード" ? "正解" : "不正解");
-            await userRef.update({ quizStatus });
-
-            alert(answer === "正解コード" ? "正解です！次の問題へ進みます。" : "不正解です。再挑戦してください！");
-            if (answer === "正解コード") {
-                // 次の問題へ
-                window.location.href = "quiz-2.html";
-            }
+        if (!answer) {
+            alert("回答を入力してください！");
+            return;
         }
-    } catch (error) {
-        console.error("回答送信エラー:", error);
-        alert("回答を送信できませんでした。");
-    }
-});
 
-        });
+        try {
+            const userDoc = await userRef.get();
+            if (userDoc.exists) {
+                const userData = userDoc.data();
+                let quizStatus = userData.quizStatus;
+
+                // 問題1の回答を更新
+                quizStatus[0] = (answer === "正解コード" ? "正解" : "不正解");
+                await userRef.update({ quizStatus });
+
+                alert(answer === "正解コード" ? "正解です！次の問題へ進みます。" : "不正解です。再挑戦してください！");
+                if (answer === "正解コード") {
+                    // 次の問題へ
+                    window.location.href = "quiz-2.html";
+                }
+            }
+        } catch (error) {
+            console.error("回答送信エラー:", error);
+            alert("回答を送信できませんでした。");
+        }
+    });
+});
     </script>
 </body>
 </html>
