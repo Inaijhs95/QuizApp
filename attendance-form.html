@@ -118,7 +118,9 @@
         submitButton.addEventListener('click', async () => {
             const name = form.name.value.trim();
             const phone = form.phone.value.trim();
-            const attendance = form.attendance.value;
+          const attendance = form.attendance.value;
+const gender = form.gender.value; // 性別の取得
+
 
             if (!name || !phone || !attendance) {
                 alert('すべての項目を入力してください。');
@@ -126,12 +128,13 @@
             }
 
             try {
-                await db.collection('attendance_responses').add({
-                    name: name,
-                    phone: phone,
-                    attendance: attendance,
-                    timestamp: new Date()
-                });
+               await db.collection('attendance_responses').add({
+    name: name,
+    phone: phone,
+    attendance: attendance,
+    gender: gender, // 性別を追加
+    timestamp: new Date()
+});
 
                 alert('出欠回答が送信されました！');
                 location.reload(); // ページをリロードしてフォームをリセット
