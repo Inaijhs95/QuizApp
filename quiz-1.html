@@ -24,9 +24,7 @@
             text-align: center;
             padding: 20px;
         }
-        h1 {
-            margin-bottom: 20px;
-        }
+        h1 { margin-bottom: 20px; }
         .progress {
             width: 80%;
             height: 10px;
@@ -57,9 +55,7 @@
             border-radius: 5px;
             cursor: pointer;
         }
-        button:hover {
-            background-color: #007c00;
-        }
+        button:hover { background-color: #007c00; }
     </style>
 </head>
 <body>
@@ -86,7 +82,6 @@
         };
         firebase.initializeApp(firebaseConfig);
 
-        // ユーザーログイン確認
         firebase.auth().onAuthStateChanged(async (user) => {
             if (!user) {
                 window.location.href = "quiz-start.html";
@@ -97,7 +92,19 @@
             const db = firebase.firestore();
             const userRef = db.collection('users').doc(userId);
 
-            // 回答送信処理
+            try {
+                const userDoc = await userRef.get();
+                if (userDoc.exists) {
+                    console.log("ユーザーデータ:", userDoc.data());
+                } else {
+                    console.log("新規ユーザーの可能性があります。");
+                }
+
+                document.getElementById('progress-bar').style.width = "25%";
+            } catch (error) {
+                console.error("Firestoreデータ取得エラー:", error);
+            }
+
             document.getElementById('submit-answer').addEventListener('click', async () => {
                 const answer = document.getElementById('answer').value.trim();
 
@@ -112,13 +119,11 @@
                         const userData = userDoc.data();
                         let quizStatus = userData.quizStatus;
 
-                        // 問題1の回答を更新
                         quizStatus[0] = (answer === "いない" ? "正解" : "不正解");
                         await userRef.update({ quizStatus });
 
                         alert(answer === "いない" ? "正解です！次の問題へ進みます。" : "不正解です。再挑戦してください！");
                         if (answer === "いない") {
-                            // 次の問題へ
                             window.location.href = "quiz-2.html";
                         }
                     }
@@ -126,9 +131,6 @@
                     console.error("エラー:", error);
                 }
             });
-
-            // 進捗バーを更新
-            document.getElementById('progress-bar').style.width = "25%"; // 25%進捗 (全4問の例)
         });
     </script>
 </body>
