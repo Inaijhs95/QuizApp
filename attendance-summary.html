@@ -76,7 +76,7 @@
     const remainingCountElement = document.getElementById('remaining-count');
     const updateTimeElement = document.getElementById('update-time');
 
-    function updateCounts() {
+   function updateCounts() {
     const now = new Date();
     updateTimeElement.textContent = `${now.getMonth() + 1}月${now.getDate()}日${now.getHours()}時${now.getMinutes()}分`;
 
@@ -87,12 +87,10 @@
           let maleCount = 0;
           let femaleCount = 0;
 
-          console.log(`Snapshot size: ${snapshot.size}`); // デバッグログ
-
           snapshot.forEach(doc => {
               const data = doc.data();
-              console.log("Processing document:", data); // デバッグログ
 
+              // コンソールにはカウントのログのみ出力
               if (data.gender === '男性') maleCount++;
               if (data.gender === '女性') femaleCount++;
           });
@@ -102,7 +100,8 @@
           femaleCountElement.textContent = femaleCount;
           remainingCountElement.textContent = Math.max(20 - (maleCount + femaleCount), 0);
 
-          console.log(`男性: ${maleCount}, 女性: ${femaleCount}, 残り: ${Math.max(20 - (maleCount + femaleCount), 0)}`); // デバッグログ
+          // 必要最低限のログ
+          console.log(`男性: ${maleCount}, 女性: ${femaleCount}, 残り: ${Math.max(20 - (maleCount + femaleCount), 0)}`);
       })
       .catch(error => {
           console.error("Error updating counts:", error);
