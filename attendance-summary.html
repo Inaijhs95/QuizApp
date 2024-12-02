@@ -77,21 +77,38 @@
     const updateTimeElement = document.getElementById('update-time');
 
     function updateCounts() {
-        const now = new Date();
-        updateTimeElement.textContent = `${now.getMonth() + 1}月${now.getDate()}日${now.getHours()}時${now.getMinutes()}分`;
+    const now = new Date();
+    updateTimeElement.textContent = `${now.getMonth() + 1}月${now.getDate()}日${now.getHours()}時${now.getMinutes()}分`;
 
-        db.collection('attendance_responses')
-          .get()
-          .then(snapshot => {
-              snapshot.forEach(doc => {
-                  const data = doc.data();
-                  console.log(`Gender: ${data.gender}, Attendance: ${data.attendance}`);
-              });
-          })
-          .catch(error => {
-              console.error("Error:", error);
+    db.collection('attendance_responses')
+      .where('attendance', '==', '出席')
+      .get()
+      .then(snapshot => {
+          let maleCount = 0;
+          let femaleCount = 0;
+
+          console.log(`Snapshot size: ${snapshot.size}`); // デバッグログ
+
+          snapshot.forEach(doc => {
+              const data = doc.data();
+              console.log("Processing document:", data); // デバッグログ
+
+              if (data.gender === '男性') maleCount++;
+              if (data.gender === '女性') femaleCount++;
           });
-    }
+
+          // UIに反映
+          maleCountElement.textContent = maleCount;
+          femaleCountElement.textContent = femaleCount;
+          remainingCountElement.textContent = Math.max(20 - (maleCount + femaleCount), 0);
+
+          console.log(`男性: ${maleCount}, 女性: ${femaleCount}, 残り: ${Math.max(20 - (maleCount + femaleCount), 0)}`); // デバッグログ
+      })
+      .catch(error => {
+          console.error("Error updating counts:", error);
+      });
+}
+
 
     // 初期化
     updateCounts();
