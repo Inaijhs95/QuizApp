@@ -80,48 +80,17 @@
             const now = new Date();
             updateTimeElement.textContent = `${now.getMonth() + 1}月${now.getDate()}日${now.getHours()}時${now.getMinutes()}分`;
 
-      db.collection('attendance_responses')
-  .where('attendance', '==', '出席') // 条件: attendance が "出席"
-  .onSnapshot(
-      snapshot => {
-          try {
-              // ドキュメントが空の場合の処理
-              if (snapshot.empty) {
-                  console.log("No matching documents.");
-                  maleCountElement.textContent = 0;
-                  femaleCountElement.textContent = 0;
-                  remainingCountElement.textContent = 20; // 必要人数
-                  return;
-              }
+ db.collection('attendance_responses')
+  .get()
+  .then(snapshot => {
+      snapshot.forEach(doc => {
+          console.log(doc.id, doc.data());
+      });
+  })
+  .catch(error => {
+      console.error("Error:", error);
+  });
 
-              // カウント用の変数
-              let maleCount = 0;
-              let femaleCount = 0;
-
-              // スナップショット内のデータを処理
-              snapshot.forEach(doc => {
-                  const data = doc.data();
-                  if (data.gender === '男性') maleCount++;
-                  if (data.gender === '女性') femaleCount++;
-              });
-
-              // UIを更新
-              maleCountElement.textContent = maleCount;
-              femaleCountElement.textContent = femaleCount;
-
-              const totalCount = maleCount + femaleCount;
-              remainingCountElement.textContent = Math.max(20 - totalCount, 0);
-
-              console.log(`男性: ${maleCount}, 女性: ${femaleCount}, 残り: ${Math.max(20 - totalCount, 0)}`);
-          } catch (error) {
-              console.error("Error processing snapshot data:", error);
-          }
-      },
-      error => {
-          // スナップショットの取得エラー処理
-          console.error("Firestore Snapshot Error:", error);
-      }
-  );
 
 
 
