@@ -80,26 +80,30 @@
             const now = new Date();
             updateTimeElement.textContent = `${now.getMonth() + 1}月${now.getDate()}日${now.getHours()}時${now.getMinutes()}分`;
 
-           db.collection('attendance_responses')
-    .where('attendance', '==', '出席') // 出欠が「出席」のデータのみ取得
-    .onSnapshot(snapshot => {
-        let maleCount = 0;
-        let femaleCount = 0;
+         db.collection('attendance_responses')
+  .where('attendance', '==', '出席')
+  .onSnapshot(
+      snapshot => {
+          let maleCount = 0;
+          let femaleCount = 0;
 
-        snapshot.forEach(doc => {
-            const data = doc.data();
-            if (data.gender === '男性') maleCount++;
-            if (data.gender === '女性') femaleCount++;
-        });
+          snapshot.forEach(doc => {
+              const data = doc.data();
+              if (data.gender === '男性') maleCount++;
+              if (data.gender === '女性') femaleCount++;
+          });
 
-        maleCountElement.textContent = maleCount;
-        femaleCountElement.textContent = femaleCount;
+          maleCountElement.textContent = maleCount;
+          femaleCountElement.textContent = femaleCount;
 
-        const totalCount = maleCount + femaleCount;
-        remainingCountElement.textContent = Math.max(20 - totalCount, 0);
-    });
+          const totalCount = maleCount + femaleCount;
+          remainingCountElement.textContent = Math.max(20 - totalCount, 0);
+      },
+      error => {
+          console.error("Firestore Error: ", error);
+      }
+  );
 
-        }
 
         // 初期化
         updateCounts();
