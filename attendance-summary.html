@@ -80,17 +80,18 @@
         const now = new Date();
         updateTimeElement.textContent = `${now.getMonth() + 1}月${now.getDate()}日${now.getHours()}時${now.getMinutes()}分`;
 
-        db.collection('attendance_responses')
-          .get()
-          .then(snapshot => {
-              snapshot.forEach(doc => {
-                  console.log(doc.id, doc.data());
-              });
-          })
-          .catch(error => {
-              console.error("Error:", error);
-          });
-    }
+       db.collection('attendance_responses')
+  .get()
+  .then(snapshot => {
+      snapshot.forEach(doc => {
+          const data = doc.data();
+          console.log(`Gender: ${data.gender}, Attendance: ${data.attendance}`);
+      });
+  })
+  .catch(error => {
+      console.error("Error:", error);
+  });
+
 
     // 関数を呼び出してテスト
     updateCounts();
