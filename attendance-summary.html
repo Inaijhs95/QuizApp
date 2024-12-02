@@ -80,7 +80,7 @@
             const now = new Date();
             updateTimeElement.textContent = `${now.getMonth() + 1}月${now.getDate()}日${now.getHours()}時${now.getMinutes()}分`;
 
- db.collection('attendance_responses')
+db.collection('attendance_responses')
   .get()
   .then(snapshot => {
       snapshot.forEach(doc => {
@@ -90,6 +90,7 @@
   .catch(error => {
       console.error("Error:", error);
   });
+
 
 
 
