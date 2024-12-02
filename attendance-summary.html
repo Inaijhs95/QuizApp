@@ -80,32 +80,21 @@
     const now = new Date();
     updateTimeElement.textContent = `${now.getMonth() + 1}月${now.getDate()}日${now.getHours()}時${now.getMinutes()}分`;
 
-    db.collection('attendance_responses')
-      .where('attendance', '==', '出席')
-      .get()
-      .then(snapshot => {
-          let maleCount = 0;
-          let femaleCount = 0;
-
-          snapshot.forEach(doc => {
-              const data = doc.data();
-
-              // コンソールにはカウントのログのみ出力
-              if (data.gender === '男性') maleCount++;
-              if (data.gender === '女性') femaleCount++;
-          });
-
-          // UIに反映
-          maleCountElement.textContent = maleCount;
-          femaleCountElement.textContent = femaleCount;
-          remainingCountElement.textContent = Math.max(20 - (maleCount + femaleCount), 0);
-
-          // 必要最低限のログ
-          console.log(`男性: ${maleCount}, 女性: ${femaleCount}, 残り: ${Math.max(20 - (maleCount + femaleCount), 0)}`);
-      })
-      .catch(error => {
-          console.error("Error updating counts:", error);
+ db.collection('attendance_responses')
+  .get()
+  .then(snapshot => {
+      if (snapshot.empty) {
+          console.log("No documents found.");
+          return;
+      }
+      snapshot.forEach(doc => {
+          console.log(doc.id, doc.data());
       });
+  })
+  .catch(error => {
+      console.error("Error testing counts:", error);
+  });
+
 }
 
 
