@@ -54,43 +54,47 @@
     <!-- Firebase SDK -->
     <script src="https://www.gstatic.com/firebasejs/9.21.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.21.0/firebase-firestore-compat.js"></script>
-    <script>
-        // Firebase の構成情報
-        const firebaseConfig = {
-            apiKey: "AIzaSyD30sxoHhSnpH7xMwGj55SSjRkMRa0oRX8",
-            authDomain: "inai95.firebaseapp.com",
-            projectId: "inai95",
-            storageBucket: "inai95.firebasestorage.app",
-            messagingSenderId: "418002209728",
-            appId: "1:418002209728:web:dc034e538d3bf0fae15625",
-            measurementId: "G-58LP3ZDTLJ"
-        };
+<script>
+    // Firebase の構成情報
+    const firebaseConfig = {
+        apiKey: "AIzaSyD30sxoHhSnpH7xMwGj55SSjRkMRa0oRX8",
+        authDomain: "inai95.firebaseapp.com",
+        projectId: "inai95",
+        storageBucket: "inai95.firebasestorage.app",
+        messagingSenderId: "418002209728",
+        appId: "1:418002209728:web:dc034e538d3bf0fae15625",
+        measurementId: "G-58LP3ZDTLJ"
+    };
 
-        // Firebase 初期化
-        const app = firebase.initializeApp(firebaseConfig);
-        const db = firebase.firestore();
+    // Firebase 初期化
+    const app = firebase.initializeApp(firebaseConfig);
+    const db = firebase.firestore();
 
-        // 参加人数の集計と表示
-        const maleCountElement = document.getElementById('male-count');
-        const femaleCountElement = document.getElementById('female-count');
-        const remainingCountElement = document.getElementById('remaining-count');
-        const updateTimeElement = document.getElementById('update-time');
+    // 参加人数の集計と表示
+    const maleCountElement = document.getElementById('male-count');
+    const femaleCountElement = document.getElementById('female-count');
+    const remainingCountElement = document.getElementById('remaining-count');
+    const updateTimeElement = document.getElementById('update-time');
 
-        function updateCounts() {
-            const now = new Date();
-            updateTimeElement.textContent = `${now.getMonth() + 1}月${now.getDate()}日${now.getHours()}時${now.getMinutes()}分`;
+    function updateCounts() {
+        const now = new Date();
+        updateTimeElement.textContent = `${now.getMonth() + 1}月${now.getDate()}日${now.getHours()}時${now.getMinutes()}分`;
 
-db.collection('attendance_responses')
-  .get()
-  .then(snapshot => {
-      snapshot.forEach(doc => {
-          console.log(doc.id, doc.data());
-      });
-  })
-  .catch(error => {
-      console.error("Error:", error);
-  });
+        db.collection('attendance_responses')
+          .get()
+          .then(snapshot => {
+              snapshot.forEach(doc => {
+                  console.log(doc.id, doc.data());
+              });
+          })
+          .catch(error => {
+              console.error("Error:", error);
+          });
+    }
 
-    </script>
+    // 関数を呼び出してテスト
+    updateCounts();
+</script>
+
 </body>
 </html>
