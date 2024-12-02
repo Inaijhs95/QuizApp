@@ -57,7 +57,7 @@
 <script>
     // Firebase の構成情報
     const firebaseConfig = {
-        apiKey: "AIzaSyD30sxoHhSnpH7xMwGj55SSjRkMRa0oRX8",
+        apiKey: "AIzaSyD30sxoHhSnpH7xMwGj55SSjRkMRa0RX8",
         authDomain: "inai95.firebaseapp.com",
         projectId: "inai95",
         storageBucket: "inai95.firebasestorage.app",
@@ -80,22 +80,23 @@
         const now = new Date();
         updateTimeElement.textContent = `${now.getMonth() + 1}月${now.getDate()}日${now.getHours()}時${now.getMinutes()}分`;
 
-       db.collection('attendance_responses')
-  .get()
-  .then(snapshot => {
-      snapshot.forEach(doc => {
-          const data = doc.data();
-          console.log(`Gender: ${data.gender}, Attendance: ${data.attendance}`);
-      });
-  })
-  .catch(error => {
-      console.error("Error:", error);
-  });
+        db.collection('attendance_responses')
+          .get()
+          .then(snapshot => {
+              snapshot.forEach(doc => {
+                  const data = doc.data();
+                  console.log(`Gender: ${data.gender}, Attendance: ${data.attendance}`);
+              });
+          })
+          .catch(error => {
+              console.error("Error:", error);
+          });
+    }
 
-
-    // 関数を呼び出してテスト
+    // 初期化
     updateCounts();
 </script>
+
 
 </body>
 </html>
