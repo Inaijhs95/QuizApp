@@ -27,10 +27,17 @@
                 <label><input type="radio" id="female" name="gender" value="女性" required> 女性</label>
             </div>
             <div class="form-group">
-                <label>出欠</label>
-                <label><input type="radio" name="attendance" value="出席" required> 出席</label>
-                <label><input type="radio" name="attendance" value="欠席" required> 欠席</label>
-            </div>
+    <label>出欠</label>
+    <label><input type="radio" name="attendance" value="出席" required onchange="toggleTicketSection(true)"> 出席</label>
+    <label><input type="radio" name="attendance" value="欠席" required onchange="toggleTicketSection(false)"> 欠席</label>
+</div>
+<div id="ticket-section" style="display: none;">
+    <h2>チケット購入</h2>
+    <p>以下のリンクからチケットをご購入ください。</p>
+    <a id="early-bird-button" href="https://square.link/u/a2RyhiAS" class="button" target="_blank">早期割引: 6,000円</a>
+    <a id="general-ticket-button" href="https://square.link/u/mclmviX8" class="button" target="_blank">一般: 7,000円</a>
+</div>
+
             <div class="buttons">
                 <button type="button" class="button" id="submit-button">送信する</button>
             </div>
@@ -42,52 +49,84 @@
     <script src="https://www.gstatic.com/firebasejs/9.21.0/firebase-firestore-compat.js"></script>
 
     <!-- Firebase 初期化と出欠回答保存スクリプト -->
-    <script>
-        // Firebase の構成情報
-        const firebaseConfig = {
-            apiKey: "AIzaSyD30sxoHhSnpH7xMwGj55SSjRkMRa0oRX8",
-            authDomain: "inai95.firebaseapp.com",
-            projectId: "inai95",
-            storageBucket: "inai95.firebasestorage.app",
-            messagingSenderId: "418002209728",
-            appId: "1:418002209728:web:dc034e538d3bf0fae15625",
-            measurementId: "G-58LP3ZDTLJ"
-        };
+<script>
+    // Firebase の構成情報
+    const firebaseConfig = {
+        apiKey: "AIzaSyD30sxoHhSnpH7xMwGj55SSjRkMRa0oRX8",
+        authDomain: "inai95.firebaseapp.com",
+        projectId: "inai95",
+        storageBucket: "inai95.firebasestorage.app",
+        messagingSenderId: "418002209728",
+        appId: "1:418002209728:web:dc034e538d3bf0fae15625",
+        measurementId: "G-58LP3ZDTLJ"
+    };
 
-        // Firebase 初期化
-        const app = firebase.initializeApp(firebaseConfig);
-        const db = firebase.firestore();
+    // Firebase 初期化
+    const app = firebase.initializeApp(firebaseConfig);
+    const db = firebase.firestore();
 
-        // 出欠回答データの保存
-        const form = document.getElementById('attendance-form');
-        const submitButton = document.getElementById('submit-button');
+    // 出欠回答データの保存
+    const form = document.getElementById('attendance-form');
+    const submitButton = document.getElementById('submit-button');
 
-        submitButton.addEventListener('click', async () => {
-            const name = form.name.value.trim();
-            const phone = form.phone.value.trim();
-            const attendance = form.attendance.value;
-            const gender = form.gender.value;
+    submitButton.addEventListener('click', async () => {
+        const name = form.name.value.trim();
+        const phone = form.phone.value.trim();
+        const attendance = form.attendance.value;
+        const gender = form.gender.value;
 
-            if (!name || !phone || !attendance || !gender) {
-                alert('すべての項目を入力してください。');
-                return;
+        if (!name || !phone || !attendance || !gender) {
+            alert('すべての項目を入力してください。');
+            return;
+        }
+
+        try {
+            // Firestoreにデータ送信
+            await db.collection('attendance_responses').add({
+                name: name,
+                phone: phone,
+                attendance: attendance,
+                gender: gender,
+                timestamp: new Date()
+            });
+
+            alert('出欠回答が送信されました！');
+
+            // 出席者のみチケットセクションを表示
+            if (attendance === '出席') {
+                toggleTicketSection(true);
+            } else {
+                toggleTicketSection(false);
             }
 
-            try {
-                await db.collection('attendance_responses').add({
-                    name: name,
-                    phone: phone,
-                    attendance: attendance,
-                    gender: gender,
-                    timestamp: new Date()
-                });
-                alert('出欠回答が送信されました！');
-                form.reset(); // フォームのリセット
-            } catch (error) {
-                console.error('送信エラー:', error);
-                alert('送信に失敗しました。');
-            }
-        });
-    </script>
+            form.reset(); // フォームのリセット
+        } catch (error) {
+            console.error('送信エラー:', error);
+            alert('送信に失敗しました。');
+        }
+    });
+
+    // チケットセクションの表示切り替え
+    function toggleTicketSection(show) {
+        const ticketSection = document.getElementById('ticket-section');
+        ticketSection.style.display = show ? 'block' : 'none';
+    }
+
+    // 早期割引の締切設定
+    const EARLY_BIRD_DEADLINE = new Date('2025-04-04T00:00:00');
+    const now = new Date();
+
+    const earlyBirdButton = document.getElementById('early-bird-button');
+    const generalTicketButton = document.getElementById('general-ticket-button');
+
+    // 締切後の処理
+    if (now >= EARLY_BIRD_DEADLINE) {
+        earlyBirdButton.classList.add('disabled');
+        earlyBirdButton.href = '#';
+        earlyBirdButton.removeAttribute('target');
+        earlyBirdButton.textContent = '早期割引（販売終了）';
+    }
+</script>
+
 </body>
 </html>
