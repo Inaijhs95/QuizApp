@@ -66,6 +66,16 @@
 
     <!-- Firebaseスクリプト -->
 <script>
+ firebase.auth().signInAnonymously()
+  .then(() => {
+      console.log("匿名認証に成功しました");
+      updateCounts(); // 認証後にデータ取得を開始
+  })
+  .catch(error => {
+      console.error("認証エラー:", error.message);
+      alert("認証に失敗しました。");
+  });
+
     // Firebase の構成情報
     const firebaseConfig = {
         apiKey: "AIzaSyD30sxoHhSnpH7xMwGj55SSjRkMRa0RX8",
