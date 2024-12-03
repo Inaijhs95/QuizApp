@@ -5,99 +5,69 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>参加人数</title>
 <style>
-    /* 全体のスタイル */
+    /* 全体設定 */
     body {
         font-family: 'Arial', sans-serif;
-        background-color: #121212; /* モノトーンの背景 */
+        background-color: #f4f4f9; /* 落ち着いたライトグレー */
+        color: #333; /* 高級感のある文字色 */
         margin: 0;
-        padding: 20px;
+        padding: 0;
         display: flex;
         justify-content: center;
         align-items: center;
-        min-height: 100vh;
-        color: #f5f5f5; /* テキストカラーを淡い白に */
+        min-height: 100vh; /* 縦中央寄せ */
     }
 
-    /* コンテナのデザイン */
+    /* コンテナ設定 */
     .container {
         max-width: 600px;
         width: 100%;
-        margin: 0 auto;
-        background: #1e1e1e; /* ダークグレーの背景 */
-        padding: 20px;
-        border-radius: 12px;
-        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.5); /* 深みを感じる影 */
+        background: #ffffff; /* 白で清潔感を演出 */
+        padding: 40px 30px;
+        border-radius: 16px; /* 滑らかな角丸 */
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15); /* 立体感を追加 */
         text-align: center;
     }
 
-    /* 見出しのスタイル */
-    h1 {
-        font-size: 2em;
-        font-weight: bold;
+    /* ヘッダー設定 */
+    .container h1 {
+        font-size: 2rem;
+        color: #1a1a1a; /* 見やすいダークグレー */
         margin-bottom: 20px;
-        color: #ffffff; /* 強調された白色 */
-        text-transform: uppercase; /* 全て大文字 */
-        letter-spacing: 1px; /* 少し文字間を空ける */
+        font-weight: bold;
     }
 
-    /* 各カウントエリア */
+    /* データ表示用 */
     .count {
-        font-size: 1.5em;
+        font-size: 1.3rem;
         margin: 15px 0;
-        color: #d4d4d4; /* ライトグレーで上品さを演出 */
-        display: flex;
-        align-items: center;
-        justify-content: center;
+        color: #444;
     }
 
-    /* 絵文字のスタイル */
-    .emoji {
-        font-size: 2em;
-        margin-right: 10px;
+    .count span {
+        font-weight: bold;
+        color: #1d4e89; /* データ部分を青に */
     }
 
-    /* 更新時間のスタイル */
+    /* 更新タイム */
     .update-time {
+        font-size: 0.9rem;
+        color: #777;
         margin-top: 20px;
-        font-size: 0.9em;
-        color: #a1a1a1; /* 更新時刻を少し目立たせないグレー */
     }
 
-    /* レスポンシブ対応 */
-    @media (max-width: 600px) {
-        body {
-            padding: 10px;
-        }
-
+    /* メディアクエリ（レスポンシブ対応） */
+    @media (max-width: 768px) {
         .container {
-            padding: 15px;
+            padding: 30px 20px;
         }
 
-        h1 {
-            font-size: 1.8em;
+        .container h1 {
+            font-size: 1.8rem;
         }
-
-        .count {
-            font-size: 1.3em;
-        }
-    }
-
-    /* ボタンデザイン（必要なら追加） */
-    button {
-        background-color: #292929; /* ダークグレー */
-        color: #ffffff;
-        border: none;
-        padding: 10px 20px;
-        font-size: 1em;
-        border-radius: 8px;
-        cursor: pointer;
-        transition: background-color 0.3s ease;
-    }
-
-    button:hover {
-        background-color: #3a3a3a; /* ホバー時の少し明るいトーン */
     }
 </style>
+
 
 </head>
 <body>
