@@ -12,9 +12,9 @@
 <body>
     <div class="container">
         <h1>出欠回答</h1>
-       <form id="attendance-form">
-    <div class="form-group">
-        <label for="name">お名前（欠席者のみ）</label>
+  <form id="attendance-form">
+    <div class="form-group" id="name-group" style="display: none;">
+        <label for="name">お名前（欠席の場合のみ入力）</label>
         <input type="text" id="name" name="name" placeholder="欠席の場合のみ入力" />
     </div>
     <div class="form-group">
@@ -25,16 +25,17 @@
     <div class="form-group">
         <label>出欠</label>
         <label>
-            <input type="radio" name="attendance" value="出席" required> 出席
+            <input type="radio" name="attendance" value="出席" required onchange="toggleNameField(false)"> 出席
         </label>
         <label>
-            <input type="radio" name="attendance" value="欠席" required> 欠席
+            <input type="radio" name="attendance" value="欠席" required onchange="toggleNameField(true)"> 欠席
         </label>
     </div>
     <div class="buttons">
         <button type="button" class="button" id="submit-button">送信する</button>
     </div>
 </form>
+
 
     </div>
 
@@ -44,6 +45,12 @@
 
     <!-- Firebase 初期化と出欠回答保存スクリプト -->
 <script>
+    // 名前欄の表示切り替え
+    function toggleNameField(show) {
+        const nameGroup = document.getElementById('name-group');
+        nameGroup.style.display = show ? 'block' : 'none';
+    }
+
     const firebaseConfig = {
         apiKey: "AIzaSy...",
         authDomain: "inai95.firebaseapp.com",
@@ -104,9 +111,9 @@
         }
 
         form.reset(); // フォームのリセット
+        toggleNameField(false); // フォームリセット時に名前欄を非表示
     });
 </script>
-
 
 
 </body>
