@@ -8,28 +8,30 @@
     <style>
     body {
         font-family: 'Source Han Serif JP', serif;
-        background-color: #fafafa; /* 全体を明るいグレーでトーンアップ */
+        background-color: #f9f9f9; /* 優しい白系の背景色 */
         margin: 0;
-        padding: 20px;
-        color: #222; /* 深いグレーで落ち着いた印象 */
+        padding: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh; /* 縦方向中央揃え */
     }
 
     .container {
         max-width: 600px;
-        margin: 50px auto;
-        background: #ffffff; /* ピュアホワイト */
-        padding: 40px;
-        border-radius: 16px; /* より柔らかい角丸 */
-        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1); /* より明確な陰影 */
-        border: 1px solid #e6e6e6; /* 微細な境界線で高級感を演出 */
+        width: 100%;
+        background: #ffffff; /* 真っ白な背景 */
+        padding: 30px;
+        border-radius: 12px; /* 角丸で柔らかい印象 */
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1); /* 柔らかい影 */
+        border: 1px solid #e6e6e6; /* 高級感のある薄い枠線 */
     }
 
     .container h1 {
         text-align: center;
         margin-bottom: 30px;
-        font-size: 2rem;
-        font-weight: 700;
-        color: #111; /* タイトルを目立たせる */
+        font-size: 1.8rem;
+        color: #333; /* 落ち着いた文字色 */
     }
 
     .form-group {
@@ -38,84 +40,63 @@
 
     .form-group label {
         display: block;
-        font-size: 1rem;
-        font-weight: 600;
         margin-bottom: 8px;
-        color: #333; /* ラベルを濃くして視認性アップ */
-    }
-
-    .form-group input, .form-group select {
-        width: 100%;
-        padding: 12px;
         font-size: 1rem;
-        border: 1px solid #dcdcdc; /* 入力欄に上品な枠線 */
-        border-radius: 8px;
-        background-color: #f9f9f9; /* わずかな陰影を持たせる */
-        transition: all 0.3s ease;
+        color: #555; /* 中間的な文字色 */
+        font-weight: bold;
     }
 
-    .form-group input:focus, .form-group select:focus {
-        border-color: #007bff; /* フォーカス時にブルーを採用 */
-        background-color: #ffffff; /* アクティブ感を出す */
+    .form-group input[type="text"],
+    .form-group select {
+        width: 100%;
+        padding: 10px;
+        font-size: 1rem;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.05); /* 内側の陰影 */
+        transition: border-color 0.3s ease;
+    }
+
+    .form-group input[type="text"]:focus {
+        border-color: #007bff; /* フォーカス時の青色 */
         outline: none;
     }
 
     .form-group input[type="radio"] {
-        width: auto;
-        margin-right: 8px;
+        margin-right: 10px;
     }
 
-    .form-group label input[type="radio"] + span {
-        margin-left: 4px;
+    .form-group label[for="gender"] {
+        margin-bottom: 15px;
+        display: inline-block;
+        font-weight: normal;
         font-size: 0.9rem;
     }
 
     .buttons {
         text-align: center;
-        margin-top: 30px;
+        margin-top: 20px;
     }
 
     .button {
-        display: inline-block;
-        padding: 14px 28px;
+        padding: 12px 24px;
         font-size: 1rem;
-        color: #ffffff;
-        background-color: #007bff; /* 高級感のあるブルー */
+        color: #fff;
+        background-color: #007bff; /* ブルー */
         text-decoration: none;
-        border-radius: 10px; /* より洗練された角丸 */
-        margin: 10px 5px;
+        border-radius: 8px;
         cursor: pointer;
         border: none;
-        transition: all 0.3s ease;
+        transition: background-color 0.3s ease;
     }
 
     .button:hover {
-        background-color: #0056b3; /* ホバー時は濃い青 */
-        transform: translateY(-2px); /* ホバー効果で軽く浮かせる */
+        background-color: #0056b3; /* ダークブルー */
     }
 
-    .button:active {
-        background-color: #003d80; /* クリック時はさらに濃い青 */
-        transform: translateY(0); /* 押し込む効果 */
-    }
-
-    @media (max-width: 600px) {
-        .container {
-            padding: 20px;
-        }
-
-        .container h1 {
-            font-size: 1.8rem;
-        }
-
-        .form-group input, .form-group select {
-            font-size: 0.9rem;
-        }
-
-        .button {
-            font-size: 0.9rem;
-            padding: 10px 20px;
-        }
+    .button:disabled {
+        background-color: #ccc; /* 無効時のグレー */
+        cursor: not-allowed;
     }
 </style>
 
