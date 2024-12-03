@@ -4,9 +4,35 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>参加人数</title>
-    <script src="https://www.gstatic.com/firebasejs/9.21.0/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.21.0/firebase-firestore-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.21.0/firebase-auth-compat.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 20px;
+            text-align: center;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .count {
+            font-size: 1.5em;
+            margin: 10px 0;
+        }
+        .emoji {
+            font-size: 2em;
+        }
+        .update-time {
+            margin-top: 20px;
+            font-size: 0.9em;
+            color: #666;
+        }
+    </style>
 </head>
 <body>
     <div class="container">
@@ -25,16 +51,21 @@
         </div>
     </div>
 
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.21.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.21.0/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.21.0/firebase-auth-compat.js"></script>
+
     <script>
         // Firebase の構成情報
         const firebaseConfig = {
-           apiKey: "AIzaSyD30sxoHhSnpH7xMwGj55SSjRkMRa0oRX8",
-  authDomain: "inai95.firebaseapp.com",
-  projectId: "inai95",
-  storageBucket: "inai95.firebasestorage.app",
-  messagingSenderId: "418002209728",
-  appId: "1:418002209728:web:dc034e538d3bf0fae15625",
-  measurementId: "G-58LP3ZDTLJ"
+            apiKey: "AIzaSy...",
+            authDomain: "inai95.firebaseapp.com",
+            projectId: "inai95",
+            storageBucket: "inai95.firebasestorage.app",
+            messagingSenderId: "418002209728",
+            appId: "1:418002209728:web:dc034e538d3bf0fae15625",
+            measurementId: "G-58LP3ZDTLJ"
         };
 
         // Firebase 初期化
@@ -47,40 +78,47 @@
         const remainingCountElement = document.getElementById('remaining-count');
         const updateTimeElement = document.getElementById('update-time');
 
-       function updateCounts() {
-    db.collection('attendance_responses')
-      .where('attendance', '==', '出席') // 出席者のみ
-      .get()
-      .then(snapshot => {
-          let maleCount = 0;
-          let femaleCount = 0;
+        function updateCounts() {
+            const now = new Date();
+            updateTimeElement.textContent = `${now.getMonth() + 1}月${now.getDate()}日 ${now.getHours()}時${now.getMinutes()}分`;
 
-          snapshot.forEach(doc => {
-              const data = doc.data();
-              if (data.gender === '男性') maleCount++;
-              if (data.gender === '女性') femaleCount++;
-          });
+            db.collection('attendance_responses')
+              .where('attendance', '==', '出席') // 出席者のみを対象にする
+              .get()
+              .then(snapshot => {
+                  let maleCount = 0;
+                  let femaleCount = 0;
 
-          maleCountElement.textContent = maleCount;
-          femaleCountElement.textContent = femaleCount;
-          remainingCountElement.textContent = Math.max(20 - (maleCount + femaleCount), 0);
-      })
-      .catch(error => {
-          console.error("Firestore Error:", error);
-      });
-}
+                  snapshot.forEach(doc => {
+                      const data = doc.data();
+                      if (data.gender === '男性') maleCount++;
+                      if (data.gender === '女性') femaleCount++;
+                  });
 
+                  // カウントを画面に反映
+                  maleCountElement.textContent = maleCount;
+                  femaleCountElement.textContent = femaleCount;
+
+                  // 残り人数を計算
+                  const totalCount = maleCount + femaleCount;
+                  remainingCountElement.textContent = Math.max(20 - totalCount, 0);
+              })
+              .catch(error => {
+                  console.error("データ取得エラー:", error);
+                  alert("データの取得に失敗しました。");
+              });
+        }
 
         // Firebase 認証後にカウントを更新
         firebase.auth().signInAnonymously()
-  .then(() => {
-      console.log("匿名認証に成功しました");
-      updateCounts(); // 認証後にデータ取得を開始
-  })
-  .catch(error => {
-      console.error("認証エラー:", error.message);
-      alert("認証に失敗しました。");
-  });
+          .then(() => {
+              console.log("匿名認証に成功しました");
+              updateCounts(); // 認証後にデータ取得を開始
+          })
+          .catch(error => {
+              console.error("認証エラー:", error.message);
+              alert("認証に失敗しました。リロードして再試行してください。");
+          });
 
     </script>
 </body>
