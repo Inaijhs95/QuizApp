@@ -4,44 +4,110 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>参加人数</title>
-    <style>
+<style>
+    /* 全体のスタイル */
+    body {
+        font-family: 'Arial', sans-serif;
+        background-color: #121212; /* モノトーンの背景 */
+        margin: 0;
+        padding: 20px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        color: #f5f5f5; /* テキストカラーを淡い白に */
+    }
+
+    /* コンテナのデザイン */
+    .container {
+        max-width: 600px;
+        width: 100%;
+        margin: 0 auto;
+        background: #1e1e1e; /* ダークグレーの背景 */
+        padding: 20px;
+        border-radius: 12px;
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.5); /* 深みを感じる影 */
+        text-align: center;
+    }
+
+    /* 見出しのスタイル */
+    h1 {
+        font-size: 2em;
+        font-weight: bold;
+        margin-bottom: 20px;
+        color: #ffffff; /* 強調された白色 */
+        text-transform: uppercase; /* 全て大文字 */
+        letter-spacing: 1px; /* 少し文字間を空ける */
+    }
+
+    /* 各カウントエリア */
+    .count {
+        font-size: 1.5em;
+        margin: 15px 0;
+        color: #d4d4d4; /* ライトグレーで上品さを演出 */
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    /* 絵文字のスタイル */
+    .emoji {
+        font-size: 2em;
+        margin-right: 10px;
+    }
+
+    /* 更新時間のスタイル */
+    .update-time {
+        margin-top: 20px;
+        font-size: 0.9em;
+        color: #a1a1a1; /* 更新時刻を少し目立たせないグレー */
+    }
+
+    /* レスポンシブ対応 */
+    @media (max-width: 600px) {
         body {
-            font-family: Arial, sans-serif;
-            background-color: #f5f5f5;
-            margin: 0;
-            padding: 20px;
-            text-align: center;
+            padding: 10px;
         }
+
         .container {
-            max-width: 600px;
-            margin: 0 auto;
-            background: #fff;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 15px;
         }
+
+        h1 {
+            font-size: 1.8em;
+        }
+
         .count {
-            font-size: 1.5em;
-            margin: 10px 0;
+            font-size: 1.3em;
         }
-        .emoji {
-            font-size: 2em;
-        }
-        .update-time {
-            margin-top: 20px;
-            font-size: 0.9em;
-            color: #666;
-        }
-    </style>
+    }
+
+    /* ボタンデザイン（必要なら追加） */
+    button {
+        background-color: #292929; /* ダークグレー */
+        color: #ffffff;
+        border: none;
+        padding: 10px 20px;
+        font-size: 1em;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+
+    button:hover {
+        background-color: #3a3a3a; /* ホバー時の少し明るいトーン */
+    }
+</style>
+
 </head>
 <body>
     <div class="container">
         <h1>参加人数</h1>
         <div class="count">
-            <span class="emoji">👨</span> 男性: <span id="male-count">0</span>人
+            <span class="emoji"></span> 男性: <span id="male-count">0</span>人
         </div>
         <div class="count">
-            <span class="emoji">👩</span> 女性: <span id="female-count">0</span>人
+            <span class="emoji"></span> 女性: <span id="female-count">0</span>人
         </div>
         <div class="count">
             開催決定まであと: <span id="remaining-count">20</span>人
