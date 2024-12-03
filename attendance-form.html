@@ -92,64 +92,75 @@
     <script src="https://www.gstatic.com/firebasejs/9.21.0/firebase-firestore-compat.js"></script>
 
     <!-- Firebase Script -->
-    <script>
-        // Firebase の構成情報
-        const firebaseConfig = {
-            apiKey: "AIzaSy...",
-            authDomain: "inai95.firebaseapp.com",
-            projectId: "inai95",
-            storageBucket: "inai95.firebasestorage.app",
-            messagingSenderId: "418002209728",
-            appId: "1:418002209728:web:dc034e538d3bf0fae15625",
-            measurementId: "G-58LP3ZDTLJ"
-        };
+   <script>
+    // Firebase の構成情報
+    const firebaseConfig = {
+     apiKey: "AIzaSyD30sxoHhSnpH7xMwGj55SSjRkMRa0oRX8",
+  authDomain: "inai95.firebaseapp.com",
+  projectId: "inai95",
+  storageBucket: "inai95.firebasestorage.app",
+  messagingSenderId: "418002209728",
+  appId: "1:418002209728:web:dc034e538d3bf0fae15625",
+  measurementId: "G-58LP3ZDTLJ"
+    };
 
-        // Firebase 初期化
-        const app = firebase.initializeApp(firebaseConfig);
-        const db = firebase.firestore();
+    // Firebase 初期化
+    const app = firebase.initializeApp(firebaseConfig);
+    const db = firebase.firestore();
 
-        // フォーム送信処理
-        const form = document.getElementById('attendance-form');
-        const submitButton = document.getElementById('submit-button');
-
-        submitButton.addEventListener('click', async () => {
-            const name = form.name.value.trim();
-            const gender = form.gender.value;
-            const attendance = form.attendance.value;
-            const timestamp = new Date();
-
-            if (!name || !gender || !attendance) {
-                alert("すべての項目を入力してください。");
-                return;
-            }
-
-            try {
-                // Firestore で共通の ID を生成
-                const uniqueId = db.collection('attendance_responses').doc().id;
-
-                // `personal_data` に保存
-                await db.collection('personal_data').doc(uniqueId).set({
-                    name,
-                    gender,
-                    attendance,
-                    timestamp
-                });
-
-                // `attendance_responses` に保存
-                await db.collection('attendance_responses').doc(uniqueId).set({
-                    gender,
-                    attendance,
-                    timestamp
-                });
-
-                alert("データが送信されました！");
-                form.reset();
-            } catch (error) {
-                console.error("送信エラー:", error);
-                alert("送信に失敗しました。");
-            }
+    // 匿名認証処理
+    firebase.auth().signInAnonymously()
+        .then(() => {
+            console.log("匿名認証に成功しました");
+        })
+        .catch(error => {
+            console.error("認証エラー:", error.message);
+            alert("認証に失敗しました。リロードして再試行してください。");
         });
-    </script>
+
+    // フォーム送信処理
+    const form = document.getElementById('attendance-form');
+    const submitButton = document.getElementById('submit-button');
+
+    submitButton.addEventListener('click', async () => {
+        const name = form.name.value.trim();
+        const gender = form.gender.value;
+        const attendance = form.attendance.value;
+        const timestamp = new Date();
+
+        if (!name || !gender || !attendance) {
+            alert("すべての項目を入力してください。");
+            return;
+        }
+
+        try {
+            // Firestore で共通の ID を生成
+            const uniqueId = db.collection('attendance_responses').doc().id;
+
+            // `personal_data` に保存
+            await db.collection('personal_data').doc(uniqueId).set({
+                name,
+                gender,
+                attendance,
+                timestamp
+            });
+
+            // `attendance_responses` に保存
+            await db.collection('attendance_responses').doc(uniqueId).set({
+                gender,
+                attendance,
+                timestamp
+            });
+
+            alert("データが送信されました！");
+            form.reset();
+        } catch (error) {
+            console.error("送信エラー:", error);
+            alert("データの送信に失敗しました。再試行してください。");
+        }
+    });
+</script>
+
 </body>
 
 </html>
