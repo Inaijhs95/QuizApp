@@ -3,150 +3,137 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>出欠確認フォーム</title>
+    <title>出欠回答</title>
+    <link href="https://fonts.googleapis.com/css2?family=Source+Han+Serif+JP:wght@400;700&display=swap" rel="stylesheet">
     <style>
-        /* グローバルスタイル */
-body {
-  font-family: 'Noto Sans JP', sans-serif;
-  background-color: #f5f5f5; /* 背景色 */
-  color: #333;
-  margin: 0;
-  padding: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 100vh;
-}
-
-.container {
-  background-color: #fff;
-  padding: 40px;
-  border-radius: 10px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
-  max-width: 400px;
-}
-
-/* フォーム */
-form {
-  display: flex;
-  flex-direction: column;
-}
-
-label {
-  font-weight: bold;
-  margin-bottom: 5px;
-}
-
-input[type="text"],
-input[type="radio"] {
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  margin-bottom: 15px;
-}
-
-.button {
-  background-color: #4CAF50;
-  color: #fff;
-  padding: 15px 30px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background-color 0.3s ease-in-out;
-}
-
-.button:hover {
-  background-color: #3e8e41;
-}
-
-/* ダークモード */
-.dark-mode {
-  background-color: #222;
-  color: #fff;
-}
-
-.dark-mode .button {
-  background-color: #333;
-  color: #fff;
-}
+        body {
+            font-family: 'Source Han Serif JP', serif;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 20px;
+            color: #444;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .container h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 8px;
+            font-size: 1rem;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .form-group input[type="radio"] {
+            width: auto;
+            margin-right: 10px;
+        }
+        .buttons {
+            text-align: center;
+        }
+        .button {
+            display: inline-block;
+            padding: 10px 20px;
+            font-size: 1rem;
+            color: #fff;
+            background-color: #007bff;
+            text-decoration: none;
+            border-radius: 5px;
+            margin: 10px 5px;
+            cursor: pointer;
+            border: none;
+        }
+        .button:hover {
+            background-color: #0056b3;
+        }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>出欠確認フォーム</h1>
+        <h1>出欠回答フォーム</h1>
         <form id="attendance-form">
             <div class="form-group">
                 <label for="name">お名前</label>
-                <input type="text" id="name" name="name" required>
+                <input type="text" id="name" name="name" placeholder="お名前を入力してください" required>
             </div>
             <div class="form-group">
                 <label>性別</label>
-                <input type="radio" id="male" name="gender" value="男性" required>
-                <label for="male">男性</label>
-                <input type="radio" id="female" name="gender" value="女性" required>
-                <label for="female">女性</label>
+                <label><input type="radio" name="gender" value="男性" required> 男性</label>
+                <label><input type="radio" name="gender" value="女性" required> 女性</label>
             </div>
             <div class="form-group">
                 <label>出欠</label>
-                <input type="radio" name="attendance" value="出席" required> 出席
-                <input type="radio" name="attendance" value="欠席" required> 欠席
+                <label><input type="radio" name="attendance" value="出席" required> 出席</label>
+                <label><input type="radio" name="attendance" value="欠席" required> 欠席</label>
             </div>
-            <button type="button" class="button" id="submit-button">送信</button>
+            <div class="buttons">
+                <button type="button" class="button" id="submit-button">送信する</button>
+            </div>
         </form>
     </div>
 
+    <!-- Firebase SDK -->
     <script src="https://www.gstatic.com/firebasejs/9.21.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.21.0/firebase-firestore-compat.js"></script>
+
+    <!-- Firebase Script -->
     <script>
-      // Firebase の構成情報
+        // Firebase の構成情報
         const firebaseConfig = {
-  apiKey: "AIzaSyD30sxoHhSnpH7xMwGj55SSjRkMRa0oRX8",
-  authDomain: "inai95.firebaseapp.com",
-  projectId: "inai95",
-  storageBucket: "inai95.firebasestorage.app",
-  messagingSenderId: "418002209728",
-  appId: "1:418002209728:web:dc034e538d3bf0fae15625",
-  measurementId: "G-58LP3ZDTLJ"
-};
+            apiKey: "AIzaSy...",
+            authDomain: "inai95.firebaseapp.com",
+            projectId: "inai95",
+            storageBucket: "inai95.firebasestorage.app",
+            messagingSenderId: "418002209728",
+            appId: "1:418002209728:web:dc034e538d3bf0fae15625",
+            measurementId: "G-58LP3ZDTLJ"
         };
+
+        // Firebase 初期化
         const app = firebase.initializeApp(firebaseConfig);
         const db = firebase.firestore();
 
-        // フォームの取得とイベントリスナーの設定
+        // フォーム送信処理
         const form = document.getElementById('attendance-form');
         const submitButton = document.getElementById('submit-button');
 
         submitButton.addEventListener('click', async () => {
             const name = form.name.value.trim();
-            const gender = form.gender.value;
-            const attendance = form.attendance.value;
+            const gender = document.querySelector('input[name="gender"]:checked')?.value;
+            const attendance = document.querySelector('input[name="attendance"]:checked')?.value;
 
-            // 入力チェック
-            if (!name) {
-                alert('お名前を入力してください。');
-                return;
-            }
-            if (!/^[^\x00-\x7F]*$/.test(name)) {
-                alert('お名前は全角文字で入力してください。');
-                return;
-            }
-            if (gender !== '男性' && gender !== '女性') {
-                alert('性別を選択してください。');
+            if (!name || !gender || !attendance) {
+                alert('すべての項目を入力してください。');
                 return;
             }
 
             try {
                 await db.collection('attendance_responses').add({
-                    name,
-                    gender,
-                    attendance,
-                    timestamp: firebase.firestore.FieldValue.serverTimestamp()
+                    name: name,
+                    gender: gender,
+                    attendance: attendance,
+                    timestamp: new Date()
                 });
-                alert('出欠回答が送信されました！');
+                alert('送信が完了しました！ありがとうございます。');
                 form.reset();
             } catch (error) {
-                console.error('エラー:', error);
-                alert('送信に失敗しました。');
+                console.error('送信エラー:', error);
+                alert('送信に失敗しました。もう一度お試しください。');
             }
         });
     </script>
