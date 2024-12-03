@@ -64,55 +64,49 @@
     const app = firebase.initializeApp(firebaseConfig);
     const db = firebase.firestore();
 
-    const form = document.getElementById('attendance-form');
-    const submitButton = document.getElementById('submit-button');
+    // ... (Firebase初期化など、変更なし)
 
-    submitButton.addEventListener('click', async () => {
-        const name = form.name.value.trim();
-        const gender = document.querySelector('input[name="gender"]:checked').value;
-        const attendance = document.querySelector('input[name="attendance"]:checked').value;
+const form = document.getElementById('attendance-form');
+const submitButton = document.getElementById('submit-button');
 
-        if (!gender || !attendance) {
-            alert('性別と出欠を選択してください。');
-            return;
+submitButton.addEventListener('click', async () => {
+    const gender = document.querySelector('input[name="gender"]:checked').value;
+    const attendance = document.querySelector('input[name="attendance"]:checked').value;
+    const name = form.name.value.trim();
+
+    // 必須項目のチェック
+    if (!gender || !attendance) {
+        alert('性別と出欠を選択してください。');
+        return;
+    }
+
+    // 欠席の場合、名前が必須
+    if (attendance === "欠席" && !name) {
+        alert("欠席の場合は名前を入力してください。");
+        return;
+    }
+
+    try {
+        // Firestoreにデータを保存
+        await db.collection('attendance_responses').add({
+            userId: firebase.auth().currentUser.uid, // 認証済みのユーザーのUID
+            gender,
+            attendance,
+            name,
+            timestamp: firebase.firestore.FieldValue.serverTimestamp()
+        });
+
+        if (attendance === "出席") {
+            // Squareの支払いリンクにリダイレクト
+            window.location.href = "https://square.link/u/a2RyhiAS";
+        } else {
+            alert("欠席のご連絡ありがとうございました。");
         }
-
-        try {
-            if (attendance === "出席") {
-                // Firestore に性別と出席情報を保存
-                await db.collection('attendance_responses').add({
-                    gender: gender,
-                    attendance: attendance,
-                    timestamp: new Date()
-                });
-
-                // Square の支払いリンクにリダイレクト
-                window.location.href = "https://square.link/u/a2RyhiAS";
-            } else if (attendance === "欠席") {
-                if (!name) {
-                    alert("欠席の場合は名前を入力してください。");
-                    return;
-                }
-
-                // Firestore に名前、性別、欠席情報を保存
-                await db.collection('attendance_responses').add({
-                    name: name,
-                    gender: gender,
-                    attendance: attendance,
-                    timestamp: new Date()
-                });
-
-                // 感謝メッセージを表示
-                alert("欠席のご連絡ありがとうございました。またのご参加をお待ちしております。");
-            }
-        } catch (error) {
-            console.error("送信エラー:", error);
-            alert("送信に失敗しました。もう一度お試しください。");
-        }
-
-        form.reset(); // フォームのリセット
-        toggleNameField(false); // フォームリセット時に名前欄を非表示
-    });
+    } catch (error) {
+        console.error('送信エラー:', error);
+        alert('送信に失敗しました。もう一度お試しください。');
+    }
+});
 </script>
 
 
