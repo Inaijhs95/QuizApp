@@ -3,56 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>参加状況</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f5f5f5;
-            margin: 0;
-            padding: 20px;
-            text-align: center;
-        }
-        .container {
-            max-width: 600px;
-            margin: 0 auto;
-            background: #fff;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        }
-        .title {
-            font-size: 2em;
-            margin-bottom: 20px;
-        }
-        .count {
-            font-size: 1.5em;
-            margin: 15px 0;
-        }
-        .emoji {
-            font-size: 2em;
-        }
-        .remaining {
-            font-size: 1.2em;
-            margin-top: 20px;
-            font-weight: bold;
-        }
-        .update-time {
-            margin-top: 20px;
-            font-size: 0.9em;
-            color: #666;
-        }
-    </style>
+    <title>参加人数</title>
+    <script src="https://www.gstatic.com/firebasejs/9.21.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.21.0/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.21.0/firebase-auth-compat.js"></script>
 </head>
 <body>
     <div class="container">
-        <div class="title">参加状況</div>
+        <h1>参加人数</h1>
         <div class="count">
             <span class="emoji">👨</span> 男性: <span id="male-count">0</span>人
         </div>
         <div class="count">
             <span class="emoji">👩</span> 女性: <span id="female-count">0</span>人
         </div>
-        <div class="remaining">
+        <div class="count">
             開催決定まであと: <span id="remaining-count">20</span>人
         </div>
         <div class="update-time">
@@ -60,76 +25,68 @@
         </div>
     </div>
 
-    <!-- Firebase SDK -->
-    <script src="https://www.gstatic.com/firebasejs/9.21.0/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.21.0/firebase-firestore-compat.js"></script>
+    <script>
+        // Firebase の構成情報
+        const firebaseConfig = {
+            apiKey: "AIzaSyD30sxoHhSnpH7xMwGj55SSjRkMRa0RX8",
+            authDomain: "inai95.firebaseapp.com",
+            projectId: "inai95",
+            storageBucket: "inai95.firebasestorage.app",
+            messagingSenderId: "418002209728",
+            appId: "1:418002209728:web:dc034e538d3bf0fae15625",
+            measurementId: "G-58LP3ZDTLJ"
+        };
 
-    <!-- Firebaseスクリプト -->
-<script>
-    // Firebase の構成情報
-    const firebaseConfig = {
-        apiKey: "AIzaSyD30sxoHhSnpH7xMwGj55SSjRkMRa0RX8",
-        authDomain: "inai95.firebaseapp.com",
-        projectId: "inai95",
-        storageBucket: "inai95.firebasestorage.app",
-        messagingSenderId: "418002209728",
-        appId: "1:418002209728:web:dc034e538d3bf0fae15625",
-        measurementId: "G-58LP3ZDTLJ"
-    };
+        // Firebase 初期化
+        const app = firebase.initializeApp(firebaseConfig);
+        const db = firebase.firestore();
 
-    // Firebase 初期化
-    const app = firebase.initializeApp(firebaseConfig);
-    const db = firebase.firestore();
+        // 要素を取得
+        const maleCountElement = document.getElementById('male-count');
+        const femaleCountElement = document.getElementById('female-count');
+        const remainingCountElement = document.getElementById('remaining-count');
+        const updateTimeElement = document.getElementById('update-time');
 
-    // 要素を取得
-    const maleCountElement = document.getElementById('male-count');
-    const femaleCountElement = document.getElementById('female-count');
-    const remainingCountElement = document.getElementById('remaining-count');
-    const updateTimeElement = document.getElementById('update-time');
+        function updateCounts() {
+            const now = new Date();
+            updateTimeElement.textContent = `${now.getMonth() + 1}月${now.getDate()}日 ${now.getHours()}時${now.getMinutes()}分`;
 
-    function updateCounts() {
-        const now = new Date();
-        updateTimeElement.textContent = `${now.getMonth() + 1}月${now.getDate()}日 ${now.getHours()}時${now.getMinutes()}分`;
+            db.collection('attendance_responses')
+              .where('attendance', '==', '出席')
+              .get()
+              .then(snapshot => {
+                  let maleCount = 0;
+                  let femaleCount = 0;
 
-        db.collection('attendance_responses')
-          .where('attendance', '==', '出席') // 出席者のみを対象にする
-          .get()
-          .then(snapshot => {
-              let maleCount = 0;
-              let femaleCount = 0;
+                  snapshot.forEach(doc => {
+                      const data = doc.data();
+                      if (data.gender === '男性') maleCount++;
+                      if (data.gender === '女性') femaleCount++;
+                  });
 
-              snapshot.forEach(doc => {
-                  const data = doc.data();
-                  if (data.gender === '男性') maleCount++;
-                  if (data.gender === '女性') femaleCount++;
+                  maleCountElement.textContent = maleCount;
+                  femaleCountElement.textContent = femaleCount;
+
+                  const totalCount = maleCount + femaleCount;
+                  remainingCountElement.textContent = Math.max(20 - totalCount, 0);
+              })
+              .catch(error => {
+                  console.error("Firestore Error Code:", error.code);
+                  console.error("Firestore Error Message:", error.message);
+                  alert("データの取得に失敗しました。");
               });
+        }
 
-              // カウントを画面に反映
-              maleCountElement.textContent = maleCount;
-              femaleCountElement.textContent = femaleCount;
-
-              // 残り人数を計算
-              const totalCount = maleCount + femaleCount;
-              remainingCountElement.textContent = Math.max(20 - totalCount, 0);
+        // Firebase 認証後にカウントを更新
+        firebase.auth().signInAnonymously()
+          .then(() => {
+              console.log("匿名認証に成功しました");
+              updateCounts(); // 認証後にデータ取得を開始
           })
           .catch(error => {
-              console.error("Firestore Error Code:", error.code);
-              console.error("Firestore Error Message:", error.message);
-              alert("データの取得に失敗しました。");
+              console.error("認証エラー:", error.message);
+              alert("認証に失敗しました。");
           });
-    }
-
-    // Firebase 認証後にカウントを更新
-    firebase.auth().signInAnonymously()
-      .then(() => {
-          console.log("匿名認証に成功しました");
-          updateCounts(); // 認証後にデータ取得を開始
-      })
-      .catch(error => {
-          console.error("認証エラー:", error.message);
-          alert("認証に失敗しました。");
-      });
-</script>
-
+    </script>
 </body>
 </html>
