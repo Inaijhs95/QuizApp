@@ -6,99 +6,107 @@
     <title>出欠回答</title>
     <link href="https://fonts.googleapis.com/css2?family=Source+Han+Serif+JP:wght@400;700&display=swap" rel="stylesheet">
     <style>
+    /* 全体設定 */
     body {
-        font-family: 'Source Han Serif JP', serif;
-        background-color: #f9f9f9; /* 優しい白系の背景色 */
+        font-family: 'Arial', sans-serif;
+        background-color: #f4f4f9; /* 優しいグレー */
+        color: #333; /* 落ち着いた文字色 */
         margin: 0;
         padding: 0;
         display: flex;
         justify-content: center;
         align-items: center;
-        min-height: 100vh; /* 縦方向中央揃え */
+        min-height: 100vh; /* 縦中央寄せ */
     }
 
+    /* コンテナのデザイン */
     .container {
-        max-width: 600px;
+        max-width: 500px;
         width: 100%;
-        background: #ffffff; /* 真っ白な背景 */
-        padding: 30px;
-        border-radius: 12px; /* 角丸で柔らかい印象 */
-        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1); /* 柔らかい影 */
-        border: 1px solid #e6e6e6; /* 高級感のある薄い枠線 */
-    }
-
-    .container h1 {
+        background: #ffffff; /* 高級感のあるホワイト */
+        padding: 40px 30px;
+        border-radius: 16px; /* 滑らかな角丸 */
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15); /* 立体感を出す影 */
         text-align: center;
-        margin-bottom: 30px;
-        font-size: 1.8rem;
-        color: #333; /* 落ち着いた文字色 */
     }
 
-    .form-group {
+    /* ヘッダー */
+    .container h1 {
+        font-size: 2rem;
+        color: #222; /* しっかりとした文字色 */
         margin-bottom: 20px;
-    }
-
-    .form-group label {
-        display: block;
-        margin-bottom: 8px;
-        font-size: 1rem;
-        color: #555; /* 中間的な文字色 */
         font-weight: bold;
     }
 
-    .form-group input[type="text"],
-    .form-group select {
-        width: 100%;
-        padding: 10px;
+    /* ラベル */
+    .form-group label {
         font-size: 1rem;
+        color: #444;
+        margin-bottom: 8px;
+        display: block;
+        text-align: left; /* 左寄せで整える */
+    }
+
+    /* 入力欄 */
+    .form-group input[type="text"],
+    .form-group input[type="radio"] + label {
+        font-size: 1rem;
+        width: 100%;
+        padding: 12px;
         border: 1px solid #ddd;
-        border-radius: 8px;
-        box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.05); /* 内側の陰影 */
+        border-radius: 10px;
+        box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.05);
         transition: border-color 0.3s ease;
+        margin-bottom: 15px;
     }
 
-    .form-group input[type="text"]:focus {
-        border-color: #007bff; /* フォーカス時の青色 */
-        outline: none;
-    }
-
+    /* ラジオボタンのスタイル */
     .form-group input[type="radio"] {
         margin-right: 10px;
     }
 
-    .form-group label[for="gender"] {
-        margin-bottom: 15px;
+    /* ボタン */
+    .button {
         display: inline-block;
-        font-weight: normal;
-        font-size: 0.9rem;
-    }
-
-    .buttons {
-        text-align: center;
+        background: linear-gradient(135deg, #4f83cc, #1d4e89); /* グラデーション */
+        color: #ffffff;
+        padding: 12px 20px;
+        font-size: 1rem;
+        text-transform: uppercase; /* 大文字 */
+        border: none;
+        border-radius: 12px;
+        cursor: pointer;
+        transition: all 0.3s ease;
         margin-top: 20px;
     }
 
-    .button {
-        padding: 12px 24px;
-        font-size: 1rem;
-        color: #fff;
-        background-color: #007bff; /* ブルー */
-        text-decoration: none;
-        border-radius: 8px;
-        cursor: pointer;
-        border: none;
-        transition: background-color 0.3s ease;
-    }
-
     .button:hover {
-        background-color: #0056b3; /* ダークブルー */
+        background: linear-gradient(135deg, #3b6cb3, #163d66);
     }
 
-    .button:disabled {
-        background-color: #ccc; /* 無効時のグレー */
-        cursor: not-allowed;
+    /* 更新タイム */
+    .update-time {
+        font-size: 0.9rem;
+        color: #888;
+        margin-top: 20px;
+    }
+
+    /* メディアクエリ（レスポンシブ対応） */
+    @media (max-width: 768px) {
+        .container {
+            padding: 30px 20px;
+        }
+
+        .container h1 {
+            font-size: 1.8rem;
+        }
+
+        .button {
+            width: 100%; /* 小画面ではボタンを幅いっぱいに */
+        }
     }
 </style>
+
 
 </head>
 <body>
