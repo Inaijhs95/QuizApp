@@ -153,12 +153,12 @@
     // Firebase の構成情報
     const firebaseConfig = {
          apiKey: "AIzaSyD30sxoHhSnpH7xMwGj55SSjRkMRa0oRX8",
-  authDomain: "inai95.firebaseapp.com",
-  projectId: "inai95",
-  storageBucket: "inai95.firebasestorage.app",
-  messagingSenderId: "418002209728",
-  appId: "1:418002209728:web:dc034e538d3bf0fae15625",
-  measurementId: "G-58LP3ZDTLJ"
+         authDomain: "inai95.firebaseapp.com",
+         projectId: "inai95",
+         storageBucket: "inai95.firebasestorage.app",
+         messagingSenderId: "418002209728",
+         appId: "1:418002209728:web:dc034e538d3bf0fae15625",
+         measurementId: "G-58LP3ZDTLJ"
     };
 
     // Firebase 初期化
@@ -209,8 +209,18 @@
                 timestamp
             });
 
-            alert("データが送信されました！");
-            form.reset();
+            if (attendance === '出席') {
+                const now = new Date();
+                const earlyBirdDeadline = new Date('2025-04-04T00:00:00');
+                const redirectUrl = now < earlyBirdDeadline 
+                    ? "https://square.link/u/a2RyhiAS" // 早割リンク
+                    : "https://square.link/u/mclmviX8"; // 一般リンク
+                window.location.href = redirectUrl; // リダイレクト
+            } else {
+                alert("欠席のご連絡ありがとうございました！");
+            }
+
+            form.reset(); // フォームのリセット
         } catch (error) {
             console.error("送信エラー:", error);
             alert("データの送信に失敗しました。再試行してください。");
