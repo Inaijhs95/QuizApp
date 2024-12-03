@@ -47,35 +47,29 @@
         const remainingCountElement = document.getElementById('remaining-count');
         const updateTimeElement = document.getElementById('update-time');
 
-        function updateCounts() {
-            const now = new Date();
-            updateTimeElement.textContent = `${now.getMonth() + 1}月${now.getDate()}日 ${now.getHours()}時${now.getMinutes()}分`;
+       function updateCounts() {
+    db.collection('attendance_responses')
+      .where('attendance', '==', '出席') // 出席者のみ
+      .get()
+      .then(snapshot => {
+          let maleCount = 0;
+          let femaleCount = 0;
 
-            db.collection('attendance_responses')
-              .where('attendance', '==', '出席')
-              .get()
-              .then(snapshot => {
-                  let maleCount = 0;
-                  let femaleCount = 0;
+          snapshot.forEach(doc => {
+              const data = doc.data();
+              if (data.gender === '男性') maleCount++;
+              if (data.gender === '女性') femaleCount++;
+          });
 
-                  snapshot.forEach(doc => {
-                      const data = doc.data();
-                      if (data.gender === '男性') maleCount++;
-                      if (data.gender === '女性') femaleCount++;
-                  });
+          maleCountElement.textContent = maleCount;
+          femaleCountElement.textContent = femaleCount;
+          remainingCountElement.textContent = Math.max(20 - (maleCount + femaleCount), 0);
+      })
+      .catch(error => {
+          console.error("Firestore Error:", error);
+      });
+}
 
-                  maleCountElement.textContent = maleCount;
-                  femaleCountElement.textContent = femaleCount;
-
-                  const totalCount = maleCount + femaleCount;
-                  remainingCountElement.textContent = Math.max(20 - totalCount, 0);
-              })
-              .catch(error => {
-                  console.error("Firestore Error Code:", error.code);
-                  console.error("Firestore Error Message:", error.message);
-                  alert("データの取得に失敗しました。");
-              });
-        }
 
         // Firebase 認証後にカウントを更新
         firebase.auth().signInAnonymously()
