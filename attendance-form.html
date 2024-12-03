@@ -12,10 +12,10 @@
 <body>
     <div class="container">
         <h1>出欠回答</h1>
-        <form id="attendance-form">
+       <form id="attendance-form">
     <div class="form-group">
-        <label for="name">お名前</label>
-        <input type="text" id="name" name="name" required>
+        <label for="name">お名前（欠席者のみ）</label>
+        <input type="text" id="name" name="name" placeholder="欠席の場合のみ入力" />
     </div>
     <div class="form-group">
         <label>性別</label>
@@ -24,14 +24,12 @@
     </div>
     <div class="form-group">
         <label>出欠</label>
-        <label><input type="radio" name="attendance" value="出席" required onchange="toggleTicketSection(true)"> 出席</label>
-        <label><input type="radio" name="attendance" value="欠席" required onchange="toggleTicketSection(false)"> 欠席</label>
-    </div>
-    <div id="ticket-section" style="display: none;">
-        <h2>チケット購入</h2>
-        <p>以下のリンクからチケットをご購入ください。</p>
-        <a id="early-bird-button" href="https://square.link/u/a2RyhiAS" class="button" target="_blank">早期割引: 6,000円</a>
-        <a id="general-ticket-button" href="https://square.link/u/mclmviX8" class="button" target="_blank">一般: 7,000円</a>
+        <label>
+            <input type="radio" name="attendance" value="出席" required> 出席
+        </label>
+        <label>
+            <input type="radio" name="attendance" value="欠席" required> 欠席
+        </label>
     </div>
     <div class="buttons">
         <button type="button" class="button" id="submit-button">送信する</button>
@@ -64,43 +62,51 @@
 
     submitButton.addEventListener('click', async () => {
         const name = form.name.value.trim();
-        const attendance = form.attendance.value;
-        const gender = form.gender.value;
+        const gender = document.querySelector('input[name="gender"]:checked').value;
+        const attendance = document.querySelector('input[name="attendance"]:checked').value;
 
-        if (!name || !attendance || !gender) {
-            alert('すべての項目を入力してください。');
+        if (!gender || !attendance) {
+            alert('性別と出欠を選択してください。');
             return;
         }
 
         try {
-            // Firestore にデータを保存
-            await db.collection('attendance_responses').add({
-                name: name,
-                attendance: attendance,
-                gender: gender,
-                timestamp: new Date()
-            });
+            if (attendance === "出席") {
+                // Firestore に性別と出席情報を保存
+                await db.collection('attendance_responses').add({
+                    gender: gender,
+                    attendance: attendance,
+                    timestamp: new Date()
+                });
 
-            if (attendance === '出席') {
-                toggleTicketSection(true);
-            } else {
-                alert('欠席のご連絡ありがとうございました。またのご参加をお待ちしております。');
-                toggleTicketSection(false);
+                // Square の支払いリンクにリダイレクト
+                window.location.href = "https://square.link/u/a2RyhiAS";
+            } else if (attendance === "欠席") {
+                if (!name) {
+                    alert("欠席の場合は名前を入力してください。");
+                    return;
+                }
+
+                // Firestore に名前、性別、欠席情報を保存
+                await db.collection('attendance_responses').add({
+                    name: name,
+                    gender: gender,
+                    attendance: attendance,
+                    timestamp: new Date()
+                });
+
+                // 感謝メッセージを表示
+                alert("欠席のご連絡ありがとうございました。またのご参加をお待ちしております。");
             }
-
-            alert('出欠回答が送信されました！');
-            form.reset();
         } catch (error) {
-            console.error('送信エラー:', error);
-            alert('送信に失敗しました。');
+            console.error("送信エラー:", error);
+            alert("送信に失敗しました。もう一度お試しください。");
         }
-    });
 
-    function toggleTicketSection(show) {
-        const ticketSection = document.getElementById('ticket-section');
-        ticketSection.style.display = show ? 'block' : 'none';
-    }
+        form.reset(); // フォームのリセット
+    });
 </script>
+
 
 
 </body>
