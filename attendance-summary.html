@@ -65,61 +65,63 @@
     <script src="https://www.gstatic.com/firebasejs/9.21.0/firebase-firestore-compat.js"></script>
 
     <!-- Firebaseスクリプト -->
-    <script>
-        // Firebase の構成情報
-        const firebaseConfig = {
-            apiKey: "AIzaSyD30sxoHhSnpH7xMwGj55SSjRkMRa0RX8",
-            authDomain: "inai95.firebaseapp.com",
-            projectId: "inai95",
-            storageBucket: "inai95.firebasestorage.app",
-            messagingSenderId: "418002209728",
-            appId: "1:418002209728:web:dc034e538d3bf0fae15625",
-            measurementId: "G-58LP3ZDTLJ"
-        };
+<script>
+    // Firebase の構成情報
+    const firebaseConfig = {
+        apiKey: "AIzaSyD30sxoHhSnpH7xMwGj55SSjRkMRa0RX8",
+        authDomain: "inai95.firebaseapp.com",
+        projectId: "inai95",
+        storageBucket: "inai95.firebasestorage.app",
+        messagingSenderId: "418002209728",
+        appId: "1:418002209728:web:dc034e538d3bf0fae15625",
+        measurementId: "G-58LP3ZDTLJ"
+    };
 
-        // Firebase 初期化
-        const app = firebase.initializeApp(firebaseConfig);
-        const db = firebase.firestore();
+    // Firebase 初期化
+    const app = firebase.initializeApp(firebaseConfig);
+    const db = firebase.firestore();
 
-        // 要素を取得
-        const maleCountElement = document.getElementById('male-count');
-        const femaleCountElement = document.getElementById('female-count');
-        const remainingCountElement = document.getElementById('remaining-count');
-        const updateTimeElement = document.getElementById('update-time');
+    // 要素を取得
+    const maleCountElement = document.getElementById('male-count');
+    const femaleCountElement = document.getElementById('female-count');
+    const remainingCountElement = document.getElementById('remaining-count');
+    const updateTimeElement = document.getElementById('update-time');
 
-        function updateCounts() {
-            const now = new Date();
-            updateTimeElement.textContent = `${now.getMonth() + 1}月${now.getDate()}日 ${now.getHours()}時${now.getMinutes()}分`;
+    function updateCounts() {
+        const now = new Date();
+        updateTimeElement.textContent = `${now.getMonth() + 1}月${now.getDate()}日 ${now.getHours()}時${now.getMinutes()}分`;
 
-            db.collection('attendance_responses')
-              .where('attendance', '==', '出席') // 出席者のみを対象にする
-              .get()
-              .then(snapshot => {
-                  let maleCount = 0;
-                  let femaleCount = 0;
+        db.collection('attendance_responses')
+          .where('attendance', '==', '出席') // 出席者のみを対象にする
+          .get()
+          .then(snapshot => {
+              let maleCount = 0;
+              let femaleCount = 0;
 
-                  snapshot.forEach(doc => {
-                      const data = doc.data();
-                      if (data.gender === '男性') maleCount++;
-                      if (data.gender === '女性') femaleCount++;
-                  });
-
-                  // カウントを画面に反映
-                  maleCountElement.textContent = maleCount;
-                  femaleCountElement.textContent = femaleCount;
-
-                  // 残り人数を計算
-                  const totalCount = maleCount + femaleCount;
-                  remainingCountElement.textContent = Math.max(20 - totalCount, 0);
-              })
-              .catch(error => {
-                  console.error("データ取得エラー:", error);
-                  alert("データの取得に失敗しました。");
+              snapshot.forEach(doc => {
+                  const data = doc.data();
+                  if (data.gender === '男性') maleCount++;
+                  if (data.gender === '女性') femaleCount++;
               });
-        }
 
-        // 初期化時にカウントを更新
-        updateCounts();
-    </script>
+              // カウントを画面に反映
+              maleCountElement.textContent = maleCount;
+              femaleCountElement.textContent = femaleCount;
+
+              // 残り人数を計算
+              const totalCount = maleCount + femaleCount;
+              remainingCountElement.textContent = Math.max(20 - totalCount, 0);
+          })
+          .catch(error => {
+              console.error("Firestore Error Code:", error.code);
+              console.error("Firestore Error Message:", error.message);
+              alert("データの取得に失敗しました。");
+          });
+    }
+
+    // 初期化時にカウントを更新
+    updateCounts();
+</script>
+
 </body>
 </html>
