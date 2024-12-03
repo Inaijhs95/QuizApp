@@ -76,44 +76,39 @@
     const remainingCountElement = document.getElementById('remaining-count');
     const updateTimeElement = document.getElementById('update-time');
 
- function updateCounts() {
-    const now = new Date();
-    updateTimeElement.textContent = `${now.getMonth() + 1}月${now.getDate()}日${now.getHours()}時${now.getMinutes()}分`;
+    function updateCounts() {
+        const now = new Date();
+        updateTimeElement.textContent = `${now.getMonth() + 1}月${now.getDate()}日${now.getHours()}時${now.getMinutes()}分`;
 
-  db.collection('attendance_responses')
-  .where('attendance', 'in', ['出席', '欠席'])
-  .get()
-  .then(snapshot => {
-      let maleCount = 0;
-      let femaleCount = 0;
+        db.collection('attendance_responses')
+          .where('attendance', 'in', ['出席', '欠席'])
+          .get()
+          .then(snapshot => {
+              let maleCount = 0;
+              let femaleCount = 0;
 
-      snapshot.forEach(doc => {
-          const data = doc.data();
-          if (data.gender === '男性') maleCount++;
-          if (data.gender === '女性') femaleCount++;
-      });
+              snapshot.forEach(doc => {
+                  const data = doc.data();
+                  if (data.gender === '男性') maleCount++;
+                  if (data.gender === '女性') femaleCount++;
+              });
 
-      maleCountElement.textContent = maleCount;
-      femaleCountElement.textContent = femaleCount;
+              maleCountElement.textContent = maleCount;
+              femaleCountElement.textContent = femaleCount;
 
-      const totalCount = maleCount + femaleCount;
-      remainingCountElement.textContent = Math.max(20 - totalCount, 0);
-  })
-  .catch(error => {
-      console.error("Error updating counts:", error);
-  });
-
-}
-.catch(error => {
-    console.error("Firestore Snapshot Error:", error.message);
-    if (error.code === 'permission-denied') {
-        console.warn("Firestore permissions might be too restrictive. Please review your Firestore rules.");
+              const totalCount = maleCount + femaleCount;
+              remainingCountElement.textContent = Math.max(20 - totalCount, 0);
+          })
+          .catch(error => {
+              console.error("Error updating counts:", error);
+              if (error.code === 'permission-denied') {
+                  console.warn("Firestore permissions might be too restrictive. Please review your Firestore rules.");
+              }
+          });
     }
-});
 
-// 関数を呼び出す
-updateCounts();
-
+    // 関数を呼び出す
+    updateCounts();
 </script>
 
 
