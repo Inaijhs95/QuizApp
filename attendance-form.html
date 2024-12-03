@@ -113,29 +113,45 @@
         const submitButton = document.getElementById('submit-button');
 
         submitButton.addEventListener('click', async () => {
-            const name = form.name.value.trim();
-            const gender = document.querySelector('input[name="gender"]:checked')?.value;
-            const attendance = document.querySelector('input[name="attendance"]:checked')?.value;
+    const name = form.name.value.trim();
+    const phone = form.phone.value.trim();
+    const gender = form.gender.value;
+    const attendance = form.attendance.value;
+    const timestamp = new Date();
 
-            if (!name || !gender || !attendance) {
-                alert('すべての項目を入力してください。');
-                return;
-            }
+    if (!name || !phone || !gender || !attendance) {
+        alert("すべての項目を入力してください。");
+        return;
+    }
 
-            try {
-                await db.collection('attendance_responses').add({
-                    name: name,
-                    gender: gender,
-                    attendance: attendance,
-                    timestamp: new Date()
-                });
-                alert('送信が完了しました！ありがとうございます。');
-                form.reset();
-            } catch (error) {
-                console.error('送信エラー:', error);
-                alert('送信に失敗しました。もう一度お試しください。');
-            }
+    try {
+        // Firestore で共通の ID を生成
+        const uniqueId = db.collection('attendance_responses').doc().id;
+
+        // `personal_data` に保存
+        await db.collection('personal_data').doc(uniqueId).set({
+            name,
+            phone,
+            gender,
+            attendance,
+            timestamp
         });
+
+        // `attendance_responses` に保存
+        await db.collection('attendance_responses').doc(uniqueId).set({
+            gender,
+            attendance,
+            timestamp
+        });
+
+        alert("データが送信されました！");
+        form.reset();
+    } catch (error) {
+        console.error("送信エラー:", error);
+        alert("送信に失敗しました。");
+    }
+});
+
     </script>
 </body>
 </html>
