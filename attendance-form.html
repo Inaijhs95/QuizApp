@@ -69,42 +69,43 @@
     const form = document.getElementById('attendance-form');
     const submitButton = document.getElementById('submit-button');
 
-   submitButton.addEventListener('click', async () => {
-    const name = form.name.value.trim();
-    const phone = form.phone.value.trim();
-    const attendance = form.attendance.value;
-    const gender = form.gender.value;
+    submitButton.addEventListener('click', async () => {
+        const name = form.name.value.trim();
+        const phone = form.phone.value.trim();
+        const attendance = form.attendance.value;
+        const gender = form.gender.value;
 
-    if (!name || !phone || !attendance || !gender) {
-        alert('すべての項目を入力してください。');
-        return;
-    }
-
-    try {
-        // 必要なデータをFirestoreに送信
-        await db.collection('attendance_responses').add({
-            name: name, // 書き込みは可能
-            phone: phone, // 書き込みは可能
-            attendance: attendance, // 読み取り可能
-            gender: gender, // 読み取り可能
-            timestamp: new Date()
-        });
-
-        alert('出欠回答が送信されました！');
-
-        if (attendance === '出席') {
-            toggleTicketSection(true);
-        } else {
-            toggleTicketSection(false);
+        if (!name || !phone || !attendance || !gender) {
+            alert('すべての項目を入力してください。');
+            return;
         }
 
-        form.reset(); // フォームのリセット
-    } catch (error) {
-        console.error('送信エラー:', error);
-        alert('送信に失敗しました。');
-    }
-});
+        try {
+            // Firestore にデータを保存
+            await db.collection('attendance_responses').add({
+                name: name,
+                phone: phone,
+                attendance: attendance,
+                gender: gender,
+                timestamp: new Date()
+            });
 
+            if (attendance === '出席') {
+                // 出席者用の処理: チケットセクションを表示
+                toggleTicketSection(true);
+            } else {
+                // 欠席者用の処理: 感謝メッセージを表示
+                alert('欠席のご連絡ありがとうございました。またのご参加をお待ちしております。');
+                toggleTicketSection(false);
+            }
+
+            alert('出欠回答が送信されました！');
+            form.reset(); // フォームのリセット
+        } catch (error) {
+            console.error('送信エラー:', error);
+            alert('送信に失敗しました。');
+        }
+    });
 
     // チケットセクションの表示切り替え
     function toggleTicketSection(show) {
