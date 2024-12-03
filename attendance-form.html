@@ -13,42 +13,31 @@
     <div class="container">
         <h1>出欠回答</h1>
         <form id="attendance-form">
-            <div class="form-group">
-                <label for="name">お名前</label>
-                <input type="text" id="name" name="name" required>
-            </div>
-            <div class="form-group">
-                <label for="phone">電話番号</label>
-                <input type="tel" id="phone" name="phone" required pattern="\d{10,11}" placeholder="例: 09012345678">
-            </div>
-            <div class="form-group">
-                <label>性別</label>
-                <label><input type="radio" id="male" name="gender" value="男性" required> 男性</label>
-                <label><input type="radio" id="female" name="gender" value="女性" required> 女性</label>
-            </div>
-            <div class="form-group">
-                <label>出欠</label>
-                <label>
-                    <input type="radio" name="attendance" value="出席" required 
-                           onchange="toggleTicketSection(true)"> 出席
-                </label>
-                <label>
-                    <input type="radio" name="attendance" value="欠席" required 
-                           onchange="toggleTicketSection(false)"> 欠席
-                </label>
-            </div>
-            <div id="ticket-section" style="display: none;">
-                <h2>チケット購入</h2>
-                <p>以下のリンクからチケットをご購入ください。</p>
-                <a id="early-bird-button" href="https://square.link/u/a2RyhiAS" 
-                   class="button" target="_blank">早期割引: 6,000円</a>
-                <a id="general-ticket-button" href="https://square.link/u/mclmviX8" 
-                   class="button" target="_blank">一般: 7,000円</a>
-            </div>
-            <div class="buttons">
-                <button type="button" class="button" id="submit-button">送信する</button>
-            </div>
-        </form>
+    <div class="form-group">
+        <label for="name">お名前</label>
+        <input type="text" id="name" name="name" required>
+    </div>
+    <div class="form-group">
+        <label>性別</label>
+        <label><input type="radio" id="male" name="gender" value="男性" required> 男性</label>
+        <label><input type="radio" id="female" name="gender" value="女性" required> 女性</label>
+    </div>
+    <div class="form-group">
+        <label>出欠</label>
+        <label><input type="radio" name="attendance" value="出席" required onchange="toggleTicketSection(true)"> 出席</label>
+        <label><input type="radio" name="attendance" value="欠席" required onchange="toggleTicketSection(false)"> 欠席</label>
+    </div>
+    <div id="ticket-section" style="display: none;">
+        <h2>チケット購入</h2>
+        <p>以下のリンクからチケットをご購入ください。</p>
+        <a id="early-bird-button" href="https://square.link/u/a2RyhiAS" class="button" target="_blank">早期割引: 6,000円</a>
+        <a id="general-ticket-button" href="https://square.link/u/mclmviX8" class="button" target="_blank">一般: 7,000円</a>
+    </div>
+    <div class="buttons">
+        <button type="button" class="button" id="submit-button">送信する</button>
+    </div>
+</form>
+
     </div>
 
     <!-- Firebase SDK -->
@@ -57,9 +46,8 @@
 
     <!-- Firebase 初期化と出欠回答保存スクリプト -->
 <script>
-    // Firebase の構成情報
     const firebaseConfig = {
-        apiKey: "AIzaSyD30sxoHhSnpH7xMwGj55SSjRkMRa0oRX8",
+        apiKey: "AIzaSy...",
         authDomain: "inai95.firebaseapp.com",
         projectId: "inai95",
         storageBucket: "inai95.firebasestorage.app",
@@ -68,21 +56,18 @@
         measurementId: "G-58LP3ZDTLJ"
     };
 
-    // Firebase 初期化
     const app = firebase.initializeApp(firebaseConfig);
     const db = firebase.firestore();
 
-    // 出欠回答データの保存
     const form = document.getElementById('attendance-form');
     const submitButton = document.getElementById('submit-button');
 
     submitButton.addEventListener('click', async () => {
         const name = form.name.value.trim();
-        const phone = form.phone.value.trim();
         const attendance = form.attendance.value;
         const gender = form.gender.value;
 
-        if (!name || !phone || !attendance || !gender) {
+        if (!name || !attendance || !gender) {
             alert('すべての項目を入力してください。');
             return;
         }
@@ -91,50 +76,32 @@
             // Firestore にデータを保存
             await db.collection('attendance_responses').add({
                 name: name,
-                phone: phone,
                 attendance: attendance,
                 gender: gender,
                 timestamp: new Date()
             });
 
             if (attendance === '出席') {
-                // 出席者用の処理: チケットセクションを表示
                 toggleTicketSection(true);
             } else {
-                // 欠席者用の処理: 感謝メッセージを表示
                 alert('欠席のご連絡ありがとうございました。またのご参加をお待ちしております。');
                 toggleTicketSection(false);
             }
 
             alert('出欠回答が送信されました！');
-            form.reset(); // フォームのリセット
+            form.reset();
         } catch (error) {
             console.error('送信エラー:', error);
             alert('送信に失敗しました。');
         }
     });
 
-    // チケットセクションの表示切り替え
     function toggleTicketSection(show) {
         const ticketSection = document.getElementById('ticket-section');
         ticketSection.style.display = show ? 'block' : 'none';
     }
-
-    // 早期割引の締切設定
-    const EARLY_BIRD_DEADLINE = new Date('2025-04-04T00:00:00');
-    const now = new Date();
-
-    const earlyBirdButton = document.getElementById('early-bird-button');
-    const generalTicketButton = document.getElementById('general-ticket-button');
-
-    // 締切後の処理
-    if (now >= EARLY_BIRD_DEADLINE) {
-        earlyBirdButton.classList.add('disabled');
-        earlyBirdButton.href = '#';
-        earlyBirdButton.removeAttribute('target');
-        earlyBirdButton.textContent = '早期割引（販売終了）';
-    }
 </script>
+
 
 </body>
 </html>
