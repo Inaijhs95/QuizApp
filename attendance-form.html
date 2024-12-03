@@ -3,112 +3,108 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>出欠回答</title>
-    <link href="https://fonts.googleapis.com/css2?family=Source+Han+Serif+JP:wght@400;700&display=swap" rel="stylesheet">
+    <title>出欠確認フォーム</title>
     <style>
-        /* スタイル設定 */
+        /* CSSスタイルは簡略化しています。必要に応じて詳細に設定してください */
+        body {
+            font-family: sans-serif;
+            text-align: center;
+        }
+        .container {
+            max-width: 400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .form-group {
+            margin-bottom: 10px;
+        }
+        .button {
+            padding: 10px 20px;
+            background-color: #4CAF50; /* 緑色 */
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>出欠回答</h1>
-  <form id="attendance-form">
-    <div class="form-group" id="name-group" style="display: none;">
-        <label for="name">お名前（欠席の場合のみ入力）</label>
-        <input type="text" id="name" name="name" placeholder="欠席の場合のみ入力" />
-    </div>
-    <div class="form-group">
-        <label>性別</label>
-        <label><input type="radio" id="male" name="gender" value="男性" required> 男性</label>
-        <label><input type="radio" id="female" name="gender" value="女性" required> 女性</label>
-    </div>
-    <div class="form-group">
-        <label>出欠</label>
-        <label>
-            <input type="radio" name="attendance" value="出席" required onchange="toggleNameField(false)"> 出席
-        </label>
-        <label>
-            <input type="radio" name="attendance" value="欠席" required onchange="toggleNameField(true)"> 欠席
-        </label>
-    </div>
-    <div class="buttons">
-        <button type="button" class="button" id="submit-button">送信する</button>
-    </div>
-</form>
-
-
+        <h1>出欠確認フォーム</h1>
+        <form id="attendance-form">
+            <div class="form-group">
+                <label for="name">お名前</label>
+                <input type="text" id="name" name="name" required>
+            </div>
+            <div class="form-group">
+                <label>性別</label>
+                <input type="radio" id="male" name="gender" value="男性" required>
+                <label for="male">男性</label>
+                <input type="radio" id="female" name="gender" value="女性" required>
+                <label for="female">女性</label>
+            </div>
+            <div class="form-group">
+                <label>出欠</label>
+                <input type="radio" name="attendance" value="出席" required> 出席
+                <input type="radio" name="attendance" value="欠席" required> 欠席
+            </div>
+            <button type="button" class="button" id="submit-button">送信</button>
+        </form>
     </div>
 
-    <!-- Firebase SDK -->
     <script src="https://www.gstatic.com/firebasejs/9.21.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.21.0/firebase-firestore-compat.js"></script>
+    <script>
+      // Firebase の構成情報
+        const firebaseConfig = {
+  apiKey: "AIzaSyD30sxoHhSnpH7xMwGj55SSjRkMRa0oRX8",
+  authDomain: "inai95.firebaseapp.com",
+  projectId: "inai95",
+  storageBucket: "inai95.firebasestorage.app",
+  messagingSenderId: "418002209728",
+  appId: "1:418002209728:web:dc034e538d3bf0fae15625",
+  measurementId: "G-58LP3ZDTLJ"
+};
+        };
+        const app = firebase.initializeApp(firebaseConfig);
+        const db = firebase.firestore();
 
-    <!-- Firebase 初期化と出欠回答保存スクリプト -->
-<script>
-    // 名前欄の表示切り替え
-    function toggleNameField(show) {
-        const nameGroup = document.getElementById('name-group');
-        nameGroup.style.display = show ? 'block' : 'none';
-    }
+        // フォームの取得とイベントリスナーの設定
+        const form = document.getElementById('attendance-form');
+        const submitButton = document.getElementById('submit-button');
 
-    const firebaseConfig = {
-        apiKey: "AIzaSy...",
-        authDomain: "inai95.firebaseapp.com",
-        projectId: "inai95",
-        storageBucket: "inai95.firebasestorage.app",
-        messagingSenderId: "418002209728",
-        appId: "1:418002209728:web:dc034e538d3bf0fae15625",
-        measurementId: "G-58LP3ZDTLJ"
-    };
+        submitButton.addEventListener('click', async () => {
+            const name = form.name.value.trim();
+            const gender = form.gender.value;
+            const attendance = form.attendance.value;
 
-    const app = firebase.initializeApp(firebaseConfig);
-    const db = firebase.firestore();
+            // 入力チェック
+            if (!name) {
+                alert('お名前を入力してください。');
+                return;
+            }
+            if (!/^[^\x00-\x7F]*$/.test(name)) {
+                alert('お名前は全角文字で入力してください。');
+                return;
+            }
+            if (gender !== '男性' && gender !== '女性') {
+                alert('性別を選択してください。');
+                return;
+            }
 
-    // ... (Firebase初期化など、変更なし)
-
-const form = document.getElementById('attendance-form');
-const submitButton = document.getElementById('submit-button');
-
-submitButton.addEventListener('click', async () => {
-    const gender = document.querySelector('input[name="gender"]:checked').value;
-    const attendance = document.querySelector('input[name="attendance"]:checked').value;
-    const name = form.name.value.trim();
-
-    // 必須項目のチェック
-    if (!gender || !attendance) {
-        alert('性別と出欠を選択してください。');
-        return;
-    }
-
-    // 欠席の場合、名前が必須
-    if (attendance === "欠席" && !name) {
-        alert("欠席の場合は名前を入力してください。");
-        return;
-    }
-
-    try {
-        // Firestoreにデータを保存
-        await db.collection('attendance_responses').add({
-            userId: firebase.auth().currentUser.uid, // 認証済みのユーザーのUID
-            gender,
-            attendance,
-            name,
-            timestamp: firebase.firestore.FieldValue.serverTimestamp()
+            try {
+                await db.collection('attendance_responses').add({
+                    name,
+                    gender,
+                    attendance,
+                    timestamp: firebase.firestore.FieldValue.serverTimestamp()
+                });
+                alert('出欠回答が送信されました！');
+                form.reset();
+            } catch (error) {
+                console.error('エラー:', error);
+                alert('送信に失敗しました。');
+            }
         });
-
-        if (attendance === "出席") {
-            // Squareの支払いリンクにリダイレクト
-            window.location.href = "https://square.link/u/a2RyhiAS";
-        } else {
-            alert("欠席のご連絡ありがとうございました。");
-        }
-    } catch (error) {
-        console.error('送信エラー:', error);
-        alert('送信に失敗しました。もう一度お試しください。');
-    }
-});
-</script>
-
-
+    </script>
 </body>
 </html>
