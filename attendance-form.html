@@ -8,28 +8,28 @@
     <style>
     body {
         font-family: 'Source Han Serif JP', serif;
-        background-color: #fafafa; /* より明るい白 */
+        background-color: #fafafa; /* 全体を明るいグレーでトーンアップ */
         margin: 0;
         padding: 20px;
-        color: #333; /* 柔らかい黒 */
+        color: #222; /* 深いグレーで落ち着いた印象 */
     }
 
     .container {
         max-width: 600px;
-        margin: 0 auto;
-        background: #ffffff; /* 純白の背景 */
-        padding: 30px;
-        border-radius: 12px;
-        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1); /* より明確な影 */
-        border: 1px solid #ddd; /* 薄い境界線 */
+        margin: 50px auto;
+        background: #ffffff; /* ピュアホワイト */
+        padding: 40px;
+        border-radius: 16px; /* より柔らかい角丸 */
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1); /* より明確な陰影 */
+        border: 1px solid #e6e6e6; /* 微細な境界線で高級感を演出 */
     }
 
     .container h1 {
         text-align: center;
-        margin-bottom: 25px;
-        font-size: 1.8rem;
-        font-weight: bold;
-        color: #333; /* タイトルの強調 */
+        margin-bottom: 30px;
+        font-size: 2rem;
+        font-weight: 700;
+        color: #111; /* タイトルを目立たせる */
     }
 
     .form-group {
@@ -39,25 +39,25 @@
     .form-group label {
         display: block;
         font-size: 1rem;
-        font-weight: bold;
+        font-weight: 600;
         margin-bottom: 8px;
-        color: #555; /* ラベルを少し明るいトーンに */
+        color: #333; /* ラベルを濃くして視認性アップ */
     }
 
     .form-group input, .form-group select {
         width: 100%;
-        padding: 10px;
+        padding: 12px;
         font-size: 1rem;
-        border: 1px solid #ccc;
+        border: 1px solid #dcdcdc; /* 入力欄に上品な枠線 */
         border-radius: 8px;
-        background-color: #f9f9f9; /* 入力欄の淡い背景色 */
-        transition: border-color 0.3s ease;
+        background-color: #f9f9f9; /* わずかな陰影を持たせる */
+        transition: all 0.3s ease;
     }
 
-    .form-group input:focus {
-        border-color: #007bff; /* フォーカス時の青い境界線 */
+    .form-group input:focus, .form-group select:focus {
+        border-color: #007bff; /* フォーカス時にブルーを採用 */
+        background-color: #ffffff; /* アクティブ感を出す */
         outline: none;
-        background-color: #ffffff; /* アクティブ時により白く */
     }
 
     .form-group input[type="radio"] {
@@ -72,31 +72,31 @@
 
     .buttons {
         text-align: center;
-        margin-top: 20px;
+        margin-top: 30px;
     }
 
     .button {
         display: inline-block;
-        padding: 12px 25px;
+        padding: 14px 28px;
         font-size: 1rem;
-        color: #fff;
-        background-color: #007bff; /* ボタンの青 */
+        color: #ffffff;
+        background-color: #007bff; /* 高級感のあるブルー */
         text-decoration: none;
-        border-radius: 8px;
+        border-radius: 10px; /* より洗練された角丸 */
         margin: 10px 5px;
         cursor: pointer;
         border: none;
-        transition: background-color 0.3s ease, transform 0.2s ease;
+        transition: all 0.3s ease;
     }
 
     .button:hover {
-        background-color: #0056b3; /* ホバー時の濃い青 */
-        transform: translateY(-2px); /* 軽く浮かせる効果 */
+        background-color: #0056b3; /* ホバー時は濃い青 */
+        transform: translateY(-2px); /* ホバー効果で軽く浮かせる */
     }
 
     .button:active {
-        background-color: #004080; /* クリック時の濃い青 */
-        transform: translateY(0); /* 押し込み効果 */
+        background-color: #003d80; /* クリック時はさらに濃い青 */
+        transform: translateY(0); /* 押し込む効果 */
     }
 
     @media (max-width: 600px) {
@@ -105,7 +105,7 @@
         }
 
         .container h1 {
-            font-size: 1.6rem;
+            font-size: 1.8rem;
         }
 
         .form-group input, .form-group select {
