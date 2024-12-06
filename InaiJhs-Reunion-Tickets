@@ -38,7 +38,12 @@
 <body>
     <div class="container">
         <h1>チケット購入</h1>
- <h2>出欠回答がまだの方は回答後、お買い求めください。自動で購入ページにリンクします。</h2>
+<h2>
+  <a href="attendance-form.html" target="_blank" style="text-decoration: none; color: inherit;">
+    出欠回答がまだの方はこちらより回答のうえ、お買い求めください。自動で購入ページにリンクします。
+  </a>
+</h2>
+
         <!-- 早期割引ボタン -->
         <a id="early-bird-button" href="https://square.link/u/a2RyhiAS" class="button" target="_blank">
             早期割引: 6,000円
