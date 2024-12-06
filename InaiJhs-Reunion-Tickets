@@ -63,14 +63,14 @@
 <body>
     <div id="overlay" class="overlay"></div>
     <div id="modal" class="modal">
-        <h2>出欠回答はお済みですか？</h2>
+        <h2>出欠回答は<br>お済みですか？</h2>
         <button class="button" onclick="handleAttendanceResponse('yes')">回答済み</button>
         <button class="button" onclick="handleAttendanceResponse('no')">まだ</button>
     </div>
 
     <div class="container">
         <h1>チケット購入</h1>
-        <h2>出欠回答後に購入できます。</h2>
+    
 
         <!-- 早期割引ボタン -->
         <a id="early-bird-button" href="https://square.link/u/a2RyhiAS" class="button" target="_blank">
