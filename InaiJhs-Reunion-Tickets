@@ -52,7 +52,7 @@
 
     <script>
         // 締切日時設定
-        const EARLY_BIRD_DEADLINE = new Date('2025-04-04T00:00:00'); // 締切日時
+        const EARLY_BIRD_DEADLINE = new Date('2024-12-06T17:07:00'); // 締切日時
         const now = new Date();
 
         // ボタン要素の取得
