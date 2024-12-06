@@ -47,31 +47,18 @@
         .button:hover {
             background-color: #005bb5;
         }
-    </style>
-    <script>
-        function handleAttendanceResponse(response) {
-            if (response === "yes") {
-                alert("出欠回答は完了しています。このままお進みください。");
-                hideModal();
-            } else if (response === "no") {
-                alert("出欠回答ページへ移動します。");
-                window.location.href = "attendance-form.html"; // 出欠回答ページのリンク
+        h2 {
+            font-size: 1.5rem; /* 基本サイズ */
+            max-width: 90%; /* スマホ対応 */
+            margin: 0 auto; /* 中央揃え */
+            line-height: 1.5; /* 行間調整 */
+        }
+        @media (max-width: 600px) {
+            h2 {
+                font-size: 1.2rem; /* スマホ用フォントサイズ */
             }
         }
-
-        function hideModal() {
-            document.getElementById("modal").style.display = "none";
-            document.getElementById("overlay").style.display = "none";
-        }
-
-        function showModal() {
-            document.getElementById("modal").style.display = "flex";
-            document.getElementById("overlay").style.display = "block";
-        }
-
-        // ページ読み込み時にモーダルを表示
-        window.onload = showModal;
-    </script>
+    </style>
 </head>
 <body>
     <div id="overlay" class="overlay"></div>
@@ -96,9 +83,30 @@
         </a>
     </div>
 
-
-
     <script>
+        function handleAttendanceResponse(response) {
+            if (response === "yes") {
+                alert("このままお買い求めください。");
+                hideModal();
+            } else if (response === "no") {
+                alert("出欠回答ページへ移動します。");
+                window.location.href = "attendance-form.html";
+            }
+        }
+
+        function hideModal() {
+            document.getElementById("modal").style.display = "none";
+            document.getElementById("overlay").style.display = "none";
+        }
+
+        function showModal() {
+            document.getElementById("modal").style.display = "flex";
+            document.getElementById("overlay").style.display = "block";
+        }
+
+        window.onload = showModal;
+
+
         // 締切日時設定
         const EARLY_BIRD_DEADLINE = new Date('2025-04-04T00:00:00'); // 締切日時
         const now = new Date();
