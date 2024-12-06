@@ -67,11 +67,7 @@
             earlyBirdButton.removeAttribute('target');
             earlyBirdButton.textContent = '早期割引（販売終了）';
 
-            // 一般チケットリンクも無効化（任意）
-            generalTicketButton.classList.add('disabled');
-            generalTicketButton.href = '#';
-            generalTicketButton.removeAttribute('target');
-            generalTicketButton.textContent = '一般（販売終了）';
+        
         }
     </script>
 </body>
