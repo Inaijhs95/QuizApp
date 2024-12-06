@@ -37,7 +37,7 @@
 </head>
 <body>
     <div class="container">
-        <h1>稲井中学校同窓会チケット購入</h1>
+        <h1>チケット購入</h1>
 
         <!-- 早期割引ボタン -->
         <a id="early-bird-button" href="https://square.link/u/a2RyhiAS" class="button" target="_blank">
