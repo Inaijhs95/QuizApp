@@ -34,15 +34,25 @@
             background-color: #005bb5;
         }
     </style>
+    <script>
+        function checkAttendanceStatus() {
+            const isAnswered = confirm("出欠回答はお済みですか？\nOK: 回答済み\nキャンセル: まだ");
+
+            if (!isAnswered) {
+                // 未回答の場合
+                alert("出欠回答ページへ移動します。");
+                window.location.href = "attendance-form.html"; // 出欠回答ページのリンク
+            } else {
+                // 回答済みの場合
+                alert("チケットをお求めください。");
+            }
+        }
+    </script>
 </head>
-<body>
+<body onload="checkAttendanceStatus()">
     <div class="container">
         <h1>チケット購入</h1>
-<h2>
-  <a href="attendance-form.html" target="_blank" style="text-decoration: none; color: inherit;">
-    出欠回答がまだの方はこちらより回答のうえ、お買い求めください。自動で購入ページにリンクします。
-  </a>
-</h2>
+        <h2>出欠回答後に購入できます。</h2>
 
         <!-- 早期割引ボタン -->
         <a id="early-bird-button" href="https://square.link/u/a2RyhiAS" class="button" target="_blank">
@@ -54,6 +64,7 @@
             一般: 7,000円
         </a>
     </div>
+
 
     <script>
         // 締切日時設定
