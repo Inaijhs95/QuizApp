@@ -10,46 +10,77 @@
             text-align: center;
             margin: 20px;
         }
-        .container {
-            max-width: 600px;
-            margin: 0 auto;
+        .modal {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
             padding: 20px;
-            border: 1px solid #ddd;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
             border-radius: 10px;
+            z-index: 1000;
+        }
+        .overlay {
+            display: block;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 999;
         }
         .button {
             padding: 10px 20px;
             background-color: #007aff;
-            color: #fff;
+            color: white;
             border: none;
             border-radius: 5px;
             cursor: pointer;
             margin: 10px;
         }
-        .button.disabled {
-            background-color: #ccc;
-            cursor: not-allowed;
-        }
-        .button:hover:not(.disabled) {
+        .button:hover {
             background-color: #005bb5;
         }
     </style>
     <script>
-        function checkAttendanceStatus() {
-            const isAnswered = confirm("出欠回答はお済みですか？\nOK: 回答済み\nキャンセル: まだ");
-
-            if (!isAnswered) {
-                // 未回答の場合
+        function handleAttendanceResponse(response) {
+            if (response === "yes") {
+                alert("出欠回答は完了しています。このままお進みください。");
+                hideModal();
+            } else if (response === "no") {
                 alert("出欠回答ページへ移動します。");
                 window.location.href = "attendance-form.html"; // 出欠回答ページのリンク
-            } else {
-                // 回答済みの場合
-                alert("チケットをお求めください。");
             }
         }
+
+        function hideModal() {
+            document.getElementById("modal").style.display = "none";
+            document.getElementById("overlay").style.display = "none";
+        }
+
+        function showModal() {
+            document.getElementById("modal").style.display = "flex";
+            document.getElementById("overlay").style.display = "block";
+        }
+
+        // ページ読み込み時にモーダルを表示
+        window.onload = showModal;
     </script>
 </head>
-<body onload="checkAttendanceStatus()">
+<body>
+    <div id="overlay" class="overlay"></div>
+    <div id="modal" class="modal">
+        <h2>出欠回答はお済みですか？</h2>
+        <button class="button" onclick="handleAttendanceResponse('yes')">回答済み</button>
+        <button class="button" onclick="handleAttendanceResponse('no')">まだ</button>
+    </div>
+
     <div class="container">
         <h1>チケット購入</h1>
         <h2>出欠回答後に購入できます。</h2>
@@ -64,6 +95,7 @@
             一般: 7,000円
         </a>
     </div>
+
 
 
     <script>
