@@ -164,6 +164,30 @@
             alert("認証に失敗しました。リロードして再試行してください。");
         });
 
+    // 期限の設定
+    const earlyBirdDeadline = new Date('2025-04-04T00:00:00');
+    const now = new Date();
+
+    // ページ読み込み時の期限チェックと回答済みチェック
+    window.onload = () => {
+        const answered = localStorage.getItem('attendanceResponse');
+        const formContainer = document.getElementById('attendance-form');
+
+        // 期限切れの場合
+        if (now > earlyBirdDeadline) {
+            formContainer.innerHTML = `
+                <p style="color: red; font-weight: bold;">回答期間が終了しました。</p>`;
+            return;
+        }
+
+        // 回答済みの場合
+        if (answered) {
+            formContainer.innerHTML = `
+                <p style="color: green; font-weight: bold;">既に回答済みです。再回答はできません。</p>`;
+            return;
+        }
+    };
+
     // フォーム送信処理
     const form = document.getElementById('attendance-form');
     const submitButton = document.getElementById('submit-button');
@@ -198,9 +222,11 @@
                 timestamp
             });
 
+            // 回答済みフラグをローカルストレージに保存
+            localStorage.setItem('attendanceResponse', 'true');
+
+            // 出席の場合のリダイレクト
             if (attendance === '出席') {
-                const now = new Date();
-                const earlyBirdDeadline = new Date('2025-04-04T00:00:00');
                 const redirectUrl = now < earlyBirdDeadline 
                     ? "https://square.link/u/a2RyhiAS" // 早割リンク
                     : "https://square.link/u/mclmviX8"; // 一般リンク
@@ -216,6 +242,7 @@
         }
     });
 </script>
+
 
 
 </body>
