@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unauthorized Access Detected</title>
+<style>
+    body {
+        background-color: #000;
+        color: #0f0;
+        font-family: 'Courier New', Courier, monospace;
+        padding: 20px;
+        overflow: hidden;
+    }
+    .blinking {
+        animation: blink 1s infinite;
+    }
+    @keyframes blink {
+        0% { opacity: 1; }
+        50% { opacity: 0; }
+        100% { opacity: 1; }
+    }
+    #message {
+        height: 300px;
+        overflow-y: auto;
+        border: 1px solid #0f0;
+        padding: 10px;
+        white-space: pre-wrap;
+    }
+    #hacker-popup {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background-color: #111;
+        color: #0f0;
+        padding: 20px;
+        border: 2px solid #0f0;
+        font-size: 18px;
+        text-align: center;
+        z-index: 1000;
+        opacity: 0;
+        transition: opacity 0.5s;
+        visibility: hidden;
+    }
+    #final-message {
+        font-size: 24px;
+        text-align: center;
+        color: #0f0;
+    }
+</style>
+</head>
+<body>
+
+<h1 id="alert" class="blinking">Your device has been hacked</h1>
+<div id="message"></div>
+<div id="hacker-popup">⚠️ A message from the hacker has arrived.</div>
+
+<script>
+    // List of realistic personal data leak messages
+    const personalDataMessages = [
+        "IP Address: 203.***.***.58",
+        "Location: Japan",
+        "Device: iPhone (iOS)",
+        "Username: ****",
+        "Email: private***@softbank.jp",
+        "Backup Email: ***@gmail.com",
+        "Recent Browsing History: https://***.rakuten.co.jp, https://***.mybank.co.jp/login",
+        "Saved Passwords: 47 accounts (some compromised)",
+        "Credit Card Info: ****-****-****-**** (Exp: 03/28, VISA)",
+        "Bank Accounts Linked: Mitsubishi UFJ, Mizuho, SMBC",
+        "Call Log: Last call - +81 090-****-**** (Recent: Boss)",
+        "Social Media: Logged in on LINE, Twitter (X), Facebook",
+        "Location Tracking: Frequent visits to Shinjuku, Akihabara, and Odaiba",
+        "VPN Status: OFF (IP visible)",
+        "Recent Search Terms: “how to erase browsing history,” “Bitcoin exchange Japan”",
+        "Recent Photos: Last photo taken near Tokyo Tower",
+        "Cloud Services: iCloud, Google Drive (Recent upload: 'Tax documents.pdf')",
+        "Streaming Accounts: Netflix Japan, Hulu Japan, Amazon Prime Video",
+        "Recent Transactions: ¥8,200 at FamilyMart, ¥12,500 at Uniqlo Ginza",
+        "Wi-Fi Networks Connected: 'Home_WiFi_5G', 'Cafe_Free_WiFi'",
+        "IP Address: 203.***.***.58",
+        "Location: Japan",
+        "Device: iPhone (iOS)",
+        "Username: ****",
+        "Email: private***@softbank.jp",
+        "Backup Email: ***@gmail.com",
+        "Recent Browsing History: https://***.rakuten.co.jp, https://***.mybank.co.jp/login",
+        "Saved Passwords: 47 accounts (some compromised)",
+        "Credit Card Info: ****-****-****-**** (Exp: 03/28, VISA)",
+        "Bank Accounts Linked: Mitsubishi UFJ, Mizuho, SMBC",
+        "Call Log: Last call - +81 090-****-**** (Recent: Boss)",
+        "Social Media: Logged in on LINE, Twitter (X), Facebook",
+        "Location Tracking: Frequent visits to Shinjuku, Akihabara, and Odaiba",
+        "VPN Status: OFF (IP visible)",
+        "Recent Search Terms: “how to erase browsing history,” “Bitcoin exchange Japan”",
+        "Recent Photos: Last photo taken near Tokyo Tower",
+        "Cloud Services: iCloud, Google Drive (Recent upload: 'Tax documents.pdf')",
+        "Streaming Accounts: Netflix Japan, Hulu Japan, Amazon Prime Video",
+        "Recent Transactions: ¥8,200 at FamilyMart, ¥12,500 at Uniqlo Ginza",
+        "Wi-Fi Networks Connected: 'Home_WiFi_5G', 'Cafe_Free_WiFi'",
+        "IP Address: 203.***.***.58",
+        "Location: Japan",
+        "Device: iPhone (iOS)",
+        "Username: ****",
+        "Email: private***@softbank.jp",
+        "IP Address: 203.***.***.58",
+        "Location: Japan",
+        "Device: iPhone (iOS)",
+        "Username: ****",
+        "Email: private***@softbank.jp",
+        "Backup Email: ***@gmail.com",
+        "Recent Browsing History: https://***.rakuten.co.jp, https://***.mybank.co.jp/login",
+        "Saved Passwords: 47 accounts (some compromised)",
+        "Credit Card Info: ****-****-****-**** (Exp: 03/28, VISA)",
+        "Bank Accounts Linked: Mitsubishi UFJ, Mizuho, SMBC",
+        "Call Log: Last call - +81 090-****-**** (Recent: Boss)",
+        "Social Media: Logged in on LINE, Twitter (X), Facebook",
+        "Location Tracking: Frequent visits to Shinjuku, Akihabara, and Odaiba",
+        "VPN Status: OFF (IP visible)",
+        "Recent Search Terms: “how to erase browsing history,” “Bitcoin exchange Japan”",
+        "Recent Photos: Last photo taken near Tokyo Tower",
+        "Cloud Services: iCloud, Google Drive (Recent upload: 'Tax documents.pdf')",
+        "Streaming Accounts: Netflix Japan, Hulu Japan, Amazon Prime Video",
+        "Recent Transactions: ¥8,200 at FamilyMart, ¥12,500 at Uniqlo Ginza",
+        "Wi-Fi Networks Connected: 'Home_WiFi_5G', 'Cafe_Free_WiFi'",
+        "IP Address: 203.***.***.58",
+        "Location: Japan",
+        "Device: iPhone (iOS)",
+        "Username: ****",
+        "Email: private***@softbank.jp",
+        "Backup Email: ***@gmail.com",
+        "Recent Browsing History: https://***.rakuten.co.jp, https://***.mybank.co.jp/login",
+        "Saved Passwords: 47 accounts (some compromised)",
+        "Credit Card Info: ****-****-****-**** (Exp: 03/28, VISA)",
+        "Bank Accounts Linked: Mitsubishi UFJ, Mizuho, SMBC",
+        "Call Log: Last call - +81 090-****-**** (Recent: Boss)",
+        "Social Media: Logged in on LINE, Twitter (X), Facebook",
+        "Location Tracking: Frequent visits to Shinjuku, Akihabara, and Odaiba",
+        "VPN Status: OFF (IP visible)",
+        "Recent Search Terms: “how to erase browsing history,” “Bitcoin exchange Japan”",
+        "Recent Photos: Last photo taken near Tokyo Tower",
+        "Cloud Services: iCloud, Google Drive (Recent upload: 'Tax documents.pdf')",
+        "Streaming Accounts: Netflix Japan, Hulu Japan, Amazon Prime Video",
+        "Recent Transactions: ¥8,200 at FamilyMart, ¥12,500 at Uniqlo Ginza",
+        "Wi-Fi Networks Connected: 'Home_WiFi_5G', 'Cafe_Free_WiFi'",
+        "IP Address: 203.***.***.58",
+        "Location: Japan",
+        "Device: iPhone (iOS)",
+        "Username: ****",
+        "Email: private***@softbank.jp",
+        "Backup Email: ***@gmail.com",
+        "Recent Browsing History: https://***.rakuten.co.jp, https://***.mybank.co.jp/login",
+        "Saved Passwords: 47 accounts (some compromised)",
+        "Credit Card Info: ****-****-****-**** (Exp: 03/28, VISA)",
+        "Bank Accounts Linked: Mitsubishi UFJ, Mizuho, SMBC",
+        "Call Log: Last call - +81 090-****-**** (Recent: Boss)",
+        "Social Media: Logged in on LINE, Twitter (X), Facebook",
+        "Location Tracking: Frequent visits to Shinjuku, Akihabara, and Odaiba",
+        "VPN Status: OFF (IP visible)",
+        "Recent Search Terms: “how to erase browsing history,” “Bitcoin exchange Japan”",
+        "Recent Photos: Last photo taken near Tokyo Tower",
+        "Cloud Services: iCloud, Google Drive (Recent upload: 'Tax documents.pdf')",
+        "Streaming Accounts: Netflix Japan, Hulu Japan, Amazon Prime Video",
+        "Recent Transactions: ¥8,200 at FamilyMart, ¥12,500 at Uniqlo Ginza",
+        "Wi-Fi Networks Connected: 'Home_WiFi_5G', 'Cafe_Free_WiFi'",
+        "IP Address: 203.***.***.58",
+        "Location: Japan",
+        "Device: iPhone (iOS)",
+        "Username: ****",
+        "Email: private***@softbank.jp",
+        "Backup Email: ***@gmail.com",
+        "Recent Browsing History: https://***.rakuten.co.jp, https://***.mybank.co.jp/login",
+        "Saved Passwords: 47 accounts (some compromised)",
+        "Credit Card Info: ****-****-****-**** (Exp: 03/28, VISA)",
+        "Bank Accounts Linked: Mitsubishi UFJ, Mizuho, SMBC",
+        "Call Log: Last call - +81 090-****-**** (Recent: Boss)",
+        "Social Media: Logged in on LINE, Twitter (X), Facebook",
+        "Location Tracking: Frequent visits to Shinjuku, Akihabara, and Odaiba",
+        "VPN Status: OFF (IP visible)",
+        "Recent Search Terms: “how to erase browsing history,” “Bitcoin exchange Japan”",
+        "Recent Photos: Last photo taken near Tokyo Tower",
+        "Cloud Services: iCloud, Google Drive (Recent upload: 'Tax documents.pdf')",
+        "Streaming Accounts: Netflix Japan, Hulu Japan, Amazon Prime Video",
+        "Recent Transactions: ¥8,200 at FamilyMart, ¥12,500 at Uniqlo Ginza",
+        "Wi-Fi Networks Connected: 'Home_WiFi_5G', 'Cafe_Free_WiFi'",
+        "IP Address: 203.***.***.58",
+        "Location: Japan",
+        "Device: iPhone (iOS)",
+        "Username: ****",
+        "Email: private***@softbank.jp",
+        "Backup Email: ***@gmail.com",
+        "Recent Browsing History: https://***.rakuten.co.jp, https://***.mybank.co.jp/login",
+        "Saved Passwords: 47 accounts (some compromised)",
+        "Credit Card Info: ****-****-****-**** (Exp: 03/28, VISA)",
+        "Bank Accounts Linked: Mitsubishi UFJ, Mizuho, SMBC",
+        "Call Log: Last call - +81 090-****-**** (Recent: Boss)",
+        "Social Media: Logged in on LINE, Twitter (X), Facebook",
+        "Location Tracking: Frequent visits to Shinjuku, Akihabara, and Odaiba",
+        "VPN Status: OFF (IP visible)",
+        "Recent Search Terms: “how to erase browsing history,” “Bitcoin exchange Japan”", "IP Address: 203.***.***.58",
+        "Location: Japan",
+        "Device: iPhone (iOS)",
+        "Username: ****",
+        "Email: private***@softbank.jp",
+        "Backup Email: ***@gmail.com",
+        "Recent Browsing History: https://***.rakuten.co.jp, https://***.mybank.co.jp/login",
+        "Saved Passwords: 47 accounts (some compromised)",
+        "Credit Card Info: ****-****-****-**** (Exp: 03/28, VISA)",
+        "Bank Accounts Linked: Mitsubishi UFJ, Mizuho, SMBC",
+        "Call Log: Last call - +81 090-****-**** (Recent: Boss)",
+        "Social Media: Logged in on LINE, Twitter (X), Facebook",
+        "Location Tracking: Frequent visits to Shinjuku, Akihabara, and Odaiba",
+        "VPN Status: OFF (IP visible)",
+        "Recent Search Terms: “how to erase browsing history,” “Bitcoin exchange Japan”",
+        "Recent Photos: Last photo taken near Tokyo Tower",
+        "Cloud Services: iCloud, Google Drive (Recent upload: 'Tax documents.pdf')",
+        "Streaming Accounts: Netflix Japan, Hulu Japan, Amazon Prime Video",
+        "Recent Transactions: ¥8,200 at FamilyMart, ¥12,500 at Uniqlo Ginza",
+        "Wi-Fi Networks Connected: 'Home_WiFi_5G', 'Cafe_Free_WiFi'",
+        "IP Address: 203.***.***.58",
+        "Location: Japan",
+        "Device: iPhone (iOS)",
+        "Username: ****",
+        "Email: private***@softbank.jp",
+        "Backup Email: ***@gmail.com",
+        "Recent Browsing History: https://***.rakuten.co.jp, https://***.mybank.co.jp/login",
+        "Saved Passwords: 47 accounts (some compromised)",
+        "Credit Card Info: ****-****-****-**** (Exp: 03/28, VISA)",
+        "Bank Accounts Linked: Mitsubishi UFJ, Mizuho, SMBC",
+        "Call Log: Last call - +81 090-****-**** (Recent: Boss)",
+        "Social Media: Logged in on LINE, Twitter (X), Facebook",
+        "Location Tracking: Frequent visits to Shinjuku, Akihabara, and Odaiba",
+        "VPN Status: OFF (IP visible)",
+        "Recent Search Terms: “how to erase browsing history,” “Bitcoin exchange Japan”",
+        "Recent Photos: Last photo taken near Tokyo Tower",
+        "Cloud Services: iCloud, Google Drive (Recent upload: 'Tax documents.pdf')",
+        "Streaming Accounts: Netflix Japan, Hulu Japan, Amazon Prime Video",
+        "Recent Transactions: ¥8,200 at FamilyMart, ¥12,500 at Uniqlo Ginza",
+        "Wi-Fi Networks Connected: 'Home_WiFi_5G', 'Cafe_Free_WiFi'",
+        "IP Address: 203.***.***.58",
+        "Location: Japan",
+        "Device: iPhone (iOS)",
+        "Username: ****",
+        "Email: private***@softbank.jp",
+        "Backup Email: ***@gmail.com",
+        "Recent Browsing History: https://***.rakuten.co.jp, https://***.mybank.co.jp/login",
+        "Saved Passwords: 47 accounts (some compromised)",
+        "Credit Card Info: ****-****-****-**** (Exp: 03/28, VISA)",
+        "Bank Accounts Linked: Mitsubishi UFJ, Mizuho, SMBC",
+        "Call Log: Last call - +81 090-****-**** (Recent: Boss)",
+        "Social Media: Logged in on LINE, Twitter (X), Facebook",
+        "Location Tracking: Frequent visits to Shinjuku, Akihabara, and Odaiba",
+        "VPN Status: OFF (IP visible)",
+        "Recent Search Terms: “how to erase browsing history,” “Bitcoin exchange Japan”",
+        "Recent Photos: Last photo taken near Tokyo Tower",
+        "Cloud Services: iCloud, Google Drive (Recent upload: 'Tax documents.pdf')",
+        "Streaming Accounts: Netflix Japan, Hulu Japan, Amazon Prime Video",
+        "Recent Transactions: ¥8,200 at FamilyMart, ¥12,500 at Uniqlo Ginza",
+        "Wi-Fi Networks Connected: 'Home_WiFi_5G', 'Cafe_Free_WiFi'",
+        "IP Address: 203.***.***.58",
+        "Location: Japan",
+        "Device: iPhone (iOS)",
+        "Username: ****",
+        "Email: private***@softbank.jp",
+        "Backup Email: ***@gmail.com",
+        "Recent Browsing History: https://***.rakuten.co.jp, https://***.mybank.co.jp/login",
+        "Saved Passwords: 47 accounts (some compromised)",
+        "Credit Card Info: ****-****-****-**** (Exp: 03/28, VISA)",
+        "Bank Accounts Linked: Mitsubishi UFJ, Mizuho, SMBC",
+        "Call Log: Last call - +81 090-****-**** (Recent: Boss)",
+        "Social Media: Logged in on LINE, Twitter (X), Facebook",
+        "Location Tracking: Frequent visits to Shinjuku, Akihabara, and Odaiba",
+        "VPN Status: OFF (IP visible)",
+        "Recent Search Terms: “how to erase browsing history,” “Bitcoin exchange Japan”",
+        "Recent Photos: Last photo taken near Tokyo Tower",
+        "Cloud Services: iCloud, Google Drive (Recent upload: 'Tax documents.pdf')",
+        "Streaming Accounts: Netflix Japan, Hulu Japan, Amazon Prime Video",
+        "Recent Transactions: ¥8,200 at FamilyMart, ¥12,500 at Uniqlo Ginza",
+        "Wi-Fi Networks Connected: 'Home_WiFi_5G', 'Cafe_Free_WiFi'",
+        "IP Address: 203.***.***.58",
+        "Location: Japan",
+        "Device: iPhone (iOS)",
+        "Username: ****",
+        "Email: private***@softbank.jp",
+        "Backup Email: ***@gmail.com",
+        "Recent Browsing History: https://***.rakuten.co.jp, https://***.mybank.co.jp/login",
+        "Saved Passwords: 47 accounts (some compromised)",
+        "Credit Card Info: ****-****-****-**** (Exp: 03/28, VISA)",
+        "Bank Accounts Linked: Mitsubishi UFJ, Mizuho, SMBC",
+        "Call Log: Last call - +81 090-****-**** (Recent: Boss)",
+        "Social Media: Logged in on LINE, Twitter (X), Facebook",
+        "Location Tracking: Frequent visits to Shinjuku, Akihabara, and Odaiba",
+        "VPN Status: OFF (IP visible)",
+        "Recent Search Terms: “how to erase browsing history,” “Bitcoin exchange Japan”",
+        "Recent Photos: Last photo taken near Tokyo Tower",
+        "Cloud Services: iCloud, Google Drive (Recent upload: 'Tax documents.pdf')",
+        "Streaming Accounts: Netflix Japan, Hulu Japan, Amazon Prime Video",
+        "Recent Transactions: ¥8,200 at FamilyMart, ¥12,500 at Uniqlo Ginza",
+        "Wi-Fi Networks Connected: 'Home_WiFi_5G', 'Cafe_Free_WiFi'",
+        "IP Address: 203.***.***.58",
+        "Location: Japan",
+        "Device: iPhone (iOS)",
+        "Username: ****",
+        "Email: private***@softbank.jp",
+        "Backup Email: ***@gmail.com",
+        "Recent Browsing History: https://***.rakuten.co.jp, https://***.mybank.co.jp/login",
+        "Saved Passwords: 47 accounts (some compromised)",
+        "Credit Card Info: ****-****-****-**** (Exp: 03/28, VISA)",
+        "Bank Accounts Linked: Mitsubishi UFJ, Mizuho, SMBC",
+        "Call Log: Last call - +81 090-****-**** (Recent: Boss)",
+        "Social Media: Logged in on LINE, Twitter (X), Facebook",
+        "Location Tracking: Frequent visits to Shinjuku, Akihabara, and Odaiba",
+        "VPN Status: OFF (IP visible)",
+        "Recent Search Terms: “how to erase browsing history,” “Bitcoin exchange Japan”", "IP Address: 203.***.***.58",
+        "Location: Japan",
+        "Device: iPhone (iOS)",
+        "Username: ****",
+        "Email: private***@softbank.jp",
+        "Backup Email: ***@gmail.com",
+        "Recent Browsing History: https://***.rakuten.co.jp, https://***.mybank.co.jp/login",
+        "Saved Passwords: 47 accounts (some compromised)",
+        "Credit Card Info: ****-****-****-**** (Exp: 03/28, VISA)",
+        "Bank Accounts Linked: Mitsubishi UFJ, Mizuho, SMBC",
+        "Call Log: Last call - +81 090-****-**** (Recent: Boss)",
+        "Social Media: Logged in on LINE, Twitter (X), Facebook",
+        "Location Tracking: Frequent visits to Shinjuku, Akihabara, and Odaiba",
+        "VPN Status: OFF (IP visible)",
+        "Recent Search Terms: “how to erase browsing history,” “Bitcoin exchange Japan”",
+        "Recent Photos: Last photo taken near Tokyo Tower",
+        "Cloud Services: iCloud, Google Drive (Recent upload: 'Tax documents.pdf')",
+        "Streaming Accounts: Netflix Japan, Hulu Japan, Amazon Prime Video",
+        "Recent Transactions: ¥8,200 at FamilyMart, ¥12,500 at Uniqlo Ginza",
+        "Wi-Fi Networks Connected: 'Home_WiFi_5G', 'Cafe_Free_WiFi'",
+        "IP Address: 203.***.***.58",
+        "Location: Japan",
+        "Device: iPhone (iOS)",
+        "Username: ****",
+        "Email: private***@softbank.jp",
+        "Backup Email: ***@gmail.com",
+        "Recent Browsing History: https://***.rakuten.co.jp, https://***.mybank.co.jp/login",
+        "Saved Passwords: 47 accounts (some compromised)",
+        "Credit Card Info: ****-****-****-**** (Exp: 03/28, VISA)",
+        "Bank Accounts Linked: Mitsubishi UFJ, Mizuho, SMBC",
+        "Call Log: Last call - +81 090-****-**** (Recent: Boss)",
+        "Social Media: Logged in on LINE, Twitter (X), Facebook",
+        "Location Tracking: Frequent visits to Shinjuku, Akihabara, and Odaiba",
+        "VPN Status: OFF (IP visible)",
+        "Recent Search Terms: “how to erase browsing history,” “Bitcoin exchange Japan”",
+        "Recent Photos: Last photo taken near Tokyo Tower",
+        "Cloud Services: iCloud, Google Drive (Recent upload: 'Tax documents.pdf')",
+        "Streaming Accounts: Netflix Japan, Hulu Japan, Amazon Prime Video",
+        "Recent Transactions: ¥8,200 at FamilyMart, ¥12,500 at Uniqlo Ginza",
+        "Wi-Fi Networks Connected: 'Home_WiFi_5G', 'Cafe_Free_WiFi'",
+        "IP Address: 203.***.***.58",
+        "Location: Japan",
+        "Device: iPhone (iOS)",
+        "Username: ****",
+        "Email: private***@softbank.jp",
+        "Backup Email: ***@gmail.com",
+        "Recent Browsing History: https://***.rakuten.co.jp, https://***.mybank.co.jp/login",
+        "Saved Passwords: 47 accounts (some compromised)",
+        "Credit Card Info: ****-****-****-**** (Exp: 03/28, VISA)",
+        "Bank Accounts Linked: Mitsubishi UFJ, Mizuho, SMBC",
+        "Call Log: Last call - +81 090-****-**** (Recent: Boss)",
+        "Social Media: Logged in on LINE, Twitter (X), Facebook",
+        "Location Tracking: Frequent visits to Shinjuku, Akihabara, and Odaiba",
+        "VPN Status: OFF (IP visible)",
+        "Recent Search Terms: “how to erase browsing history,” “Bitcoin exchange Japan”",
+        "Recent Photos: Last photo taken near Tokyo Tower",
+        "Cloud Services: iCloud, Google Drive (Recent upload: 'Tax documents.pdf')",
+        "Streaming Accounts: Netflix Japan, Hulu Japan, Amazon Prime Video",
+        "Recent Transactions: ¥8,200 at FamilyMart, ¥12,500 at Uniqlo Ginza",
+        "Wi-Fi Networks Connected: 'Home_WiFi_5G', 'Cafe_Free_WiFi'",
+        "IP Address: 203.***.***.58",
+        "Location: Japan",
+        "Device: iPhone (iOS)",
+        "Username: ****",
+        "Email: private***@softbank.jp",
+        "Backup Email: ***@gmail.com",
+        "Recent Browsing History: https://***.rakuten.co.jp, https://***.mybank.co.jp/login",
+        "Saved Passwords: 47 accounts (some compromised)",
+        "Credit Card Info: ****-****-****-**** (Exp: 03/28, VISA)",
+        "Bank Accounts Linked: Mitsubishi UFJ, Mizuho, SMBC",
+        "Call Log: Last call - +81 090-****-**** (Recent: Boss)",
+        "Social Media: Logged in on LINE, Twitter (X), Facebook",
+        "Location Tracking: Frequent visits to Shinjuku, Akihabara, and Odaiba",
+        "VPN Status: OFF (IP visible)",
+        "Recent Search Terms: “how to erase browsing history,” “Bitcoin exchange Japan”",
+        "Recent Photos: Last photo taken near Tokyo Tower",
+        "Cloud Services: iCloud, Google Drive (Recent upload: 'Tax documents.pdf')",
+        "Streaming Accounts: Netflix Japan, Hulu Japan, Amazon Prime Video",
+        "Recent Transactions: ¥8,200 at FamilyMart, ¥12,500 at Uniqlo Ginza",
+        "Wi-Fi Networks Connected: 'Home_WiFi_5G', 'Cafe_Free_WiFi'",
+        "IP Address: 203.***.***.58",
+        "Location: Japan",
+        "Device: iPhone (iOS)",
+        "Username: ****",
+        "Email: private***@softbank.jp",
+        "Backup Email: ***@gmail.com",
+        "Recent Browsing History: https://***.rakuten.co.jp, https://***.mybank.co.jp/login",
+        "Saved Passwords: 47 accounts (some compromised)",
+        "Credit Card Info: ****-****-****-**** (Exp: 03/28, VISA)",
+        "Bank Accounts Linked: Mitsubishi UFJ, Mizuho, SMBC",
+        "Call Log: Last call - +81 090-****-**** (Recent: Boss)",
+        "Social Media: Logged in on LINE, Twitter (X), Facebook",
+        "Location Tracking: Frequent visits to Shinjuku, Akihabara, and Odaiba",
+        "VPN Status: OFF (IP visible)",
+        "Recent Search Terms: “how to erase browsing history,” “Bitcoin exchange Japan”",
+        "Recent Photos: Last photo taken near Tokyo Tower",
+        "Cloud Services: iCloud, Google Drive (Recent upload: 'Tax documents.pdf')",
+        "Streaming Accounts: Netflix Japan, Hulu Japan, Amazon Prime Video",
+        "Recent Transactions: ¥8,200 at FamilyMart, ¥12,500 at Uniqlo Ginza",
+        "Wi-Fi Networks Connected: 'Home_WiFi_5G', 'Cafe_Free_WiFi'",
+        "IP Address: 203.***.***.58",
+        "Location: Japan",
+        "Device: iPhone (iOS)",
+        "Username: ****",
+        "Email: private***@softbank.jp",
+        "Backup Email: ***@gmail.com",
+        "Recent Browsing History: https://***.rakuten.co.jp, https://***.mybank.co.jp/login",
+        "Saved Passwords: 47 accounts (some compromised)",
+        "Credit Card Info: ****-****-****-**** (Exp: 03/28, VISA)",
+        "Bank Accounts Linked: Mitsubishi UFJ, Mizuho, SMBC",
+        "Call Log: Last call - +81 090-****-**** (Recent: Boss)",
+        "Social Media: Logged in on LINE, Twitter (X), Facebook",
+        "Location Tracking: Frequent visits to Shinjuku, Akihabara, and Odaiba",
+        "VPN Status: OFF (IP visible)",
+        "Recent Search Terms: “how to erase browsing history,” “Bitcoin exchange Japan”",
+        "Recent Search Terms: “how to erase browsing history,” “Bitcoin exchange Japan”",
+        "Recent Photos: Last photo taken near Tokyo Tower",
+        "Cloud Services: iCloud, Google Drive (Recent upload: 'Tax documents.pdf')",
+        "Streaming Accounts: Netflix Japan, Hulu Japan, Amazon Prime Video",
+        "Recent Transactions: ¥8,200 at FamilyMart, ¥12,500 at Uniqlo Ginza",
+        "Wi-Fi Networks Connected: 'Home_WiFi_5G', 'Cafe_Free_WiFi'",
+        "IP Address: 203.***.***.58",
+        "Location: Japan",
+        "Device: iPhone (iOS)",
+        "Username: ****",
+        "Email: private***@softbank.jp",
+        "Backup Email: ***@gmail.com",
+        "Recent Browsing History: https://***.rakuten.co.jp, https://***.mybank.co.jp/login",
+        "Saved Passwords: 47 accounts (some compromised)",
+        "Credit Card Info: ****-****-****-**** (Exp: 03/28, VISA)",
+        "Bank Accounts Linked: Mitsubishi UFJ, Mizuho, SMBC",
+        "Call Log: Last call - +81 090-****-**** (Recent: Boss)",
+        "Social Media: Logged in on LINE, Twitter (X), Facebook",
+        "Location Tracking: Frequent visits to Shinjuku, Akihabara, and Odaiba",
+        "VPN Status: OFF (IP visible)",
+        "Recent Search Terms: “how to erase browsing history,” “Bitcoin exchange Japan”",
+        "Recent Photos: Last photo taken near Tokyo Tower",
+        "Cloud Services: iCloud, Google Drive (Recent upload: 'Tax documents.pdf')",
+        "Streaming Accounts: Netflix Japan, Hulu Japan, Amazon Prime Video",
+        "Recent Transactions: ¥8,200 at FamilyMart, ¥12,500 at Uniqlo Ginza",
+        "Wi-Fi Networks Connected: 'Home_WiFi_5G', 'Cafe_Free_WiFi'",
+        "Bluetooth Devices: Apple Watch, AirPods, Car Bluetooth"
+    ];
+
+    // Function to display personal data messages at high speed
+    function showScrollingMessages(index = 0) {
+        if (index < personalDataMessages.length) {
+            const messageElement = document.getElementById("message");
+            messageElement.textContent += personalDataMessages[index] + "\n";
+            messageElement.scrollTop = messageElement.scrollHeight; // Auto-scroll to the bottom
+            setTimeout(() => showScrollingMessages(index + 1), 20); // High speed: 20ms interval
+        } else {
+            showHackerPopup();
+        }
+    }
+
+    // Function to display hacker message as a pop-up
+    function showHackerPopup() {
+        const hackerPopup = document.getElementById("hacker-popup");
+        hackerPopup.style.visibility = "visible";
+        hackerPopup.style.opacity = "1";
+        setTimeout(clearScreenAndShowFinalMessage, 4000); // Short delay for effect
+    }
+
+    // Function to clear the screen and show the final message
+    function clearScreenAndShowFinalMessage() {
+        document.body.innerHTML = ""; // Clear all previous content
+        const finalMessage = document.createElement("p");
+     finalMessage.innerHTML = 
+   "ここからキャッシュバック抽選申込はできません<br><br><br>" + 
+    "<br><br><br>" +
+    "<br><br><br><br>";
+
+   ;
+
+        finalMessage.id = "final-message";
+        document.body.appendChild(finalMessage);
+    }
+
+    // Start displaying messages on page load
+    window.onload = () => {
+        showScrollingMessages();
+    };
+</script>
+
+</body>
+</html>
