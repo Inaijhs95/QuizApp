@@ -6,66 +6,76 @@
     <title>参加人数</title>
 <style>
     /* 全体設定 */
-    body {
-        font-family: 'Arial', sans-serif;
-        background-color: #f4f4f9; /* 落ち着いたライトグレー */
-        color: #333; /* 高級感のある文字色 */
-        margin: 0;
-        padding: 0;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        min-height: 100vh; /* 縦中央寄せ */
-    }
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f2f2f2; /* 明るいグレーの背景 */
+    color: #333; /* シックな濃いグレー文字 */
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
 
-    /* コンテナ設定 */
+/* コンテナ設定 */
+.container {
+    max-width: 600px;
+    width: 100%;
+    background: #fff;
+    padding: 40px 30px;
+    border-radius: 16px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    border: 1px solid #ddd; /* 控えめな境界線 */
+}
+
+/* ヘッダー設定 */
+.container h1 {
+    font-size: 2rem;
+    color: #222; 
+    margin-bottom: 20px;
+    font-weight: bold;
+    letter-spacing: 0.05em;
+}
+
+/* データ表示用 */
+.count {
+    font-size: 1.3rem;
+    margin: 15px 0;
+    color: #444;
+    line-height: 1.6;
+}
+
+.count span {
+    font-weight: bold;
+    color: #000; 
+    padding: 2px 6px;
+    background: #e8e8e8;
+    border-radius: 4px;
+}
+
+/* 更新タイム */
+.update-time {
+    font-size: 0.9rem;
+    color: #666;
+    margin-top: 20px;
+    border-top: 1px solid #ddd;
+    padding-top: 20px;
+    font-style: italic;
+}
+
+/* メディアクエリ（レスポンシブ対応） */
+@media (max-width: 768px) {
     .container {
-        max-width: 600px;
-        width: 100%;
-        background: #ffffff; /* 白で清潔感を演出 */
-        padding: 40px 30px;
-        border-radius: 16px; /* 滑らかな角丸 */
-        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15); /* 立体感を追加 */
-        text-align: center;
+        padding: 30px 20px;
     }
 
-    /* ヘッダー設定 */
     .container h1 {
-        font-size: 2rem;
-        color: #1a1a1a; /* 見やすいダークグレー */
-        margin-bottom: 20px;
-        font-weight: bold;
+        font-size: 1.8rem;
     }
+}
 
-    /* データ表示用 */
-    .count {
-        font-size: 1.3rem;
-        margin: 15px 0;
-        color: #444;
-    }
-
-    .count span {
-        font-weight: bold;
-        color: #1d4e89; /* データ部分を青に */
-    }
-
-    /* 更新タイム */
-    .update-time {
-        font-size: 0.9rem;
-        color: #777;
-        margin-top: 20px;
-    }
-
-    /* メディアクエリ（レスポンシブ対応） */
-    @media (max-width: 768px) {
-        .container {
-            padding: 30px 20px;
-        }
-
-        .container h1 {
-            font-size: 1.8rem;
-        }
-    }
 </style>
 
 
