@@ -4,93 +4,113 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>参加人数</title>
-<style>
-    /* 全体設定 */
-    body {
-        font-family: 'Arial', sans-serif;
-        background-color: #2f2921; /* 背景をダークブラウンに変更 */
-        color: #9e8123; /* シックなゴールド文字 */
-        margin: 0;
-        padding: 0;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        min-height: 100vh;
-    }
+    <!-- Font Awesome CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-puUu4t3Tz0bXKpqHya5OKfUsfO6p5VIF7F/RCd5RnP1AIGfVU8F1RzotE6XzM2GkR+gGk/08yf1S1YWk+HCJ3Q==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+        /* 全体設定 */
+        body {
+            font-family: 'Source Han Serif JP', serif; /* エレガントなフォントに変更 */
+            background-color: #2f2921; /* 背景をダークブラウンに変更 */
+            color: #9e8123; /* シックなゴールド文字 */
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
 
-    /* コンテナ設定 */
-    .container {
-        max-width: 600px;
-        width: 100%;
-        background: #19171b; /* コンテナ背景を非常にダークな色に変更 */
-        padding: 40px 30px;
-        border-radius: 16px;
-        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2); /* シャドウを少し濃く */
-        text-align: center;
-        border: 1px solid #9e8123; /* ゴールドの境界線 */
-    }
-
-    /* ヘッダー設定 */
-    .container h1 {
-        font-size: 2rem;
-        color: #9e8123; /* タイトルをゴールドに変更 */
-        margin-bottom: 20px;
-        font-weight: bold;
-        letter-spacing: 0.05em;
-    }
-
-    /* データ表示用 */
-    .count {
-        font-size: 1.3rem;
-        margin: 15px 0;
-        color: #d2b48c; /* テキストカラーを明るめのゴールドに調整 */
-        line-height: 1.6;
-    }
-
-    .count span {
-        font-weight: bold;
-        color: #19171b; /* ダークブラウンに変更 */
-        padding: 2px 6px;
-        background: #9e8123; /* ゴールド背景 */
-        border-radius: 4px;
-    }
-
-    /* 更新タイム */
-    .update-time {
-        font-size: 0.9rem;
-        color: #d2b48c; /* テキストカラーを明るめのゴールドに調整 */
-        margin-top: 20px;
-        border-top: 1px solid #9e8123; /* ゴールドの境界線 */
-        padding-top: 20px;
-        font-style: italic;
-    }
-
-    /* メディアクエリ（レスポンシブ対応） */
-    @media (max-width: 768px) {
+        /* コンテナ設定 */
         .container {
-            padding: 30px 20px;
+            max-width: 600px;
+            width: 90%;
+            background: #19171b; /* コンテナ背景を非常にダークな色に変更 */
+            padding: 40px 30px;
+            border-radius: 16px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2); /* シャドウを少し濃く */
+            text-align: center;
+            border: 1px solid #9e8123; /* ゴールドの境界線 */
         }
 
+        /* ヘッダー設定 */
         .container h1 {
-            font-size: 1.8rem;
+            font-size: 2rem;
+            color: #9e8123; /* タイトルをゴールドに変更 */
+            margin-bottom: 30px;
+            font-weight: bold;
+            letter-spacing: 0.05em;
         }
-    }
-</style>
 
+        /* データ表示用 */
+        .count {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.3rem;
+            margin: 15px 0;
+            color: #d2b48c; /* テキストカラーを明るめのゴールドに調整 */
+            line-height: 1.6;
+        }
 
+        .count i {
+            margin-right: 10px;
+            color: #9e8123; /* アイコンカラーをゴールドに */
+            font-size: 1.5rem;
+            width: 30px;
+        }
 
+        .count span {
+            font-weight: bold;
+            color: #19171b; /* ダークブラウンに変更 */
+            padding: 2px 6px;
+            background: #9e8123; /* ゴールド背景 */
+            border-radius: 4px;
+            min-width: 30px;
+            display: inline-block;
+            text-align: center;
+        }
+
+        /* 更新タイム */
+        .update-time {
+            font-size: 0.9rem;
+            color: #d2b48c; /* テキストカラーを明るめのゴールドに調整 */
+            margin-top: 20px;
+            border-top: 1px solid #9e8123; /* ゴールドの境界線 */
+            padding-top: 20px;
+            font-style: italic;
+        }
+
+        /* メディアクエリ（レスポンシブ対応） */
+        @media (max-width: 768px) {
+            .container {
+                padding: 30px 20px;
+            }
+
+            .container h1 {
+                font-size: 1.8rem;
+            }
+
+            .count {
+                flex-direction: column;
+            }
+
+            .count i {
+                margin-bottom: 5px;
+            }
+        }
+    </style>
 </head>
 <body>
     <div class="container">
         <h1>参加人数</h1>
         <div class="count">
-            <span class="emoji"></span> 男性: <span id="male-count">0</span>人
+            <i class="fa-solid fa-mars"></i> 男性: <span id="male-count">0</span>人
         </div>
         <div class="count">
-            <span class="emoji"></span> 女性: <span id="female-count">0</span>人
+            <i class="fa-solid fa-venus"></i> 女性: <span id="female-count">0</span>人
         </div>
         <div class="count">
-            開催決定まであと: <span id="remaining-count">20</span>人
+            <i class="fa-solid fa-hourglass-half"></i> 開催決定まであと: <span id="remaining-count">20</span>人
         </div>
         <div class="update-time">
             更新: <span id="update-time">-</span>
@@ -105,13 +125,13 @@
     <script>
         // Firebase の構成情報
         const firebaseConfig = {
-          apiKey: "AIzaSyD30sxoHhSnpH7xMwGj55SSjRkMRa0oRX8",
-  authDomain: "inai95.firebaseapp.com",
-  projectId: "inai95",
-  storageBucket: "inai95.firebasestorage.app",
-  messagingSenderId: "418002209728",
-  appId: "1:418002209728:web:dc034e538d3bf0fae15625",
-  measurementId: "G-58LP3ZDTLJ"
+            apiKey: "AIzaSyD30sxoHhSnpH7xMwGj55SSjRkMRa0oRX8",
+            authDomain: "inai95.firebaseapp.com",
+            projectId: "inai95",
+            storageBucket: "inai95.firebasestorage.app",
+            messagingSenderId: "418002209728",
+            appId: "1:418002209728:web:dc034e538d3bf0fae15625",
+            measurementId: "G-58LP3ZDTLJ"
         };
 
         // Firebase 初期化
@@ -126,7 +146,8 @@
 
         function updateCounts() {
             const now = new Date();
-            updateTimeElement.textContent = `${now.getMonth() + 1}月${now.getDate()}日 ${now.getHours()}時${now.getMinutes()}分`;
+            const formattedTime = `${now.getMonth() + 1}月${now.getDate()}日 ${now.getHours()}時${now.getMinutes()}分`;
+            updateTimeElement.textContent = formattedTime;
 
             db.collection('attendance_responses')
               .where('attendance', '==', '出席') // 出席者のみを対象にする
