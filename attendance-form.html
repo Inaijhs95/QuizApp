@@ -5,12 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>出欠回答</title>
     <link href="https://fonts.googleapis.com/css2?family=Source+Han+Serif+JP:wght@400;700&display=swap" rel="stylesheet">
-    <style>
+  <style>
     /* 全体設定 */
     body {
         font-family: 'Arial', sans-serif;
-        background-color: #f4f4f9; /* 優しいグレー */
-        color: #333; /* 落ち着いた文字色 */
+        background-color: #2f2921; /* 背景をダークブラウンに変更 */
+        color: #9e8123; /* 落ち着いたゴールド文字 */
         margin: 0;
         padding: 0;
         display: flex;
@@ -23,25 +23,27 @@
     .container {
         max-width: 500px;
         width: 100%;
-        background: #ffffff; /* 高級感のあるホワイト */
+        background: #19171b; /* コンテナ背景を非常にダークな色に変更 */
         padding: 40px 30px;
         border-radius: 16px; /* 滑らかな角丸 */
-        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15); /* 立体感を出す影 */
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2); /* 立体感を出す影を濃く */
         text-align: center;
+        border: 1px solid #9e8123; /* ゴールドの境界線 */
     }
 
     /* ヘッダー */
     .container h1 {
         font-size: 2rem;
-        color: #222; /* しっかりとした文字色 */
+        color: #9e8123; /* タイトルをゴールドに変更 */
         margin-bottom: 20px;
         font-weight: bold;
+        letter-spacing: 0.05em;
     }
 
     /* ラベル */
     .form-group label {
         font-size: 1rem;
-        color: #444;
+        color: #d2b48c; /* ラベル色を明るめのゴールドに変更 */
         margin-bottom: 8px;
         display: block;
         text-align: left; /* 左寄せで整える */
@@ -53,11 +55,21 @@
         font-size: 1rem;
         width: 100%;
         padding: 12px;
-        border: 1px solid #ddd;
+        border: 1px solid #9e8123; /* 境界線をゴールドに変更 */
         border-radius: 10px;
-        box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.05);
-        transition: border-color 0.3s ease;
+        background-color: #2f2921; /* 入力欄の背景をダークブラウンに変更 */
+        color: #ffffff; /* 入力テキストを白に変更 */
+        box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1); /* 少し濃いめの影 */
+        transition: border-color 0.3s ease, background-color 0.3s ease;
         margin-bottom: 15px;
+    }
+
+    /* 入力欄フォーカス時のスタイル */
+    .form-group input[type="text"]:focus,
+    .form-group input[type="radio"]:focus + label {
+        border-color: #d2b48c; /* フォーカス時の境界線を明るめのゴールドに変更 */
+        background-color: #19171b; /* フォーカス時の背景色を非常にダークに変更 */
+        outline: none;
     }
 
     /* ラジオボタンのスタイル */
@@ -68,27 +80,31 @@
     /* ボタン */
     .button {
         display: inline-block;
-        background: linear-gradient(135deg, #4f83cc, #1d4e89); /* グラデーション */
-        color: #ffffff;
+        background: linear-gradient(135deg, #9e8123, #d2b48c); /* ゴールドのグラデーション */
+        color: #2f2921; /* ボタンテキストをダークブラウンに変更 */
         padding: 12px 20px;
         font-size: 1rem;
         text-transform: uppercase; /* 大文字 */
         border: none;
         border-radius: 12px;
         cursor: pointer;
-        transition: all 0.3s ease;
+        transition: all 0.3s ease, background 0.3s ease;
         margin-top: 20px;
     }
 
     .button:hover {
-        background: linear-gradient(135deg, #3b6cb3, #163d66);
+        background: linear-gradient(135deg, #d2b48c, #9e8123); /* ホバー時にグラデーションを逆転 */
+        color: #ffffff; /* ホバー時のテキストを白に変更 */
     }
 
     /* 更新タイム */
     .update-time {
         font-size: 0.9rem;
-        color: #888;
+        color: #d2b48c; /* テキストカラーを明るめのゴールドに変更 */
         margin-top: 20px;
+        border-top: 1px solid #9e8123; /* ゴールドの境界線 */
+        padding-top: 20px;
+        font-style: italic;
     }
 
     /* メディアクエリ（レスポンシブ対応） */
@@ -106,6 +122,7 @@
         }
     }
 </style>
+
 
 
 </head>
