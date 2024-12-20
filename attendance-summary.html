@@ -98,20 +98,34 @@
                 margin-bottom: 5px;
             }
         }
+        /* 「人」のスタイル */
+.unit {
+    font-weight: bold;
+    color: #d2b48c; /* 明るめのゴールド */
+    padding: 2px 6px;
+    background: #9e8123; /* ゴールド背景 */
+    border-radius: 4px;
+    margin-left: 5px; /* 数字との間にスペースを追加 */
+    display: inline-block;
+    min-width: 30px;
+    text-align: center;
+}
+
     </style>
 </head>
 <body>
     <div class="container">
         <h1>参加人数</h1>
-        <div class="count">
-            <i class="fa-solid fa-mars"></i> 男性: <span id="male-count">0人</span>
-        </div>
-        <div class="count">
-            <i class="fa-solid fa-venus"></i> 女性: <span id="female-count">0人</span>
-        </div>
-        <div class="count">
-            <i class="fa-solid fa-hourglass-half"></i> 開催決定まであと: <span id="remaining-count">20人</span>
-        </div>
+     <div class="count">
+    <i class="fa-solid fa-mars"></i> 男性: <span id="male-count">0</span><span class="unit">人</span>
+</div>
+<div class="count">
+    <i class="fa-solid fa-venus"></i> 女性: <span id="female-count">0</span><span class="unit">人</span>
+</div>
+<div class="count">
+    <i class="fa-solid fa-hourglass-half"></i> 開催決定まであと: <span id="remaining-count">20</span><span class="unit">人</span>
+</div>
+
         <div class="update-time">
             更新: <span id="update-time">-</span>
         </div>
