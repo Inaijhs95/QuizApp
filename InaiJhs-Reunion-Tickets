@@ -5,63 +5,80 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>同窓会チケット購入</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            text-align: center;
-            margin: 20px;
-        }
-       .modal {
-    width: 80%; /* 画面幅の80% */
-    max-width: 400px; /* 最大幅 */
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background: white;
-    padding: 20px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    border-radius: 10px;
-    z-index: 1000;
-}
+    /* 全体設定 */
+    body {
+        font-family: Arial, sans-serif;
+        text-align: center;
+        margin: 20px;
+        background-color: #2f2921; /* 背景をダークブラウンに変更 */
+        color: #9e8123; /* テキストカラーをゴールドに変更 */
+    }
 
-        .overlay {
-            display: block;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.5);
-            z-index: 999;
-        }
-        .button {
-            padding: 10px 20px;
-            background-color: #007aff;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            margin: 10px;
-        }
-        .button:hover {
-            background-color: #005bb5;
-        }
+    /* モーダルのデザイン */
+    .modal {
+        width: 80%; /* 画面幅の80% */
+        max-width: 400px; /* 最大幅 */
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background: #19171b; /* モーダル背景を非常にダークな色に変更 */
+        padding: 20px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5); /* シャドウを濃くして立体感を強調 */
+        border-radius: 10px;
+        border: 1px solid #9e8123; /* ゴールドの境界線を追加 */
+        z-index: 1000;
+    }
+
+    /* オーバーレイのデザイン */
+    .overlay {
+        display: block;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(25, 23, 27, 0.8); /* オーバーレイの背景色をダークに調整 */
+        z-index: 999;
+    }
+
+    /* ボタンのデザイン */
+    .button {
+        padding: 10px 20px;
+        background-color: #9e8123; /* ボタン背景をゴールドに変更 */
+        color: #2f2921; /* ボタンテキストをダークブラウンに変更 */
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        margin: 10px;
+        transition: background-color 0.3s ease, color 0.3s ease;
+    }
+
+    .button:hover {
+        background-color: #d2b48c; /* ホバー時のボタン背景を明るめのゴールドに変更 */
+        color: #ffffff; /* ホバー時のボタンテキストを白に変更 */
+    }
+
+    /* 見出しのデザイン */
+    h2 {
+        font-size: 1.5rem; /* 基本サイズ */
+        max-width: 90%; /* スマホ対応 */
+        margin: 0 auto; /* 中央揃え */
+        line-height: 1.5; /* 行間調整 */
+        color: #9e8123; /* 見出しテキストをゴールドに変更 */
+    }
+
+    @media (max-width: 600px) {
         h2 {
-            font-size: 1.5rem; /* 基本サイズ */
-            max-width: 90%; /* スマホ対応 */
-            margin: 0 auto; /* 中央揃え */
-            line-height: 1.5; /* 行間調整 */
+            font-size: 1.2rem; /* スマホ用フォントサイズ */
         }
-        @media (max-width: 600px) {
-            h2 {
-                font-size: 1.2rem; /* スマホ用フォントサイズ */
-            }
-        }
-    </style>
+    }
+</style>
+
 </head>
 <body>
     <div id="overlay" class="overlay"></div>
