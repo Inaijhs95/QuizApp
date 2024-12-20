@@ -6,225 +6,242 @@
     <title>稲井中学校 同窓会メインメニュー</title>
    <link href="https://fonts.googleapis.com/css2?family=Source+Han+Serif+JP:wght@400;700&display=swap" rel="stylesheet">
  <style>
-        body {
-            font-family: 'Source Han Serif JP', serif; /* フォントを適用 */
-            color: #444; /* 墨色 */
-            background-color: #f5f5f5; /* 背景を明るい灰色 */
-            margin: 0;
-            padding: 0;
-        }
-header {
-    margin: 0;
-    padding: 0;
-}
-       header img {
-    display: block;
-    width: 100%; /* 横幅を画面サイズいっぱいに設定 */
-    height: auto; /* アスペクト比を保ちながら高さを調整 */
-    margin: 0; /* 上下の余白をなくす */
-}
+    body {
+        font-family: 'Source Han Serif JP', serif; /* フォントを適用 */
+        color: #9e8123; /* テキストカラーをゴールドに変更 */
+        background-color: #2f2921; /* 背景をダークブラウンに変更 */
+        margin: 0;
+        padding: 0;
+    }
 
+    header {
+        margin: 0;
+        padding: 0;
+    }
 
-        .message {
-            position: relative;
-            background-color: transparent;
-            color: #444;
-            margin: 20px auto;
-            padding: 20px;
-            width: 90%;
-            max-width: 800px;
-            text-align: left;
-        }
+    header img {
+        display: block;
+        width: 100%; /* 横幅を画面サイズいっぱいに設定 */
+        height: auto; /* アスペクト比を保ちながら高さを調整 */
+        margin: 0; /* 上下の余白をなくす */
+    }
 
-        .message::before {
-            content: '';
-            background: url('images/kosho.png') no-repeat center;
-            opacity: 0.1;
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            z-index: -1;
-        }
+    .message {
+        position: relative;
+        background-color: transparent;
+        color: #9e8123; /* テキストカラーをゴールドに変更 */
+        margin: 20px auto;
+        padding: 20px;
+        width: 90%;
+        max-width: 800px;
+        text-align: left;
+    }
 
-     .title {
-    margin: 0; /* タイトルの余白を削除 */
-     padding: 0;
-    text-align: center;
-    font-size: 1.5rem;
-    font-weight: bold;
-    line-height: 1; /* タイトルの高さを詰める */
-}
-        .section {
-            background-color: #333; /* 炭色 */
-            color: #fff;
-            padding: 20px;
-            margin: 20px auto;
-            width: 90%;
-            max-width: 800px;
-            text-align: left;
-        }
+    .message::before {
+        content: '';
+        background: url('images/kosho.png') no-repeat center;
+        opacity: 0.1;
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        z-index: -1;
+    }
 
-        .section h2 {
-            margin-top: 0;
-            font-size: 1.2rem;
-            border-bottom: 1px solid #444;
-            padding-bottom: 5px;
-        }
+    .title {
+        margin: 0; /* タイトルの余白を削除 */
+        padding: 0;
+        text-align: center;
+        font-size: 1.5rem;
+        font-weight: bold;
+        line-height: 1; /* タイトルの高さを詰める */
+        color: #9e8123; /* タイトルカラーをゴールドに変更 */
+    }
 
-        .section p {
-            margin: 10px 0;
-        }
+    .section {
+        background-color: #19171b; /* 背景を非常にダークな色に変更 */
+        color: #9e8123; /* テキストカラーをゴールドに変更 */
+        padding: 20px;
+        margin: 20px auto;
+        width: 90%;
+        max-width: 800px;
+        text-align: left;
+    }
 
-        .button {
-            display: block;
-            width: 90%;
-            max-width: 200px;
-            background-color: #333;
-            color: #fff;
-            text-align: center;
-            padding: 10px;
-            margin: 20px auto;
-            text-decoration: none;
-            border-radius: 5px;
-            font-weight: bold;
-        }
+    .section h2 {
+        margin-top: 0;
+        font-size: 1.2rem;
+        border-bottom: 1px solid #9e8123; /* ボーダーカラーをゴールドに変更 */
+        padding-bottom: 5px;
+        color: #9e8123; /* 見出しカラーをゴールドに変更 */
+    }
 
-        .button:hover {
-            background-color: #555;
-        }
+    .section p {
+        margin: 10px 0;
+    }
 
-        .banner {
-            display: block;
-            width: 90%;
-            max-width: 800px;
-            margin: 20px auto;
-        }
+    .button {
+        display: block;
+        width: 90%;
+        max-width: 200px;
+        background-color: #9e8123; /* ボタン背景をゴールドに変更 */
+        color: #2f2921; /* ボタンテキストをダークブラウンに変更 */
+        text-align: center;
+        padding: 10px;
+        margin: 20px auto;
+        text-decoration: none;
+        border-radius: 5px;
+        font-weight: bold;
+        transition: background-color 0.3s ease;
+    }
 
-        .footer {
-            text-align: center;
-            font-size: 0.8rem;
-            color: #999;
-            margin: 20px 0;
-        }
+    .button:hover {
+        background-color: #19171b; /* ホバー時の背景を非常にダークな色に変更 */
+        color: #ffffff; /* ホバー時のテキストを白に変更 */
+    }
 
-        .sidebar {
-            margin: 20px;
-            padding: 20px;
-            background-color: #eee;
-            border-left: 5px solid #333;
-        }
+    .banner {
+        display: block;
+        width: 90%;
+        max-width: 800px;
+        margin: 20px auto;
+    }
 
-        .sidebar h3 {
-            margin-top: 0;
-        }
-     /* サイドメニュー全体 */
-.sidebar-menu {
-    position: fixed;
-    top: 0;
-    right: -300px; /* 初期状態では隠れる */
-    width: 300px;
-    height: 100%;
-    background-color: #333; /* 炭色 */
-    color: #fff;
-    box-shadow: -2px 0 5px rgba(0, 0, 0, 0.2);
-    overflow-y: auto;
-    transition: right 0.3s ease;
-    z-index: 1000;
-}
+    .footer {
+        text-align: center;
+        font-size: 0.8rem;
+        color: #9e8123; /* フッターのテキストカラーをゴールドに変更 */
+        margin: 20px 0;
+    }
 
-/* メニュー項目 */
-.sidebar-menu h3 {
-    margin: 20px;
-    font-size: 1.2rem;
-    border-bottom: 1px solid #555;
-    padding-bottom: 10px;
-}
+    .sidebar {
+        margin: 20px;
+        padding: 20px;
+        background-color: #2f2921; /* サイドバー背景をダークブラウンに変更 */
+        border-left: 5px solid #9e8123; /* 枠線カラーをゴールドに変更 */
+    }
 
-.sidebar-menu ul {
-    list-style: none;
-    padding: 0;
-    margin: 20px;
-}
+    .sidebar h3 {
+        margin-top: 0;
+        color: #9e8123; /* サイドバー見出しカラーをゴールドに変更 */
+    }
 
-.sidebar-menu ul li {
-    margin: 10px 0;
-}
+    /* サイドメニュー全体 */
+    .sidebar-menu {
+        position: fixed;
+        top: 0;
+        right: -300px; /* 初期状態では隠れる */
+        width: 300px;
+        height: 100%;
+        background-color: #19171b; /* サイドメニュー背景を非常にダークな色に変更 */
+        color: #9e8123; /* テキストカラーをゴールドに変更 */
+        box-shadow: -2px 0 5px rgba(0, 0, 0, 0.2);
+        overflow-y: auto;
+        transition: right 0.3s ease;
+        z-index: 1000;
+    }
 
-.sidebar-menu ul li a {
-    color: #fff;
-    text-decoration: none;
-}
+    /* メニュー項目 */
+    .sidebar-menu h3 {
+        margin: 20px;
+        font-size: 1.2rem;
+        border-bottom: 1px solid #9e8123; /* ボーダーカラーをゴールドに変更 */
+        padding-bottom: 10px;
+        color: #9e8123; /* 見出しカラーをゴールドに変更 */
+    }
 
-/* トリガーボタン */
-.menu-toggle {
-    position: fixed;
-    top: 20px;
-    right: 20px;
-    width: 50px;
-    height: 50px;
-    background-color: #333; /* 炭色 */
-    color: #fff;
-    border: none;
-    border-radius: 5px;
-    font-size: 1.2rem;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-    z-index: 1100;
-    cursor: pointer;
-}
+    .sidebar-menu ul {
+        list-style: none;
+        padding: 0;
+        margin: 20px;
+    }
 
-.menu-toggle:hover {
-    background-color: #555;
-}
+    .sidebar-menu ul li {
+        margin: 10px 0;
+    }
 
-/* サイドメニュー表示時 */
-.sidebar-menu.open {
-    right: 0;
-}
-.policy {
-    background-color: #f9f9f9; /* 背景色を薄い灰色に */
-    border: 1px solid #ddd; /* 枠線 */
-    padding: 20px;
-    border-radius: 5px;
-    margin-top: 20px;
-}
+    .sidebar-menu ul li a {
+        color: #9e8123; /* リンクカラーをゴールドに変更 */
+        text-decoration: none;
+        transition: color 0.3s ease;
+    }
 
-.policy-item {
-    margin-bottom: 20px;
-}
+    .sidebar-menu ul li a:hover {
+        color: #ffffff; /* ホバー時のリンクカラーを白に変更 */
+    }
 
-.policy-item h3 {
-    font-size: 1.2rem;
-    color: #333; /* 見出しを濃い墨色に */
-    margin-bottom: 10px;
-}
+    /* トリガーボタン */
+    .menu-toggle {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        width: 50px;
+        height: 50px;
+        background-color: #9e8123; /* トリガーボタン背景をゴールドに変更 */
+        color: #2f2921; /* トリガーボタンテキストをダークブラウンに変更 */
+        border: none;
+        border-radius: 5px;
+        font-size: 1.2rem;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        z-index: 1100;
+        cursor: pointer;
+        transition: background-color 0.3s ease, color 0.3s ease;
+    }
 
-.policy-item p, .policy-item ul {
-    margin: 0;
-    font-size: 1rem;
-    color: #555; /* テキストは明るい墨色 */
-    line-height: 1.6;
-}
+    .menu-toggle:hover {
+        background-color: #19171b; /* ホバー時の背景を非常にダークな色に変更 */
+        color: #ffffff; /* ホバー時のテキストを白に変更 */
+    }
 
-.policy-item ul {
-    padding-left: 20px;
-    list-style-type: disc;
-}
+    /* サイドメニュー表示時 */
+    .sidebar-menu.open {
+        right: 0;
+    }
 
-.policy-item ul li strong {
-    color: #d2691e; /* 強調ポイントを目立たせる */
-}
-     #countdown {
-         white-space: nowrap; /* 折り返しを防止 */
-    margin-left: 10px; /* 左側の余白を少なめに */
-    font-size: 0.9rem; /* 小さいフォントサイズ */
-    font-weight: normal; /* 通常の太さに調整 */
-    color: #d2691e; /* 強調色 */
-}
+    .policy {
+        background-color: #2f2921; /* 背景色をダークブラウンに変更 */
+        border: 1px solid #9e8123; /* 枠線カラーをゴールドに変更 */
+        padding: 20px;
+        border-radius: 5px;
+        margin-top: 20px;
+    }
 
+    .policy-item {
+        margin-bottom: 20px;
+    }
 
-    </style>
+    .policy-item h3 {
+        font-size: 1.2rem;
+        color: #9e8123; /* 見出しをゴールドに変更 */
+        margin-bottom: 10px;
+    }
+
+    .policy-item p, .policy-item ul {
+        margin: 0;
+        font-size: 1rem;
+        color: #9e8123; /* テキストはゴールドに変更 */
+        line-height: 1.6;
+    }
+
+    .policy-item ul {
+        padding-left: 20px;
+        list-style-type: disc;
+    }
+
+    .policy-item ul li strong {
+        color: #9e8123; /* 強調ポイントをゴールドに変更 */
+    }
+
+    #countdown {
+        white-space: nowrap; /* 折り返しを防止 */
+        margin-left: 10px; /* 左側の余白を少なめに */
+        font-size: 0.9rem; /* 小さいフォントサイズ */
+        font-weight: normal; /* 通常の太さに調整 */
+        color: #9e8123; /* 強調色をゴールドに変更 */
+    }
+</style>
+
 </head>
 <body>
     <header>
