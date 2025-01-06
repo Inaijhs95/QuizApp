@@ -46,10 +46,11 @@ p, li {
     /* 必要に応じてフォントの太さやサイズを調整 */
 }
 
-ul {
-    padding-left: 20px;
-    color: #333333; /* リストテキストをダークグレーに */
-    background-color: #f0f0f0; /* リストの背景を薄いグレーに */
+.regulation-list { /* クラスを追加 */
+    list-style-type: disc; /* 箇条書きのマーカーを表示 */
+    padding-left: 20px; /* 左側の余白を設定 */
+    color: #333333; /* テキストカラーをダークグレーに */
+    background-color: #f0f0f0; /* 背景を薄いグレーに */
     padding: 10px;
     border-radius: 5px;
 }
@@ -61,8 +62,6 @@ footer {
     color: #555555; /* フッターのテキストカラーをミディアムダークグレーに */
 }
 </style>
-
-
 </head>
 <body>
     <h1>稲井中学校同窓会規約</h1>
@@ -80,7 +79,7 @@ footer {
     <h2>第2章 会員</h2>
     <p><strong>第4条（会員資格）</strong><br>
     本会の会員は、次の各号、全てに該当する者とする。</p>
-    <ul>
+    <ul class="regulation-list"> <!-- クラスを追加 -->
         <li>1995年度生まれ</li>
         <li>稲井小学校・稲井中学校のいずれかに在籍したことがあるもの</li>
     </ul>
@@ -91,7 +90,7 @@ footer {
     <h2>第3章 役員</h2>
     <p><strong>第6条（役員の種類）</strong><br>
     本会に次の役員を置く。</p>
-    <ul>
+    <ul class="regulation-list"> <!-- クラスを追加 -->
         <li>会長 1名</li>
         <li>副会長 1名</li>
         <li>幹事 2名</li>
@@ -117,7 +116,7 @@ footer {
 
     <p><strong>第12条（総会の議決事項）</strong><br>
     総会は、次の事項を議決する。</p>
-    <ul>
+    <ul class="regulation-list"> <!-- クラスを追加 -->
         <li>規約の変更</li>
         <li>予算および決算の承認</li>
         <li>役員の選任</li>
