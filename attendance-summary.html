@@ -7,111 +7,112 @@
     <!-- Font Awesome CDN -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-puUu4t3Tz0bXKpqHya5OKfUsfO6p5VIF7F/RCd5RnP1AIGfVU8F1RzotE6XzM2GkR+gGk/08yf1S1YWk+HCJ3Q==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <style>
-        /* 全体設定 */
-        body {
-            font-family: 'Source Han Serif JP', serif; /* エレガントなフォントに変更 */
-            background-color: #2f2921; /* 背景をダークブラウンに変更 */
-            color: #9e8123; /* シックなゴールド文字 */
-            margin: 0;
-            padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-        }
+    /* 全体設定 */
+    body {
+        font-family: 'Source Han Serif JP', serif; /* エレガントなフォント */
+        background-color: #1a1a1a; /* 背景を非常にダークなグレーに変更 */
+        color: #cccccc; /* シックなライトグレー文字 */
+        margin: 0;
+        padding: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+    }
 
-        /* コンテナ設定 */
+    /* コンテナ設定 */
+    .container {
+        max-width: 600px;
+        width: 90%;
+        background: #121212; /* コンテナ背景をさらにダークなグレーに変更 */
+        padding: 40px 30px;
+        border-radius: 16px;
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5); /* シャドウを濃くしてモノクロ感を強調 */
+        text-align: center;
+        border: 1px solid #555555; /* グレーの境界線 */
+    }
+
+    /* ヘッダー設定 */
+    .container h1 {
+        font-size: 2rem;
+        color: #cccccc; /* タイトルをライトグレーに変更 */
+        margin-bottom: 30px;
+        font-weight: bold;
+        letter-spacing: 0.05em;
+    }
+
+    /* データ表示用 */
+    .count {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.3rem;
+        margin: 15px 0;
+        color: #b0b0b0; /* テキストカラーをミディアムグレーに調整 */
+        line-height: 1.6;
+    }
+
+    .count i {
+        margin-right: 10px;
+        color: #cccccc; /* アイコンカラーをライトグレーに */
+        font-size: 1.5rem;
+        width: 30px;
+    }
+
+    .count span {
+        font-weight: bold;
+        color: #121212; /* ダークグレーに変更 */
+        padding: 2px 6px;
+        background: #555555; /* グレー背景 */
+        border-radius: 4px;
+        min-width: 30px;
+        display: inline-block;
+        text-align: center;
+    }
+
+    /* 更新タイム */
+    .update-time {
+        font-size: 0.9rem;
+        color: #b0b0b0; /* テキストカラーをミディアムグレーに調整 */
+        margin-top: 20px;
+        border-top: 1px solid #555555; /* グレーの境界線 */
+        padding-top: 20px;
+        font-style: italic;
+    }
+
+    /* メディアクエリ（レスポンシブ対応） */
+    @media (max-width: 768px) {
         .container {
-            max-width: 600px;
-            width: 90%;
-            background: #19171b; /* コンテナ背景を非常にダークな色に変更 */
-            padding: 40px 30px;
-            border-radius: 16px;
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2); /* シャドウを少し濃く */
-            text-align: center;
-            border: 1px solid #9e8123; /* ゴールドの境界線 */
+            padding: 30px 20px;
         }
 
-        /* ヘッダー設定 */
         .container h1 {
-            font-size: 2rem;
-            color: #9e8123; /* タイトルをゴールドに変更 */
-            margin-bottom: 30px;
-            font-weight: bold;
-            letter-spacing: 0.05em;
+            font-size: 1.8rem;
         }
 
-        /* データ表示用 */
         .count {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.3rem;
-            margin: 15px 0;
-            color: #d2b48c; /* テキストカラーを明るめのゴールドに調整 */
-            line-height: 1.6;
+            flex-direction: column;
         }
 
         .count i {
-            margin-right: 10px;
-            color: #9e8123; /* アイコンカラーをゴールドに */
-            font-size: 1.5rem;
-            width: 30px;
+            margin-bottom: 5px;
         }
+    }
 
-        .count span {
-            font-weight: bold;
-            color: #19171b; /* ダークブラウンに変更 */
-            padding: 2px 6px;
-            background: #9e8123; /* ゴールド背景 */
-            border-radius: 4px;
-            min-width: 30px;
-            display: inline-block;
-            text-align: center;
-        }
+    /* 「人」のスタイル */
+    .unit {
+        font-weight: bold;
+        color: #b0b0b0; /* ミディアムグレー */
+        padding: 2px 6px;
+        background: #555555; /* グレー背景 */
+        border-radius: 4px;
+        margin-left: 5px; /* 数字との間にスペースを追加 */
+        display: inline-block;
+        min-width: 30px;
+        text-align: center;
+    }
+</style>
 
-        /* 更新タイム */
-        .update-time {
-            font-size: 0.9rem;
-            color: #d2b48c; /* テキストカラーを明るめのゴールドに調整 */
-            margin-top: 20px;
-            border-top: 1px solid #9e8123; /* ゴールドの境界線 */
-            padding-top: 20px;
-            font-style: italic;
-        }
-
-        /* メディアクエリ（レスポンシブ対応） */
-        @media (max-width: 768px) {
-            .container {
-                padding: 30px 20px;
-            }
-
-            .container h1 {
-                font-size: 1.8rem;
-            }
-
-            .count {
-                flex-direction: column;
-            }
-
-            .count i {
-                margin-bottom: 5px;
-            }
-        }
-        /* 「人」のスタイル */
-.unit {
-    font-weight: bold;
-    color: #d2b48c; /* 明るめのゴールド */
-    padding: 2px 6px;
-    background: #9e8123; /* ゴールド背景 */
-    border-radius: 4px;
-    margin-left: 5px; /* 数字との間にスペースを追加 */
-    display: inline-block;
-    min-width: 30px;
-    text-align: center;
-}
-
-    </style>
 </head>
 <body>
     <div class="container">
