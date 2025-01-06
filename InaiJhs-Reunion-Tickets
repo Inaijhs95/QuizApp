@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>同窓会チケット購入</title>
-
+  <style>
  /* 全体設定 */
 body {
     font-family: 'Source Han Serif JP', serif; /* エレガントなフォント */
@@ -128,7 +128,7 @@ h2.modal-heading {
         font-size: 1.2rem; /* スマホ用フォントサイズ */
     }
 }
-
+  </style>
 
 </head>
 <body>
