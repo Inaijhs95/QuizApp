@@ -4,80 +4,131 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>同窓会チケット購入</title>
-    <style>
-    /* 全体設定 */
-    body {
-        font-family: Arial, sans-serif;
-        text-align: center;
-        margin: 20px;
-        background-color: #2f2921; /* 背景をダークブラウンに変更 */
-        color: #9e8123; /* テキストカラーをゴールドに変更 */
-    }
 
-    /* モーダルのデザイン */
-    .modal {
-        width: 80%; /* 画面幅の80% */
-        max-width: 400px; /* 最大幅 */
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        position: fixed;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        background: #19171b; /* モーダル背景を非常にダークな色に変更 */
-        padding: 20px;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5); /* シャドウを濃くして立体感を強調 */
-        border-radius: 10px;
-        border: 1px solid #9e8123; /* ゴールドの境界線を追加 */
-        z-index: 1000;
-    }
+ /* 全体設定 */
+body {
+    font-family: 'Source Han Serif JP', serif; /* エレガントなフォント */
+    color: #333333; /* テキストカラーをダークグレーに */
+    background-color: #ffffff; /* 背景を白に */
+    margin: 0;
+    padding: 20px;
+    line-height: 1.8;
+    text-align: center; /* 中央揃え */
+}
 
-    /* オーバーレイのデザイン */
-    .overlay {
-        display: block;
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: rgba(25, 23, 27, 0.8); /* オーバーレイの背景色をダークに調整 */
-        z-index: 999;
-    }
+/* ヘッダー */
+h1 {
+    font-size: 1.8rem;
+    margin-bottom: 20px;
+    text-align: center;
+    color: #000000; /* タイトルを黒に */
+}
 
-    /* ボタンのデザイン */
-    .button {
-        padding: 10px 20px;
-        background-color: #9e8123; /* ボタン背景をゴールドに変更 */
-        color: #2f2921; /* ボタンテキストをダークブラウンに変更 */
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
-        margin: 10px;
-        transition: background-color 0.3s ease, color 0.3s ease;
-    }
+h2 {
+    font-size: 1.4rem;
+    margin-top: 20px;
+    color: #555555; /* サブタイトルをミディアムダークグレーに */
+}
 
-    .button:hover {
-        background-color: #d2b48c; /* ホバー時のボタン背景を明るめのゴールドに変更 */
-        color: #ffffff; /* ホバー時のボタンテキストを白に変更 */
-    }
+.highlight {
+    color: #000000; /* リンクを黒に */
+    text-decoration: none; /* リンクの下線を非表示 */
+}
 
-    /* 見出しのデザイン */
-    h2 {
-        font-size: 1.5rem; /* 基本サイズ */
-        max-width: 90%; /* スマホ対応 */
-        margin: 0 auto; /* 中央揃え */
-        line-height: 1.5; /* 行間調整 */
-        color: #9e8123; /* 見出しテキストをゴールドに変更 */
-    }
+.highlight:hover {
+    text-decoration: underline; /* ホバー時に下線を表示 */
+    color: #333333; /* ホバー時にダークグレーに */
+}
 
-    @media (max-width: 600px) {
-        h2 {
-            font-size: 1.2rem; /* スマホ用フォントサイズ */
-        }
+p, li {
+    margin: 10px 0;
+    color: #333333; /* テキストカラーをダークグレーに */
+}
+
+.regulation-list { /* クラスを追加 */
+    list-style-type: disc; /* 箇条書きのマーカーを表示 */
+    padding-left: 20px; /* 左側の余白を設定 */
+    color: #333333; /* テキストカラーをダークグレーに */
+    background-color: #f0f0f0; /* 背景を薄いグレーに */
+    padding: 10px;
+    border-radius: 5px;
+}
+
+ul.regulation-list li {
+    /* 必要に応じてリストアイテムのスタイルを追加 */
+}
+
+footer {
+    text-align: center;
+    margin-top: 30px;
+    font-size: 0.9rem;
+    color: #555555; /* フッターのテキストカラーをミディアムダークグレーに */
+}
+
+/* モーダルのデザイン */
+.modal {
+    width: 80%; /* 画面幅の80% */
+    max-width: 400px; /* 最大幅 */
+    display: none; /* デフォルトでは非表示 */
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: #ffffff; /* モーダル背景を白に */
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5); /* シャドウを追加 */
+    border-radius: 10px;
+    border: 1px solid #333333; /* 境界線をダークグレーに */
+    z-index: 1000;
+}
+
+/* オーバーレイのデザイン */
+.overlay {
+    display: none; /* デフォルトでは非表示 */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5); /* オーバーレイの背景色を半透明の黒に */
+    z-index: 999;
+}
+
+/* ボタンのデザイン */
+.button {
+    padding: 10px 20px;
+    background-color: #333333; /* ボタン背景をダークグレーに */
+    color: #ffffff; /* ボタンテキストを白に */
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin: 10px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.button:hover {
+    background-color: #555555; /* ホバー時のボタン背景をミディアムグレーに */
+    color: #ffffff; /* ホバー時のボタンテキストを白に */
+}
+
+/* 見出しのデザイン */
+h2.modal-heading {
+    font-size: 1.5rem; /* 基本サイズ */
+    max-width: 90%; /* スマホ対応 */
+    margin: 0 auto; /* 中央揃え */
+    line-height: 1.5; /* 行間調整 */
+    color: #333333; /* 見出しテキストをダークグレーに */
+}
+
+@media (max-width: 600px) {
+    h2.modal-heading {
+        font-size: 1.2rem; /* スマホ用フォントサイズ */
     }
-</style>
+}
+
 
 </head>
 <body>
