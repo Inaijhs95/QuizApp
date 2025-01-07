@@ -17,7 +17,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            min-height: 100vh; /* 縦中央寄せはそのまま */
+            min-height: 100vh; /* 縦中央寄せ */
         }
 
         /* コンテナのデザイン */
@@ -26,10 +26,10 @@
             width: 100%;
             background: #f9f9f9; /* コンテナ背景を薄いグレーに変更 */
             padding: 40px 30px;
-            border-radius: 16px; /* 角丸はそのまま */
+            border-radius: 16px; /* 角丸 */
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* シャドウを軽減 */
             text-align: center;
-            border: 1px solid #dddddd; /*境界線を薄いグレーに変更 */
+            border: 1px solid #dddddd; /* 境界線を薄いグレーに変更 */
         }
 
         /* ヘッダー */
@@ -41,18 +41,22 @@
             letter-spacing: 0.05em;
         }
 
+        /* フォームグループ */
+        .form-group {
+            margin-bottom: 20px;
+            text-align: left; /* ラベルを左寄せ */
+        }
+
         /* ラベル */
         .form-group label {
             font-size: 1rem;
             color: #555555; /* ラベル色をミディアムグレーに変更 */
             margin-bottom: 8px;
             display: block;
-            text-align: left; /* 左寄せはそのまま */
         }
 
-        /* 入力欄 */
-        .form-group input[type="text"],
-        .form-group input[type="radio"] + label {
+        /* テキスト入力欄 */
+        .form-group input[type="text"] {
             font-size: 1rem;
             width: 100%;
             padding: 12px;
@@ -62,20 +66,29 @@
             color: #333333; /* 入力テキストをダークグレーに変更 */
             box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.05); /* 影を軽減 */
             transition: border-color 0.3s ease, background-color 0.3s ease;
-            margin-bottom: 15px;
         }
 
-        /* 入力欄フォーカス時のスタイル */
-        .form-group input[type="text"]:focus,
-        .form-group input[type="radio"]:focus + label {
+        /* テキスト入力欄フォーカス時のスタイル */
+        .form-group input[type="text"]:focus {
             border-color: #999999; /* フォーカス時の境界線をミディアムグレーに変更 */
             background-color: #f0f0f0; /* フォーカス時の背景色を薄いグレーに変更 */
             outline: none;
         }
 
-        /* ラジオボタンのスタイル */
-        .form-group input[type="radio"] {
-            margin-right: 10px;
+        /* ラジオボタンのラッパー */
+        .radio-group {
+            display: flex;
+            gap: 20px;
+        }
+
+        /* ラジオボタンとラベルのスタイル */
+        .radio-option {
+            display: flex;
+            align-items: center;
+        }
+
+        .radio-option input[type="radio"] {
+            margin-right: 8px;
             accent-color: #555555; /* ラジオボタンの色をミディアムグレーに変更 */
         }
 
@@ -122,6 +135,11 @@
             .button {
                 width: 100%; /* 小画面ではボタンを幅いっぱいに */
             }
+
+            .radio-group {
+                flex-direction: column;
+                gap: 10px;
+            }
         }
     </style>
 </head>
@@ -135,17 +153,29 @@
             </div>
             <div class="form-group">
                 <label>性別</label>
-                <input type="radio" id="gender-male" name="gender" value="男性" required>
-                <label for="gender-male">男性</label>
-                <input type="radio" id="gender-female" name="gender" value="女性" required>
-                <label for="gender-female">女性</label>
+                <div class="radio-group">
+                    <label class="radio-option" for="gender-male">
+                        <input type="radio" id="gender-male" name="gender" value="男性" required>
+                        男性
+                    </label>
+                    <label class="radio-option" for="gender-female">
+                        <input type="radio" id="gender-female" name="gender" value="女性" required>
+                        女性
+                    </label>
+                </div>
             </div>
             <div class="form-group">
                 <label>出欠</label>
-                <input type="radio" id="attendance-present" name="attendance" value="出席" required>
-                <label for="attendance-present">出席</label>
-                <input type="radio" id="attendance-absent" name="attendance" value="欠席" required>
-                <label for="attendance-absent">欠席</label>
+                <div class="radio-group">
+                    <label class="radio-option" for="attendance-present">
+                        <input type="radio" id="attendance-present" name="attendance" value="出席" required>
+                        出席
+                    </label>
+                    <label class="radio-option" for="attendance-absent">
+                        <input type="radio" id="attendance-absent" name="attendance" value="欠席" required>
+                        欠席
+                    </label>
+                </div>
             </div>
             <div class="buttons">
                 <button type="button" class="button" id="submit-button">送信する</button>
