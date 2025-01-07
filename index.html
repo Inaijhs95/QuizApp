@@ -9,8 +9,8 @@
     /* 全体設定 */
     body {
         font-family: 'Source Han Serif JP', serif; /* フォントはそのまま */
-        color: #cccccc; /* テキストカラーをライトグレーに変更 */
-        background-color: #1a1a1a; /* 背景を非常にダークなグレーに変更 */
+        color: #333333; /* テキストカラーをダークグレーに変更 */
+        background-color: #ffffff; /* 背景を白に変更 */
         margin: 0;
         padding: 0;
     }
@@ -29,19 +29,21 @@
 
     .message {
         position: relative;
-        background-color: transparent;
-        color: #cccccc; /* テキストカラーをライトグレーに変更 */
+        background-color: #f9f9f9; /* メッセージ背景を薄いグレーに変更 */
+        color: #333333; /* テキストカラーをダークグレーに変更 */
         margin: 20px auto;
         padding: 20px;
         width: 90%;
         max-width: 800px;
         text-align: left;
+        border: 1px solid #dddddd; /* 薄いグレーの枠線を追加 */
+        border-radius: 5px; /* 角を丸める */
     }
 
     .message::before {
         content: '';
         background: url('images/kosho.png') no-repeat center;
-        opacity: 0.1;
+        opacity: 0.05; /* 透過度を下げて背景画像を控えめに */
         position: absolute;
         top: 0;
         left: 0;
@@ -57,25 +59,27 @@
         font-size: 1.5rem;
         font-weight: bold;
         line-height: 1; /* タイトルの高さを詰める */
-        color: #cccccc; /* タイトルカラーをライトグレーに変更 */
+        color: #333333; /* タイトルカラーをダークグレーに変更 */
     }
 
     .section {
-        background-color: #121212; /* 背景をさらにダークなグレーに変更 */
-        color: #cccccc; /* テキストカラーをライトグレーに変更 */
+        background-color: #f2f2f2; /* セクション背景を薄いグレーに変更 */
+        color: #333333; /* テキストカラーをダークグレーに変更 */
         padding: 20px;
         margin: 20px auto;
         width: 90%;
         max-width: 800px;
         text-align: left;
+        border: 1px solid #dddddd; /* 薄いグレーの枠線を追加 */
+        border-radius: 5px; /* 角を丸める */
     }
 
     .section h2 {
         margin-top: 0;
         font-size: 1.2rem;
-        border-bottom: 1px solid #555555; /* ボーダーカラーをグレーに変更 */
+        border-bottom: 1px solid #cccccc; /* ボーダーカラーを薄いグレーに変更 */
         padding-bottom: 5px;
-        color: #cccccc; /* 見出しカラーをライトグレーに変更 */
+        color: #333333; /* 見出しカラーをダークグレーに変更 */
     }
 
     .section p {
@@ -86,8 +90,8 @@
         display: block;
         width: 90%;
         max-width: 200px;
-        background-color: #555555; /* ボタン背景をグレーに変更 */
-        color: #1a1a1a; /* ボタンテキストを非常にダークなグレーに変更 */
+        background-color: #cccccc; /* ボタン背景を薄いグレーに変更 */
+        color: #ffffff; /* ボタンテキストを白に変更 */
         text-align: center;
         padding: 10px;
         margin: 20px auto;
@@ -98,7 +102,7 @@
     }
 
     .button:hover {
-        background-color: #333333; /* ホバー時の背景をさらにダークなグレーに変更 */
+        background-color: #aaaaaa; /* ホバー時の背景を少し濃いグレーに変更 */
         color: #ffffff; /* ホバー時のテキストを白に変更 */
     }
 
@@ -112,20 +116,21 @@
     .footer {
         text-align: center;
         font-size: 0.8rem;
-        color: #cccccc; /* フッターのテキストカラーをライトグレーに変更 */
+        color: #666666; /* フッターのテキストカラーをミディアムグレーに変更 */
         margin: 20px 0;
     }
 
     .sidebar {
         margin: 20px;
         padding: 20px;
-        background-color: #1a1a1a; /* サイドバー背景を非常にダークなグレーに変更 */
-        border-left: 5px solid #555555; /* 枠線カラーをグレーに変更 */
+        background-color: #f9f9f9; /* サイドバー背景を薄いグレーに変更 */
+        border-left: 5px solid #cccccc; /* 枠線カラーを薄いグレーに変更 */
+        border-radius: 5px; /* 角を丸める */
     }
 
     .sidebar h3 {
         margin-top: 0;
-        color: #cccccc; /* サイドバー見出しカラーをライトグレーに変更 */
+        color: #333333; /* サイドバー見出しカラーをダークグレーに変更 */
     }
 
     /* サイドメニュー全体 */
@@ -135,9 +140,9 @@
         right: -300px; /* 初期状態では隠れる */
         width: 300px;
         height: 100%;
-        background-color: #121212; /* サイドメニュー背景をさらにダークなグレーに変更 */
-        color: #cccccc; /* テキストカラーをライトグレーに変更 */
-        box-shadow: -2px 0 5px rgba(0, 0, 0, 0.5); /* シャドウを濃くしてモノクロ感を強調 */
+        background-color: #ffffff; /* サイドメニュー背景を白に変更 */
+        color: #333333; /* テキストカラーをダークグレーに変更 */
+        box-shadow: -2px 0 5px rgba(0, 0, 0, 0.1); /* シャドウを薄くして自然な感じに */
         overflow-y: auto;
         transition: right 0.3s ease;
         z-index: 1000;
@@ -147,9 +152,9 @@
     .sidebar-menu h3 {
         margin: 20px;
         font-size: 1.2rem;
-        border-bottom: 1px solid #555555; /* ボーダーカラーをグレーに変更 */
+        border-bottom: 1px solid #cccccc; /* ボーダーカラーを薄いグレーに変更 */
         padding-bottom: 10px;
-        color: #cccccc; /* 見出しカラーをライトグレーに変更 */
+        color: #333333; /* 見出しカラーをダークグレーに変更 */
     }
 
     .sidebar-menu ul {
@@ -163,13 +168,13 @@
     }
 
     .sidebar-menu ul li a {
-        color: #cccccc; /* リンクカラーをライトグレーに変更 */
+        color: #333333; /* リンクカラーをダークグレーに変更 */
         text-decoration: none;
         transition: color 0.3s ease;
     }
 
     .sidebar-menu ul li a:hover {
-        color: #ffffff; /* ホバー時のリンクカラーを白に変更 */
+        color: #000000; /* ホバー時のリンクカラーを黒に変更 */
     }
 
     /* トリガーボタン */
@@ -179,19 +184,19 @@
         right: 20px;
         width: 50px;
         height: 50px;
-        background-color: #555555; /* トリガーボタン背景をグレーに変更 */
-        color: #1a1a1a; /* トリガーボタンテキストを非常にダークなグレーに変更 */
+        background-color: #cccccc; /* トリガーボタン背景を薄いグレーに変更 */
+        color: #ffffff; /* トリガーボタンテキストを白に変更 */
         border: none;
         border-radius: 5px;
         font-size: 1.2rem;
-        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5); /* シャドウを濃く変更 */
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* シャドウを薄く変更 */
         z-index: 1100;
         cursor: pointer;
         transition: background-color 0.3s ease, color 0.3s ease;
     }
 
     .menu-toggle:hover {
-        background-color: #333333; /* ホバー時の背景をさらにダークなグレーに変更 */
+        background-color: #aaaaaa; /* ホバー時の背景を少し濃いグレーに変更 */
         color: #ffffff; /* ホバー時のテキストを白に変更 */
     }
 
@@ -201,8 +206,8 @@
     }
 
     .policy {
-        background-color: #1a1a1a; /* 背景色を非常にダークなグレーに変更 */
-        border: 1px solid #555555; /* 枠線カラーをグレーに変更 */
+        background-color: #f9f9f9; /* 背景色を薄いグレーに変更 */
+        border: 1px solid #cccccc; /* 枠線カラーを薄いグレーに変更 */
         padding: 20px;
         border-radius: 5px;
         margin-top: 20px;
@@ -214,14 +219,14 @@
 
     .policy-item h3 {
         font-size: 1.2rem;
-        color: #cccccc; /* 見出しをライトグレーに変更 */
+        color: #333333; /* 見出しをダークグレーに変更 */
         margin-bottom: 10px;
     }
 
     .policy-item p, .policy-item ul {
         margin: 0;
         font-size: 1rem;
-        color: #cccccc; /* テキストをライトグレーに変更 */
+        color: #333333; /* テキストをダークグレーに変更 */
         line-height: 1.6;
     }
 
@@ -231,7 +236,7 @@
     }
 
     .policy-item ul li strong {
-        color: #cccccc; /* 強調ポイントをライトグレーに変更 */
+        color: #333333; /* 強調ポイントをダークグレーに変更 */
     }
 
     #countdown {
@@ -239,7 +244,7 @@
         margin-left: 10px; /* 左側の余白を少なめに */
         font-size: 0.9rem; /* 小さいフォントサイズ */
         font-weight: normal; /* 通常の太さに調整 */
-        color: #cccccc; /* 強調色をライトグレーに変更 */
+        color: #333333; /* 強調色をダークグレーに変更 */
     }
 </style>
 
