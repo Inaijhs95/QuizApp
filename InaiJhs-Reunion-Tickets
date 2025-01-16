@@ -107,6 +107,8 @@
             cursor: pointer;
             margin: 10px;
             transition: background-color 0.3s ease, color 0.3s ease;
+            text-decoration: none; /* リンクの場合の下線を削除 */
+            display: inline-block;
         }
         
         .button:hover {
@@ -129,7 +131,7 @@
             }
         }
 
-        /* 追加するボタン用のスタイル（オプション） */
+        /* 追加する購入ボタン用のスタイル */
         .purchase-button-container {
             overflow: auto;
             display: flex;
@@ -169,6 +171,7 @@
             background-color: #cccccc;
             color: #666666;
             cursor: not-allowed;
+            pointer-events: none; /* クリック無効化 */
         }
     </style>
 </head>
@@ -193,37 +196,19 @@
             一般: 7,000円
         </a>
 
-        <!-- 追加する購入ボタン -->
-        <div style="
-          overflow: auto;
-          display: flex;
-          flex-direction: column;
-          justify-content: flex-end;
-          align-items: center;
-          width: 259px;
-          background: #FFFFFF;
-          border: 1px solid rgba(0, 0, 0, 0.1);
-          box-shadow: -2px 10px 5px rgba(0, 0, 0, 0);
-          border-radius: 10px;
-          font-family: 'SQ Market', Helvetica, Arial, sans-serif;
-          margin: 20px auto; /* 中央揃えと上下の余白 */
-          ">
-          <div style="padding: 20px;">
-            <a target="_blank" href="https://square.link/u/gzSsFvVv?src=embed" style="
-            display: inline-block;
-            font-size: 18px;
-            line-height: 48px;
-            height: 48px;
-            color: #ffffff;
-            min-width: 212px;
-            background-color: #006aff;
-            text-align: center;
-            box-shadow: 0 0 0 1px rgba(0,0,0,.1) inset;
-            border-radius: 50px;
-            text-decoration: none; /* 下線を削除 */
-          ">今すぐ購入する</a>
-          </div>
-    </div>
+        <!-- 既存の今すぐ購入するボタン -->
+        <div class="purchase-button-container" id="buy-now-button-1">
+            <div style="padding: 20px;">
+                <a target="_blank" href="https://square.link/u/gzSsFvVv?src=embed">今すぐ購入する</a>
+            </div>
+        </div>
+
+        <!-- 新たに追加する限定ボタン -->
+        <div class="purchase-button-container" id="buy-now-button-2">
+            <div style="padding: 20px;">
+                <a target="_blank" href="https://square.link/u/OYm7ZpwQ?src=embed">今すぐ購入する</a>
+            </div>
+        </div>
     </div>
 
     <script>
@@ -251,12 +236,15 @@
 
 
         // 締切日時設定
-        const EARLY_BIRD_DEADLINE = new Date('2025-04-04T00:00:00'); // 締切日時
+        const EARLY_BIRD_DEADLINE = new Date('2025-04-04T00:00:00'); // 早期割引の締切日時
+        const LIMITED_BUTTON_DEADLINE = new Date('2025-04-03T23:59:00'); // 新しいボタンの締切日時
         const now = new Date();
 
         // ボタン要素の取得
         const earlyBirdButton = document.getElementById('early-bird-button');
         const generalTicketButton = document.getElementById('general-ticket-button');
+        const buyNowButton1 = document.getElementById('buy-now-button-1');
+        const buyNowButton2 = document.getElementById('buy-now-button-2');
 
         // 締切後の処理
         if (now >= EARLY_BIRD_DEADLINE) {
@@ -265,6 +253,11 @@
             earlyBirdButton.href = '#';
             earlyBirdButton.removeAttribute('target');
             earlyBirdButton.textContent = '早期割引（販売終了）';
+        }
+
+        if (now >= LIMITED_BUTTON_DEADLINE) {
+            // 新しい購入ボタンを非表示にする
+            buyNowButton2.style.display = 'none';
         }
     </script>
 </body>
