@@ -131,7 +131,7 @@
             }
         }
 
-        /* 追加する購入ボタン用のスタイル */
+        /* 購入ボタン用のスタイル */
         .purchase-button-container {
             overflow: auto;
             display: flex;
@@ -163,7 +163,14 @@
         }
         
         .purchase-button-container a:hover {
-            background-color: #0051cc; /* ホバー時の色変更（例） */
+            background-color: #0051cc; /* ホバー時の色変更 */
+        }
+
+        /* カウントダウンタイマーのスタイル */
+        .countdown {
+            margin-top: 10px;
+            font-size: 14px;
+            color: #777777; /* グレー色 */
         }
 
         /* 無効化ボタンのスタイル */
@@ -186,28 +193,20 @@
     <div class="container">
         <h1>チケット購入</h1>
     
-        <!-- 早期割引ボタン -->
-        <a id="early-bird-button" href="https://square.link/u/a2RyhiAS" class="button" target="_blank">
-            早期割引: 6,000円
-        </a>
-
         <!-- 一般チケットボタン -->
-        <a id="general-ticket-button" href="https://square.link/u/mclmviX8" class="button" target="_blank">
-            一般: 7,000円
-        </a>
-
-        <!-- 既存の今すぐ購入するボタン -->
-        <div class="purchase-button-container" id="buy-now-button-1">
+        <div class="purchase-button-container" id="general-ticket-button-container">
             <div style="padding: 20px;">
-                <a target="_blank" href="https://square.link/u/gzSsFvVv?src=embed">今すぐ購入する</a>
+                <a target="_blank" href="https://square.link/u/1xTdvVOQ?src=embed">一般チケット</a>
             </div>
         </div>
 
-        <!-- 新たに追加する限定ボタン -->
-        <div class="purchase-button-container" id="buy-now-button-2">
+        <!-- 早割チケットボタン -->
+        <div class="purchase-button-container" id="early-bird-ticket-container">
             <div style="padding: 20px;">
-                <a target="_blank" href="https://square.link/u/OYm7ZpwQ?src=embed">今すぐ購入する</a>
+                <a target="_blank" href="https://square.link/u/wynaVGmI?src=embed">早割チケット</a>
             </div>
+            <!-- カウントダウンタイマー -->
+            <div id="countdown" class="countdown"></div>
         </div>
     </div>
 
@@ -236,28 +235,50 @@
 
 
         // 締切日時設定
-        const EARLY_BIRD_DEADLINE = new Date('2025-04-04T00:00:00'); // 早期割引の締切日時
-        const LIMITED_BUTTON_DEADLINE = new Date('2025-04-03T23:59:00'); // 新しいボタンの締切日時
+        const EARLY_BIRD_DEADLINE = new Date('2025-04-03T23:59:00'); // 早割チケットの締切日時
         const now = new Date();
 
         // ボタン要素の取得
-        const earlyBirdButton = document.getElementById('early-bird-button');
-        const generalTicketButton = document.getElementById('general-ticket-button');
-        const buyNowButton1 = document.getElementById('buy-now-button-1');
-        const buyNowButton2 = document.getElementById('buy-now-button-2');
+        const generalTicketContainer = document.getElementById('general-ticket-button-container');
+        const earlyBirdContainer = document.getElementById('early-bird-ticket-container');
+        const countdownElement = document.getElementById('countdown');
 
         // 締切後の処理
         if (now >= EARLY_BIRD_DEADLINE) {
-            // 早期割引リンクを無効化
-            earlyBirdButton.classList.add('disabled');
-            earlyBirdButton.href = '#';
-            earlyBirdButton.removeAttribute('target');
-            earlyBirdButton.textContent = '早期割引（販売終了）';
+            // 早割チケットコンテナを非表示にする
+            earlyBirdContainer.style.display = 'none';
+        } else {
+            // カウントダウンタイマーを開始
+            startCountdown(EARLY_BIRD_DEADLINE, countdownElement);
         }
 
-        if (now >= LIMITED_BUTTON_DEADLINE) {
-            // 新しい購入ボタンを非表示にする
-            buyNowButton2.style.display = 'none';
+        /**
+         * カウントダウンタイマーを開始する関数
+         * @param {Date} endTime - カウントダウンの終了時間
+         * @param {HTMLElement} element - カウントダウンを表示する要素
+         */
+        function startCountdown(endTime, element) {
+            function updateCountdown() {
+                const now = new Date().getTime();
+                const distance = endTime.getTime() - now;
+
+                if (distance < 0) {
+                    clearInterval(interval);
+                    element.innerHTML = "早割チケットの販売は終了しました。";
+                    earlyBirdContainer.style.display = 'none';
+                    return;
+                }
+
+                const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+                element.innerHTML = `販売終了まで: ${days}日 ${hours}時間 ${minutes}分 ${seconds}秒`;
+            }
+
+            updateCountdown(); // 初回即実行
+            const interval = setInterval(updateCountdown, 1000);
         }
     </script>
 </body>
