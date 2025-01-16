@@ -4,132 +4,173 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>同窓会チケット購入</title>
-  <style>
- /* 全体設定 */
-body {
-    font-family: 'Source Han Serif JP', serif; /* エレガントなフォント */
-    color: #333333; /* テキストカラーをダークグレーに */
-    background-color: #ffffff; /* 背景を白に */
-    margin: 0;
-    padding: 20px;
-    line-height: 1.8;
-    text-align: center; /* 中央揃え */
-}
+    <style>
+        /* 全体設定 */
+        body {
+            font-family: 'Source Han Serif JP', serif; /* エレガントなフォント */
+            color: #333333; /* テキストカラーをダークグレーに */
+            background-color: #ffffff; /* 背景を白に */
+            margin: 0;
+            padding: 20px;
+            line-height: 1.8;
+            text-align: center; /* 中央揃え */
+        }
+        
+        /* ヘッダー */
+        h1 {
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            text-align: center;
+            color: #000000; /* タイトルを黒に */
+        }
+        
+        h2 {
+            font-size: 1.4rem;
+            margin-top: 20px;
+            color: #555555; /* サブタイトルをミディアムダークグレーに */
+        }
+        
+        .highlight {
+            color: #000000; /* リンクを黒に */
+            text-decoration: none; /* リンクの下線を非表示 */
+        }
+        
+        .highlight:hover {
+            text-decoration: underline; /* ホバー時に下線を表示 */
+            color: #333333; /* ホバー時にダークグレーに */
+        }
+        
+        p, li {
+            margin: 10px 0;
+            color: #333333; /* テキストカラーをダークグレーに */
+        }
+        
+        .regulation-list { /* クラスを追加 */
+            list-style-type: disc; /* 箇条書きのマーカーを表示 */
+            padding-left: 20px; /* 左側の余白を設定 */
+            color: #333333; /* テキストカラーをダークグレーに */
+            background-color: #f0f0f0; /* 背景を薄いグレーに */
+            padding: 10px;
+            border-radius: 5px;
+        }
+        
+        ul.regulation-list li {
+            /* 必要に応じてリストアイテムのスタイルを追加 */
+        }
+        
+        footer {
+            text-align: center;
+            margin-top: 30px;
+            font-size: 0.9rem;
+            color: #555555; /* フッターのテキストカラーをミディアムダークグレーに */
+        }
+        
+        /* モーダルのデザイン */
+        .modal {
+            width: 80%; /* 画面幅の80% */
+            max-width: 400px; /* 最大幅 */
+            display: none; /* デフォルトでは非表示 */
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: #ffffff; /* モーダル背景を白に */
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5); /* シャドウを追加 */
+            border-radius: 10px;
+            border: 1px solid #333333; /* 境界線をダークグレーに */
+            z-index: 1000;
+        }
+        
+        /* オーバーレイのデザイン */
+        .overlay {
+            display: none; /* デフォルトでは非表示 */
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5); /* オーバーレイの背景色を半透明の黒に */
+            z-index: 999;
+        }
+        
+        /* ボタンのデザイン */
+        .button {
+            padding: 10px 20px;
+            background-color: #333333; /* ボタン背景をダークグレーに */
+            color: #ffffff; /* ボタンテキストを白に */
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 10px;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+        
+        .button:hover {
+            background-color: #555555; /* ホバー時のボタン背景をミディアムグレーに */
+            color: #ffffff; /* ホバー時のボタンテキストを白に */
+        }
+        
+        /* 見出しのデザイン */
+        h2.modal-heading {
+            font-size: 1.5rem; /* 基本サイズ */
+            max-width: 90%; /* スマホ対応 */
+            margin: 0 auto; /* 中央揃え */
+            line-height: 1.5; /* 行間調整 */
+            color: #333333; /* 見出しテキストをダークグレーに */
+        }
+        
+        @media (max-width: 600px) {
+            h2.modal-heading {
+                font-size: 1.2rem; /* スマホ用フォントサイズ */
+            }
+        }
 
-/* ヘッダー */
-h1 {
-    font-size: 1.8rem;
-    margin-bottom: 20px;
-    text-align: center;
-    color: #000000; /* タイトルを黒に */
-}
+        /* 追加するボタン用のスタイル（オプション） */
+        .purchase-button-container {
+            overflow: auto;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            align-items: center;
+            width: 259px;
+            background: #FFFFFF;
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            box-shadow: -2px 10px 5px rgba(0, 0, 0, 0);
+            border-radius: 10px;
+            font-family: 'SQ Market', Helvetica, Arial, sans-serif;
+            margin: 20px auto; /* 中央揃えと上下の余白 */
+        }
+        
+        .purchase-button-container a {
+            display: inline-block;
+            font-size: 18px;
+            line-height: 48px;
+            height: 48px;
+            color: #ffffff;
+            min-width: 212px;
+            background-color: #006aff;
+            text-align: center;
+            box-shadow: 0 0 0 1px rgba(0,0,0,.1) inset;
+            border-radius: 50px;
+            text-decoration: none; /* 下線を削除 */
+            transition: background-color 0.3s ease;
+        }
+        
+        .purchase-button-container a:hover {
+            background-color: #0051cc; /* ホバー時の色変更（例） */
+        }
 
-h2 {
-    font-size: 1.4rem;
-    margin-top: 20px;
-    color: #555555; /* サブタイトルをミディアムダークグレーに */
-}
-
-.highlight {
-    color: #000000; /* リンクを黒に */
-    text-decoration: none; /* リンクの下線を非表示 */
-}
-
-.highlight:hover {
-    text-decoration: underline; /* ホバー時に下線を表示 */
-    color: #333333; /* ホバー時にダークグレーに */
-}
-
-p, li {
-    margin: 10px 0;
-    color: #333333; /* テキストカラーをダークグレーに */
-}
-
-.regulation-list { /* クラスを追加 */
-    list-style-type: disc; /* 箇条書きのマーカーを表示 */
-    padding-left: 20px; /* 左側の余白を設定 */
-    color: #333333; /* テキストカラーをダークグレーに */
-    background-color: #f0f0f0; /* 背景を薄いグレーに */
-    padding: 10px;
-    border-radius: 5px;
-}
-
-ul.regulation-list li {
-    /* 必要に応じてリストアイテムのスタイルを追加 */
-}
-
-footer {
-    text-align: center;
-    margin-top: 30px;
-    font-size: 0.9rem;
-    color: #555555; /* フッターのテキストカラーをミディアムダークグレーに */
-}
-
-/* モーダルのデザイン */
-.modal {
-    width: 80%; /* 画面幅の80% */
-    max-width: 400px; /* 最大幅 */
-    display: none; /* デフォルトでは非表示 */
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background: #ffffff; /* モーダル背景を白に */
-    padding: 20px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5); /* シャドウを追加 */
-    border-radius: 10px;
-    border: 1px solid #333333; /* 境界線をダークグレーに */
-    z-index: 1000;
-}
-
-/* オーバーレイのデザイン */
-.overlay {
-    display: none; /* デフォルトでは非表示 */
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.5); /* オーバーレイの背景色を半透明の黒に */
-    z-index: 999;
-}
-
-/* ボタンのデザイン */
-.button {
-    padding: 10px 20px;
-    background-color: #333333; /* ボタン背景をダークグレーに */
-    color: #ffffff; /* ボタンテキストを白に */
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    margin: 10px;
-    transition: background-color 0.3s ease, color 0.3s ease;
-}
-
-.button:hover {
-    background-color: #555555; /* ホバー時のボタン背景をミディアムグレーに */
-    color: #ffffff; /* ホバー時のボタンテキストを白に */
-}
-
-/* 見出しのデザイン */
-h2.modal-heading {
-    font-size: 1.5rem; /* 基本サイズ */
-    max-width: 90%; /* スマホ対応 */
-    margin: 0 auto; /* 中央揃え */
-    line-height: 1.5; /* 行間調整 */
-    color: #333333; /* 見出しテキストをダークグレーに */
-}
-
-@media (max-width: 600px) {
-    h2.modal-heading {
-        font-size: 1.2rem; /* スマホ用フォントサイズ */
-    }
-}
-  </style>
-
+        /* 無効化ボタンのスタイル */
+        .button.disabled {
+            background-color: #cccccc;
+            color: #666666;
+            cursor: not-allowed;
+        }
+    </style>
 </head>
 <body>
     <div id="overlay" class="overlay"></div>
@@ -142,7 +183,6 @@ h2.modal-heading {
     <div class="container">
         <h1>チケット購入</h1>
     
-
         <!-- 早期割引ボタン -->
         <a id="early-bird-button" href="https://square.link/u/a2RyhiAS" class="button" target="_blank">
             早期割引: 6,000円
@@ -152,6 +192,38 @@ h2.modal-heading {
         <a id="general-ticket-button" href="https://square.link/u/mclmviX8" class="button" target="_blank">
             一般: 7,000円
         </a>
+
+        <!-- 追加する購入ボタン -->
+        <div style="
+          overflow: auto;
+          display: flex;
+          flex-direction: column;
+          justify-content: flex-end;
+          align-items: center;
+          width: 259px;
+          background: #FFFFFF;
+          border: 1px solid rgba(0, 0, 0, 0.1);
+          box-shadow: -2px 10px 5px rgba(0, 0, 0, 0);
+          border-radius: 10px;
+          font-family: 'SQ Market', Helvetica, Arial, sans-serif;
+          margin: 20px auto; /* 中央揃えと上下の余白 */
+          ">
+          <div style="padding: 20px;">
+            <a target="_blank" href="https://square.link/u/gzSsFvVv?src=embed" style="
+            display: inline-block;
+            font-size: 18px;
+            line-height: 48px;
+            height: 48px;
+            color: #ffffff;
+            min-width: 212px;
+            background-color: #006aff;
+            text-align: center;
+            box-shadow: 0 0 0 1px rgba(0,0,0,.1) inset;
+            border-radius: 50px;
+            text-decoration: none; /* 下線を削除 */
+          ">今すぐ購入する</a>
+          </div>
+    </div>
     </div>
 
     <script>
@@ -193,8 +265,6 @@ h2.modal-heading {
             earlyBirdButton.href = '#';
             earlyBirdButton.removeAttribute('target');
             earlyBirdButton.textContent = '早期割引（販売終了）';
-
-        
         }
     </script>
 </body>
