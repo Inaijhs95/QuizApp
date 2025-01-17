@@ -166,6 +166,13 @@
             background-color: #0051cc; /* ホバー時の色変更 */
         }
 
+        /* VIPチケットの説明スタイル */
+        .ticket-description {
+            font-size: 0.9rem;
+            color: #555555;
+            margin-top: 10px;
+        }
+
         /* カウントダウンタイマーのスタイル */
         .countdown {
             margin-top: 10px;
@@ -174,11 +181,12 @@
         }
 
         /* 無効化ボタンのスタイル */
-        .button.disabled {
-            background-color: #cccccc;
-            color: #666666;
+        .button.disabled, .purchase-button-container.disabled a {
+            background-color: #cccccc !important;
+            color: #666666 !important;
             cursor: not-allowed;
             pointer-events: none; /* クリック無効化 */
+            text-decoration: none;
         }
     </style>
 </head>
@@ -193,17 +201,27 @@
     <div class="container">
         <h1>チケット購入</h1>
     
+        <!-- VIPチケットボタン -->
+        <div class="purchase-button-container" id="vip-ticket-container">
+            <div style="padding: 20px;">
+                <a target="_blank" href="https://square.link/u/1ywMaePm">VIPチケット</a>
+                <div class="ticket-description">
+                    特典をお選びいただけます。詳細はリンク先をご確認ください。
+                </div>
+            </div>
+        </div>
+
         <!-- 一般チケットボタン -->
         <div class="purchase-button-container" id="general-ticket-button-container">
             <div style="padding: 20px;">
-                <a target="_blank" href="https://square.link/u/1xTdvVOQ?src=embed">一般チケット</a>
+                <a target="_blank" href="https://square.link/u/1xTdvVOQ">一般チケット</a>
             </div>
         </div>
 
         <!-- 早割チケットボタン -->
         <div class="purchase-button-container" id="early-bird-ticket-container">
             <div style="padding: 20px;">
-                <a target="_blank" href="https://square.link/u/wynaVGmI?src=embed">早割チケット</a>
+                <a target="_blank" href="https://square.link/u/wynaVGmI" id="early-bird-button">早割チケット</a>
             </div>
             <!-- カウントダウンタイマー -->
             <div id="countdown" class="countdown"></div>
@@ -241,7 +259,9 @@
         // ボタン要素の取得
         const generalTicketContainer = document.getElementById('general-ticket-button-container');
         const earlyBirdContainer = document.getElementById('early-bird-ticket-container');
+        const vipContainer = document.getElementById('vip-ticket-container');
         const countdownElement = document.getElementById('countdown');
+        const earlyBirdButton = document.getElementById('early-bird-button');
 
         // 締切後の処理
         if (now >= EARLY_BIRD_DEADLINE) {
@@ -264,8 +284,8 @@
 
                 if (distance < 0) {
                     clearInterval(interval);
-                    element.innerHTML = "早割チケットの販売は終了しました。";
-                    earlyBirdContainer.style.display = 'none';
+                    element.innerHTML = "受付は終了しました。";
+                    earlyBirdButton.classList.add('disabled');
                     return;
                 }
 
