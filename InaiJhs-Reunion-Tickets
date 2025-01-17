@@ -253,7 +253,7 @@
 
 
         // 締切日時設定
-        const EARLY_BIRD_DEADLINE = new Date('2025-04-03T23:59:00'); // 早割チケットの締切日時
+        const EARLY_BIRD_DEADLINE = new Date('2025-01-03T23:59:00'); // 早割チケットの締切日時
         const now = new Date();
 
         // ボタン要素の取得
