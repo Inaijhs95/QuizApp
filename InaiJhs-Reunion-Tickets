@@ -7,7 +7,7 @@
     <style>
         /* 全体設定 */
         body {
-            font-family: 'Source Han Serif JP', serif; /* エレガントなフォント */
+             font-family: 'Noto Sans JP', sans-serif; /* フォントをNoto Sans JPに変更 */
             color: #333333; /* テキストカラーをダークグレーに */
             background-color: #ffffff; /* 背景を白に */
             margin: 0;
