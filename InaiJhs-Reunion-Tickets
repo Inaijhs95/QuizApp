@@ -160,10 +160,44 @@
             border-radius: 50px;
             text-decoration: none; /* 下線を削除 */
             transition: background-color 0.3s ease;
+            position: relative;
+            overflow: hidden;
         }
         
         .purchase-button-container a:hover {
             background-color: #0051cc; /* ホバー時の色変更 */
+        }
+
+        /* VIPボタン専用のスタイル */
+        .vip-button {
+            background: linear-gradient(135deg, #FFD700 25%, #FFDF00 50%, #FFD700 75%);
+            background-size: 200% 200%;
+            animation: shine 3s linear infinite;
+            position: relative;
+            overflow: hidden;
+            color: #ffffff !important; /* テキストを白に */
+        }
+
+        .vip-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -50%;
+            width: 50%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.5);
+            transform: skewX(-25deg);
+            animation: sparkle 3s linear infinite;
+        }
+
+        @keyframes shine {
+            0% { background-position: 0% 50%; }
+            100% { background-position: 100% 50%; }
+        }
+
+        @keyframes sparkle {
+            0% { left: -50%; }
+            100% { left: 100%; }
         }
 
         /* VIPチケットの説明スタイル */
@@ -204,7 +238,7 @@
         <!-- VIPチケットボタン -->
         <div class="purchase-button-container" id="vip-ticket-container">
             <div style="padding: 20px;">
-                <a target="_blank" href="https://square.link/u/1ywMaePm">VIPチケット</a>
+                <a target="_blank" href="https://square.link/u/1ywMaePm" class="vip-button">VIPチケット</a>
                 <div class="ticket-description">
                     特典をお選びいただけます。詳細はリンク先をご確認ください。
                 </div>
