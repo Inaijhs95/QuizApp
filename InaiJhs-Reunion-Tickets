@@ -264,7 +264,7 @@
 
   <script>
     // ページアクセスの制限（2025/03/21 0:00 ～ 2025/05/03 21:00）
-    const pageAccessStart = new Date('2024-03-21T00:00:00');
+    const pageAccessStart = new Date('2025-03-21T00:00:00');
     const pageAccessEnd   = new Date('2025-05-03T21:00:00');
     const now = new Date();
     if (now < pageAccessStart || now > pageAccessEnd) {
