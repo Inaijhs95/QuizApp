@@ -1,339 +1,344 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>同窓会チケット購入</title>
-    <style>
-        /* 全体設定 */
-        body {
-             font-family: 'Noto Sans JP', sans-serif; /* フォントをNoto Sans JPに変更 */
-            color: #333333; /* テキストカラーをダークグレーに */
-            background-color: #ffffff; /* 背景を白に */
-            margin: 0;
-            padding: 20px;
-            line-height: 1.8;
-            text-align: center; /* 中央揃え */
-        }
-        
-        /* ヘッダー */
-        h1 {
-            font-size: 1.8rem;
-            margin-bottom: 20px;
-            text-align: center;
-            color: #000000; /* タイトルを黒に */
-        }
-        
-        h2 {
-            font-size: 1.4rem;
-            margin-top: 20px;
-            color: #555555; /* サブタイトルをミディアムダークグレーに */
-        }
-        
-        .highlight {
-            color: #000000; /* リンクを黒に */
-            text-decoration: none; /* リンクの下線を非表示 */
-        }
-        
-        .highlight:hover {
-            text-decoration: underline; /* ホバー時に下線を表示 */
-            color: #333333; /* ホバー時にダークグレーに */
-        }
-        
-        p, li {
-            margin: 10px 0;
-            color: #333333; /* テキストカラーをダークグレーに */
-        }
-        
-        .regulation-list { /* クラスを追加 */
-            list-style-type: disc; /* 箇条書きのマーカーを表示 */
-            padding-left: 20px; /* 左側の余白を設定 */
-            color: #333333; /* テキストカラーをダークグレーに */
-            background-color: #f0f0f0; /* 背景を薄いグレーに */
-            padding: 10px;
-            border-radius: 5px;
-        }
-        
-        ul.regulation-list li {
-            /* 必要に応じてリストアイテムのスタイルを追加 */
-        }
-        
-        footer {
-            text-align: center;
-            margin-top: 30px;
-            font-size: 0.9rem;
-            color: #555555; /* フッターのテキストカラーをミディアムダークグレーに */
-        }
-        
-        /* モーダルのデザイン */
-        .modal {
-            width: 80%; /* 画面幅の80% */
-            max-width: 400px; /* 最大幅 */
-            display: none; /* デフォルトでは非表示 */
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background: #ffffff; /* モーダル背景を白に */
-            padding: 20px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5); /* シャドウを追加 */
-            border-radius: 10px;
-            border: 1px solid #333333; /* 境界線をダークグレーに */
-            z-index: 1000;
-        }
-        
-        /* オーバーレイのデザイン */
-        .overlay {
-            display: none; /* デフォルトでは非表示 */
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.5); /* オーバーレイの背景色を半透明の黒に */
-            z-index: 999;
-        }
-        
-        /* ボタンのデザイン */
-        .button {
-            padding: 10px 20px;
-            background-color: #333333; /* ボタン背景をダークグレーに */
-            color: #ffffff; /* ボタンテキストを白に */
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            margin: 10px;
-            transition: background-color 0.3s ease, color 0.3s ease;
-            text-decoration: none; /* リンクの場合の下線を削除 */
-            display: inline-block;
-        }
-        
-        .button:hover {
-            background-color: #555555; /* ホバー時のボタン背景をミディアムグレーに */
-            color: #ffffff; /* ホバー時のボタンテキストを白に */
-        }
-        
-        /* 見出しのデザイン */
-        h2.modal-heading {
-            font-size: 1.5rem; /* 基本サイズ */
-            max-width: 90%; /* スマホ対応 */
-            margin: 0 auto; /* 中央揃え */
-            line-height: 1.5; /* 行間調整 */
-            color: #333333; /* 見出しテキストをダークグレーに */
-        }
-        
-        @media (max-width: 600px) {
-            h2.modal-heading {
-                font-size: 1.2rem; /* スマホ用フォントサイズ */
-            }
-        }
-
-        /* 購入ボタン用のスタイル */
-        .purchase-button-container {
-            overflow: auto;
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-end;
-            align-items: center;
-            width: 259px;
-            background: #FFFFFF;
-            border: 1px solid rgba(0, 0, 0, 0.1);
-            box-shadow: -2px 10px 5px rgba(0, 0, 0, 0);
-            border-radius: 10px;
-            font-family: 'SQ Market', Helvetica, Arial, sans-serif;
-            margin: 20px auto; /* 中央揃えと上下の余白 */
-        }
-        
-        .purchase-button-container a {
-            display: inline-block;
-            font-size: 18px;
-            line-height: 48px;
-            height: 48px;
-            color: #ffffff;
-            min-width: 212px;
-            background-color: #006aff;
-            text-align: center;
-            box-shadow: 0 0 0 1px rgba(0,0,0,.1) inset;
-            border-radius: 50px;
-            text-decoration: none; /* 下線を削除 */
-            transition: background-color 0.3s ease;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .purchase-button-container a:hover {
-            background-color: #0051cc; /* ホバー時の色変更 */
-        }
-
-        /* VIPボタン専用のスタイル */
-        .vip-button {
-            background: linear-gradient(135deg, #FFD700 25%, #FFDF00 50%, #FFD700 75%);
-            background-size: 200% 200%;
-            animation: shine 3s linear infinite;
-            position: relative;
-            overflow: hidden;
-            color: #ffffff !important; /* テキストを白に */
-        }
-
-        .vip-button::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -50%;
-            width: 50%;
-            height: 100%;
-            background: rgba(255, 255, 255, 0.5);
-            transform: skewX(-25deg);
-            animation: sparkle 3s linear infinite;
-        }
-
-        @keyframes shine {
-            0% { background-position: 0% 50%; }
-            100% { background-position: 100% 50%; }
-        }
-
-        @keyframes sparkle {
-            0% { left: -50%; }
-            100% { left: 100%; }
-        }
-
-        /* VIPチケットの説明スタイル */
-        .ticket-description {
-            font-size: 0.9rem;
-            color: #555555;
-            margin-top: 10px;
-        }
-
-        /* カウントダウンタイマーのスタイル */
-        .countdown {
-            margin-top: 10px;
-            font-size: 14px;
-            color: #777777; /* グレー色 */
-        }
-
-        /* 無効化ボタンのスタイル */
-        .button.disabled, .purchase-button-container.disabled a {
-            background-color: #cccccc !important;
-            color: #666666 !important;
-            cursor: not-allowed;
-            pointer-events: none; /* クリック無効化 */
-            text-decoration: none;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>同窓会チケット購入</title>
+  <style>
+    /* 全体設定 */
+    body {
+      font-family: 'Noto Sans JP', sans-serif; /* フォントをNoto Sans JPに変更 */
+      color: #333333; /* テキストカラーをダークグレーに */
+      background-color: #ffffff; /* 背景を白に */
+      margin: 0;
+      padding: 20px;
+      line-height: 1.8;
+      text-align: center; /* 中央揃え */
+    }
+    
+    /* ヘッダー */
+    h1 {
+      font-size: 1.8rem;
+      margin-bottom: 20px;
+      text-align: center;
+      color: #000000; /* タイトルを黒に */
+    }
+    
+    h2 {
+      font-size: 1.4rem;
+      margin-top: 20px;
+      color: #555555; /* サブタイトルをミディアムダークグレーに */
+    }
+    
+    .highlight {
+      color: #000000; /* リンクを黒に */
+      text-decoration: none; /* リンクの下線を非表示 */
+    }
+    
+    .highlight:hover {
+      text-decoration: underline; /* ホバー時に下線を表示 */
+      color: #333333; /* ホバー時にダークグレーに */
+    }
+    
+    p, li {
+      margin: 10px 0;
+      color: #333333; /* テキストカラーをダークグレーに */
+    }
+    
+    .regulation-list { /* クラスを追加 */
+      list-style-type: disc; /* 箇条書きのマーカーを表示 */
+      padding-left: 20px; /* 左側の余白を設定 */
+      color: #333333; /* テキストカラーをダークグレーに */
+      background-color: #f0f0f0; /* 背景を薄いグレーに */
+      padding: 10px;
+      border-radius: 5px;
+    }
+    
+    ul.regulation-list li {
+      /* 必要に応じてリストアイテムのスタイルを追加 */
+    }
+    
+    footer {
+      text-align: center;
+      margin-top: 30px;
+      font-size: 0.9rem;
+      color: #555555; /* フッターのテキストカラーをミディアムダークグレーに */
+    }
+    
+    /* モーダルのデザイン */
+    .modal {
+      width: 80%; /* 画面幅の80% */
+      max-width: 400px; /* 最大幅 */
+      display: none; /* デフォルトでは非表示 */
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: #ffffff; /* モーダル背景を白に */
+      padding: 20px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5); /* シャドウを追加 */
+      border-radius: 10px;
+      border: 1px solid #333333; /* 境界線をダークグレーに */
+      z-index: 1000;
+    }
+    
+    /* オーバーレイのデザイン */
+    .overlay {
+      display: none; /* デフォルトでは非表示 */
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.5); /* オーバーレイの背景色を半透明の黒に */
+      z-index: 999;
+    }
+    
+    /* ボタンのデザイン */
+    .button {
+      padding: 10px 20px;
+      background-color: #333333; /* ボタン背景をダークグレーに */
+      color: #ffffff; /* ボタンテキストを白に */
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      margin: 10px;
+      transition: background-color 0.3s ease, color 0.3s ease;
+      text-decoration: none; /* リンクの場合の下線を削除 */
+      display: inline-block;
+    }
+    
+    .button:hover {
+      background-color: #555555; /* ホバー時のボタン背景をミディアムグレーに */
+      color: #ffffff; /* ホバー時のボタンテキストを白に */
+    }
+    
+    /* 見出しのデザイン */
+    h2.modal-heading {
+      font-size: 1.5rem; /* 基本サイズ */
+      max-width: 90%; /* スマホ対応 */
+      margin: 0 auto; /* 中央揃え */
+      line-height: 1.5; /* 行間調整 */
+      color: #333333; /* 見出しテキストをダークグレーに */
+    }
+    
+    @media (max-width: 600px) {
+      h2.modal-heading {
+        font-size: 1.2rem; /* スマホ用フォントサイズ */
+      }
+    }
+    
+    /* 購入ボタン用のスタイル */
+    .purchase-button-container {
+      overflow: auto;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      align-items: center;
+      width: 259px;
+      background: #FFFFFF;
+      border: 1px solid rgba(0, 0, 0, 0.1);
+      box-shadow: -2px 10px 5px rgba(0, 0, 0, 0);
+      border-radius: 10px;
+      font-family: 'SQ Market', Helvetica, Arial, sans-serif;
+      margin: 20px auto; /* 中央揃えと上下の余白 */
+    }
+    
+    .purchase-button-container a {
+      display: inline-block;
+      font-size: 18px;
+      line-height: 48px;
+      height: 48px;
+      color: #ffffff;
+      min-width: 212px;
+      background-color: #006aff;
+      text-align: center;
+      box-shadow: 0 0 0 1px rgba(0,0,0,.1) inset;
+      border-radius: 50px;
+      text-decoration: none; /* 下線を削除 */
+      transition: background-color 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .purchase-button-container a:hover {
+      background-color: #0051cc; /* ホバー時の色変更 */
+    }
+    
+    /* VIPボタン専用のスタイル */
+    .vip-button {
+      background: linear-gradient(135deg, #FFD700 25%, #FFDF00 50%, #FFD700 75%);
+      background-size: 200% 200%;
+      animation: shine 3s linear infinite;
+      position: relative;
+      overflow: hidden;
+      color: #ffffff !important; /* テキストを白に */
+    }
+    
+    .vip-button::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -50%;
+      width: 50%;
+      height: 100%;
+      background: rgba(255, 255, 255, 0.5);
+      transform: skewX(-25deg);
+      animation: sparkle 3s linear infinite;
+    }
+    
+    @keyframes shine {
+      0% { background-position: 0% 50%; }
+      100% { background-position: 100% 50%; }
+    }
+    
+    @keyframes sparkle {
+      0% { left: -50%; }
+      100% { left: 100%; }
+    }
+    
+    /* VIPチケットの説明スタイル */
+    .ticket-description {
+      font-size: 0.9rem;
+      color: #555555;
+      margin-top: 10px;
+    }
+    
+    /* カウントダウンタイマーのスタイル */
+    .countdown {
+      margin-top: 10px;
+      font-size: 14px;
+      color: #777777; /* グレー色 */
+    }
+    
+    /* 無効化ボタンのスタイル */
+    .button.disabled, .purchase-button-container.disabled a {
+      background-color: #cccccc !important;
+      color: #666666 !important;
+      cursor: not-allowed;
+      pointer-events: none; /* クリック無効化 */
+      text-decoration: none;
+    }
+  </style>
 </head>
 <body>
-    <div id="overlay" class="overlay"></div>
-    <div id="modal" class="modal">
-        <h2>出欠回答は<br>お済みですか？</h2>
-        <button class="button" onclick="handleAttendanceResponse('yes')">回答済み</button>
-        <button class="button" onclick="handleAttendanceResponse('no')">まだ</button>
+  <div id="overlay" class="overlay"></div>
+  <div id="modal" class="modal">
+    <h2>出欠回答は<br>お済みですか？</h2>
+    <button class="button" onclick="handleAttendanceResponse('yes')">回答済み</button>
+    <button class="button" onclick="handleAttendanceResponse('no')">まだ</button>
+  </div>
+
+  <div class="container">
+    <h1>チケット購入</h1>
+
+    <!-- VIPチケットボタン -->
+    <div class="purchase-button-container" id="vip-ticket-container">
+      <div style="padding: 20px;">
+        <a target="_blank" href="https://square.link/u/1ywMaePm" class="vip-button">VIPチケット</a>
+        <div class="ticket-description">
+          特典をお選びいただけます。詳細はリンク先をご確認ください。
+        </div>
+      </div>
     </div>
 
-    <div class="container">
-        <h1>チケット購入</h1>
-    
-        <!-- VIPチケットボタン -->
-        <div class="purchase-button-container" id="vip-ticket-container">
-            <div style="padding: 20px;">
-                <a target="_blank" href="https://square.link/u/1ywMaePm" class="vip-button">VIPチケット</a>
-                <div class="ticket-description">
-                    特典をお選びいただけます。詳細はリンク先をご確認ください。
-                </div>
-            </div>
-        </div>
-
-        <!-- 一般チケットボタン -->
-        <div class="purchase-button-container" id="general-ticket-button-container">
-            <div style="padding: 20px;">
-                <a target="_blank" href="https://square.link/u/1xTdvVOQ">一般チケット</a>
-            </div>
-        </div>
-
-        <!-- 早割チケットボタン -->
-        <div class="purchase-button-container" id="early-bird-ticket-container">
-            <div style="padding: 20px;">
-                <a target="_blank" href="https://square.link/u/wynaVGmI" id="early-bird-button">早割チケット</a>
-            </div>
-            <!-- カウントダウンタイマー -->
-            <div id="countdown" class="countdown"></div>
-        </div>
+    <!-- 一般チケットボタン -->
+    <div class="purchase-button-container" id="general-ticket-button-container">
+      <div style="padding: 20px;">
+        <a target="_blank" href="https://square.link/u/1xTdvVOQ">一般チケット</a>
+      </div>
     </div>
 
-    <script>
-        function handleAttendanceResponse(response) {
-            if (response === "yes") {
-                alert("このままお買い求めください。");
-                hideModal();
-            } else if (response === "no") {
-                alert("出欠回答ページへ移動します。");
-                window.location.href = "attendance-form.html";
-            }
+    <!-- 早割チケットボタン -->
+    <div class="purchase-button-container" id="early-bird-ticket-container">
+      <div style="padding: 20px;">
+        <a target="_blank" href="https://square.link/u/wynaVGmI" id="early-bird-button">早割チケット</a>
+      </div>
+      <!-- カウントダウンタイマー -->
+      <div id="countdown" class="countdown"></div>
+    </div>
+  </div>
+
+  <script>
+    // ページアクセスの制限（2025/03/21 0:00 ～ 2025/05/03 21:00）
+    const pageAccessStart = new Date('2025-03-21T00:00:00');
+    const pageAccessEnd   = new Date('2025-05-03T21:00:00');
+    const now = new Date();
+    if (now < pageAccessStart || now > pageAccessEnd) {
+      document.body.innerHTML = '<h1 style="text-align:center; margin-top:50px;">このページは現在アクセスできません。</h1>';
+    } else {
+      // 出欠回答モーダル用関数
+      function handleAttendanceResponse(response) {
+        if (response === "yes") {
+          alert("このままお買い求めください。");
+          hideModal();
+        } else if (response === "no") {
+          alert("出欠回答ページへ移動します。");
+          window.location.href = "attendance-form.html";
+        }
+      }
+
+      function hideModal() {
+        document.getElementById("modal").style.display = "none";
+        document.getElementById("overlay").style.display = "none";
+      }
+
+      function showModal() {
+        document.getElementById("modal").style.display = "flex";
+        document.getElementById("overlay").style.display = "block";
+      }
+
+      window.onload = showModal;
+
+      // 早割チケット〆切日時（変更なし）
+      const EARLY_BIRD_DEADLINE = new Date('2025-04-03T23:59:59');
+      
+      // ボタン要素の取得
+      const earlyBirdContainer = document.getElementById('early-bird-ticket-container');
+      const countdownElement   = document.getElementById('countdown');
+      const earlyBirdButton    = document.getElementById('early-bird-button');
+
+      // 締切後の処理
+      if (now >= EARLY_BIRD_DEADLINE) {
+        // 早割チケットコンテナを非表示にする
+        earlyBirdContainer.style.display = 'none';
+      } else {
+        // カウントダウンタイマーを開始
+        startCountdown(EARLY_BIRD_DEADLINE, countdownElement);
+      }
+
+      /**
+       * カウントダウンタイマーを開始する関数
+       * @param {Date} endTime - カウントダウンの終了時間
+       * @param {HTMLElement} element - カウントダウンを表示する要素
+       */
+      function startCountdown(endTime, element) {
+        function updateCountdown() {
+          const nowTime = new Date().getTime();
+          const distance = endTime.getTime() - nowTime;
+
+          if (distance < 0) {
+            clearInterval(interval);
+            element.innerHTML = "受付は終了しました。";
+            earlyBirdButton.classList.add('disabled');
+            return;
+          }
+
+          const days    = Math.floor(distance / (1000 * 60 * 60 * 24));
+          const hours   = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+          const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+          const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+          element.innerHTML = `販売終了まで: ${days}日 ${hours}時間 ${minutes}分 ${seconds}秒`;
         }
 
-        function hideModal() {
-            document.getElementById("modal").style.display = "none";
-            document.getElementById("overlay").style.display = "none";
-        }
-
-        function showModal() {
-            document.getElementById("modal").style.display = "flex";
-            document.getElementById("overlay").style.display = "block";
-        }
-
-        window.onload = showModal;
-
-
-        // 締切日時設定
-        const EARLY_BIRD_DEADLINE = new Date('2025-04-03T23:59:59'); // 早割チケットの締切日時
-        const now = new Date();
-
-        // ボタン要素の取得
-        const generalTicketContainer = document.getElementById('general-ticket-button-container');
-        const earlyBirdContainer = document.getElementById('early-bird-ticket-container');
-        const vipContainer = document.getElementById('vip-ticket-container');
-        const countdownElement = document.getElementById('countdown');
-        const earlyBirdButton = document.getElementById('early-bird-button');
-
-        // 締切後の処理
-        if (now >= EARLY_BIRD_DEADLINE) {
-            // 早割チケットコンテナを非表示にする
-            earlyBirdContainer.style.display = 'none';
-        } else {
-            // カウントダウンタイマーを開始
-            startCountdown(EARLY_BIRD_DEADLINE, countdownElement);
-        }
-
-        /**
-         * カウントダウンタイマーを開始する関数
-         * @param {Date} endTime - カウントダウンの終了時間
-         * @param {HTMLElement} element - カウントダウンを表示する要素
-         */
-        function startCountdown(endTime, element) {
-            function updateCountdown() {
-                const now = new Date().getTime();
-                const distance = endTime.getTime() - now;
-
-                if (distance < 0) {
-                    clearInterval(interval);
-                    element.innerHTML = "受付は終了しました。";
-                    earlyBirdButton.classList.add('disabled');
-                    return;
-                }
-
-                const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-                const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-                const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-                element.innerHTML = `販売終了まで: ${days}日 ${hours}時間 ${minutes}分 ${seconds}秒`;
-            }
-
-            updateCountdown(); // 初回即実行
-            const interval = setInterval(updateCountdown, 1000);
-        }
-    </script>
+        updateCountdown(); // 初回実行
+        const interval = setInterval(updateCountdown, 1000);
+      }
+    }
+  </script>
 </body>
 </html>
