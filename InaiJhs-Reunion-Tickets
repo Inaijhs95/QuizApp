@@ -288,7 +288,7 @@
       window.onload = showModal;
 
       // 早割チケット〆切日時（変更なし）
-      const EARLY_BIRD_DEADLINE = new Date('2025-04-03T23:59:59');
+      const EARLY_BIRD_DEADLINE = new Date('2024-04-03T23:59:59');
       const earlyBirdContainer = document.getElementById('early-bird-ticket-container');
       const countdownElement   = document.getElementById('countdown');
       const earlyBirdButton    = document.getElementById('early-bird-button');
@@ -299,7 +299,7 @@
       }
 
       // 早割チケットｰ3回払いの締切日時（新規追加：3月3日23:59まで）
-      const EARLY_BIRD_3_INSTALLMENTS_DEADLINE = new Date('2025-03-03T23:59:59');
+      const EARLY_BIRD_3_INSTALLMENTS_DEADLINE = new Date('2024-03-03T23:59:59');
       const earlyBird3Container = document.getElementById('early-bird-3-installments-ticket-container');
       const countdown3Element   = document.getElementById('countdown-3-installments');
       const earlyBird3Button    = document.getElementById('early-bird-3-installments-button');
