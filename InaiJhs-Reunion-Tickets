@@ -252,7 +252,7 @@
     <!-- 早割チケットｰ3回払いボタン（新規追加） -->
     <div class="purchase-button-container" id="early-bird-3-installments-ticket-container">
       <div style="padding: 20px;">
-        <a target="_blank" href="https://square.link/u/zm829ps6" id="early-bird-3-installments-button">早割チケットｰ3回払い</a>
+        <a target="_blank" href="https://square.link/u/zm829ps6" id="early-bird-3-installments-button">早割チケットｰ3回払い-</a>
       </div>
       <!-- カウントダウンタイマー -->
       <div id="countdown-3-installments" class="countdown"></div>
