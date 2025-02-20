@@ -260,16 +260,24 @@
       <!-- カウントダウンタイマー -->
       <div id="countdown" class="countdown"></div>
     </div>
+
+    <!-- 早割チケットｰ3回払いボタン（新規追加） -->
+    <div class="purchase-button-container" id="early-bird-3-installments-ticket-container">
+      <div style="padding: 20px;">
+        <a target="_blank" href="https://square.link/u/zm829ps6" id="early-bird-3-installments-button">早割チケットｰ3回払い</a>
+      </div>
+      <!-- カウントダウンタイマー -->
+      <div id="countdown-3-installments" class="countdown"></div>
+    </div>
   </div>
 
   <script>
     // ページアクセスの制限（2025/03/21 0:00 ～ 2025/05/03 21:00）
-    const pageAccessStart = new Date('2025-03-21T00:00:00');
+    const pageAccessStart = new Date('2024-03-21T00:00:00');
     const pageAccessEnd   = new Date('2025-05-03T21:00:00');
     const now = new Date();
     if (now < pageAccessStart || now > pageAccessEnd) {
-     document.body.innerHTML = '<h1 style="text-align:center; margin-top:50px; font-size: 1rem;">開催決定までお待ちください。</h1>';
-
+      document.body.innerHTML = '<h1 style="text-align:center; margin-top:50px; font-size: 1rem;">またのご参加をお待ちしております。</h1>';
     } else {
       // 出欠回答モーダル用関数
       function handleAttendanceResponse(response) {
@@ -297,18 +305,32 @@
       // 早割チケット〆切日時（変更なし）
       const EARLY_BIRD_DEADLINE = new Date('2025-04-03T23:59:59');
       
-      // ボタン要素の取得
+      // ボタン要素の取得（早割チケット）
       const earlyBirdContainer = document.getElementById('early-bird-ticket-container');
       const countdownElement   = document.getElementById('countdown');
       const earlyBirdButton    = document.getElementById('early-bird-button');
 
-      // 締切後の処理
+      // 締切後の処理（早割チケット）
       if (now >= EARLY_BIRD_DEADLINE) {
-        // 早割チケットコンテナを非表示にする
         earlyBirdContainer.style.display = 'none';
       } else {
         // カウントダウンタイマーを開始
         startCountdown(EARLY_BIRD_DEADLINE, countdownElement);
+      }
+
+      // 早割チケットｰ3回払いの締切日時（新規追加：2月3日23:59まで）
+      const EARLY_BIRD_3_INSTALLMENTS_DEADLINE = new Date('2025-02-03T23:59:59');
+      
+      // ボタン要素の取得（早割チケットｰ3回払い）
+      const earlyBird3Container = document.getElementById('early-bird-3-installments-ticket-container');
+      const countdown3Element   = document.getElementById('countdown-3-installments');
+      const earlyBird3Button    = document.getElementById('early-bird-3-installments-button');
+
+      // 締切後の処理（早割チケットｰ3回払い）
+      if (now >= EARLY_BIRD_3_INSTALLMENTS_DEADLINE) {
+        earlyBird3Container.style.display = 'none';
+      } else {
+        startCountdown(EARLY_BIRD_3_INSTALLMENTS_DEADLINE, countdown3Element);
       }
 
       /**
@@ -324,7 +346,8 @@
           if (distance < 0) {
             clearInterval(interval);
             element.innerHTML = "受付は終了しました。";
-            earlyBirdButton.classList.add('disabled');
+            // 対象のボタンを無効化する場合は以下の行を有効にしてください
+            // buttonElement.classList.add('disabled');
             return;
           }
 
