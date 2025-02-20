@@ -239,7 +239,7 @@
         color: #333333; /* 強調ポイントをダークグレーに変更 */
     }
 
-    #countdown {
+    #countdown, #countdown3 {
         white-space: nowrap; /* 折り返しを防止 */
         margin-left: 10px; /* 左側の余白を少なめに */
         font-size: 0.9rem; /* 小さいフォントサイズ */
@@ -247,30 +247,25 @@
         color: #333333; /* 強調色をダークグレーに変更 */
     }
 </style>
-
-
 </head>
 <body>
     <header>
         <img src="images/kosha.png" alt="稲井中学校ロゴ">
     </header>
     <!-- サイドメニュートリガーボタン -->
-<button class="menu-toggle" onclick="toggleMenu()">☰</button>
+    <button class="menu-toggle" onclick="toggleMenu()">☰</button>
 
-<!-- サイドメニュー -->
-<div class="sidebar-menu" id="sidebar-menu">
-    <h3>稲井中学校同窓会</h3>
-    <ul>
-        <li><a href="attendance-summary.html">現在までの参加人数</a></li>
-        <li><a href="attendance-form.html">出欠回答</a></li>
-          <li><a href="InaiJhs-Reunion-Tickets">チケット購入</a></li>
-        <li><a href="dosokai-regulation.html">稲井中学校同窓会規約</a></li>
-        <li><a href="mondaisoko.html">キャッシュバックに参加</a></li>
-    </ul>
-</div>
-
-
-
+    <!-- サイドメニュー -->
+    <div class="sidebar-menu" id="sidebar-menu">
+        <h3>稲井中学校同窓会</h3>
+        <ul>
+            <li><a href="attendance-summary.html">現在までの参加人数</a></li>
+            <li><a href="attendance-form.html">出欠回答</a></li>
+            <li><a href="InaiJhs-Reunion-Tickets">チケット購入</a></li>
+            <li><a href="dosokai-regulation.html">稲井中学校同窓会規約</a></li>
+            <li><a href="mondaisoko.html">キャッシュバックに参加</a></li>
+        </ul>
+    </div>
 
     <div class="title">稲井中学校同窓会</div>
 
@@ -288,85 +283,100 @@
 
     <div class="section">
         <h2>チケット種別</h2>
-     <p>
-    早期割引　6,000円
-    <span id="countdown"></span>
-</p>
+        <p>
+            早割　6,000円
+            <span id="countdown"></span>
+        </p>
+        <p>
+            早割-3回払い-　2025円×3回
+            <span id="countdown3"></span>
+        </p>
         <p>一般　　　7,000円</p>
-         <p>VIP　　　10,000円</p>
+        <p>VIP　　　10,000円</p>
     </div>
 
     <a href="attendance-form.html" class="button">出欠回答はこちら</a>
 
-
-   <div class="section">
-    <h2>出席キャンセルに関するポリシー</h2>
-    <div class="policy">
-        <div class="policy-item">
-            <h3>1. キャンセル料金について</h3>
-            <p>出席確定後、キャンセル時に料金が発生する場合があります。詳細は以下をご確認ください。</p>
-        </div>
-        <div class="policy-item">
-            <h3>2. キャンセル料金の発生タイミング</h3>
-            <ul>
-                <li>開催日3日前まで: <strong>キャンセル料金なし</strong></li>
-                <li>開催日の2日前～前日: <strong>料金の50%</strong> が発生</li>
-                <li>当日キャンセル: <strong>料金の80%</strong> が発生</li>
-                <li>無連絡の場合: <strong>全額</strong> が発生</li>
-            </ul>
-        </div>
-        <div class="policy-item">
-            <h3>3. キャンセル手続きについて</h3>
-            <p>キャンセルを希望される場合は、公式LINEを通じてご連絡ください。</p>
-        </div>
-        <div class="policy-item">
-            <h3>4. その他</h3>
-            <p>緊急事態や特別な事情がある場合は、キャンセルポリシーの対象外となる場合があります。その際は別途ご案内いたします。</p>
+    <div class="section">
+        <h2>出席キャンセルに関するポリシー</h2>
+        <div class="policy">
+            <div class="policy-item">
+                <h3>1. キャンセル料金について</h3>
+                <p>出席確定後、キャンセル時に料金が発生する場合があります。詳細は以下をご確認ください。</p>
+            </div>
+            <div class="policy-item">
+                <h3>2. キャンセル料金の発生タイミング</h3>
+                <ul>
+                    <li>開催日3日前まで: <strong>キャンセル料金なし</strong></li>
+                    <li>開催日の2日前～前日: <strong>料金の50%</strong> が発生</li>
+                    <li>当日キャンセル: <strong>料金の80%</strong> が発生</li>
+                    <li>無連絡の場合: <strong>全額</strong> が発生</li>
+                </ul>
+            </div>
+            <div class="policy-item">
+                <h3>3. キャンセル手続きについて</h3>
+                <p>キャンセルを希望される場合は、公式LINEを通じてご連絡ください。</p>
+            </div>
+            <div class="policy-item">
+                <h3>4. その他</h3>
+                <p>緊急事態や特別な事情がある場合は、キャンセルポリシーの対象外となる場合があります。その際は別途ご案内いたします。</p>
+            </div>
         </div>
     </div>
-</div>
 
-
-   <a href="mondaisoko.html">
-    <img src="images/kokoku2.png" alt="広告2" class="banner">
-</a>
-
+    <a href="mondaisoko.html">
+        <img src="images/kokoku2.png" alt="広告2" class="banner">
+    </a>
 
     <div class="footer">
         Copyright © Inai-Jhs-dosokai . All Rights Reserved
     </div>
 
-    
 <script>
     function toggleMenu() {
         const menu = document.getElementById('sidebar-menu');
         menu.classList.toggle('open');
     }
-    // カウントダウンの設定
-const countdownElement = document.getElementById('countdown');
-const deadline = new Date('2025-04-03T23:59:59'); // 締切日時
 
-function updateCountdown() {
-    const now = new Date();
-    const timeRemaining = deadline - now;
+    // 早割（通常）のカウントダウン設定
+    const countdownElement = document.getElementById('countdown');
+    const deadline = new Date('2025-04-03T23:59:59'); // 早割締切日時
 
-    if (timeRemaining <= 0) {
-        countdownElement.textContent = '販売終了';
-        return; // カウントダウン終了
+    function updateCountdown() {
+        const now = new Date();
+        const timeRemaining = deadline - now;
+        if (timeRemaining <= 0) {
+            countdownElement.textContent = '販売終了';
+            return;
+        }
+        const days = Math.floor(timeRemaining / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((timeRemaining % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes = Math.floor((timeRemaining % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((timeRemaining % (1000 * 60)) / 1000);
+        countdownElement.textContent = `販売終了まで ${days}日 ${hours}時間 ${minutes}分 ${seconds}秒`;
     }
+    setInterval(updateCountdown, 1000);
+    updateCountdown();
 
-    const days = Math.floor(timeRemaining / (1000 * 60 * 60 * 24));
-    const hours = Math.floor((timeRemaining % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-    const minutes = Math.floor((timeRemaining % (1000 * 60 * 60)) / (1000 * 60));
-    const seconds = Math.floor((timeRemaining % (1000 * 60)) / 1000);
+    // 早割-3回払い- のカウントダウン設定
+    const countdownElement3 = document.getElementById('countdown3');
+    const deadline3 = new Date('2025-03-03T23:59:59'); // 早割-3回払い- 締切日時
 
-    countdownElement.textContent = `販売終了まで ${days}日 ${hours}時間 ${minutes}分 ${seconds}秒`;
-}
-
-// 毎秒カウントダウンを更新
-setInterval(updateCountdown, 1000);
-updateCountdown(); // ページ読み込み時に即時表示
-
+    function updateCountdown3() {
+        const now = new Date();
+        const timeRemaining = deadline3 - now;
+        if (timeRemaining <= 0) {
+            countdownElement3.textContent = '販売終了';
+            return;
+        }
+        const days = Math.floor(timeRemaining / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((timeRemaining % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes = Math.floor((timeRemaining % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((timeRemaining % (1000 * 60)) / 1000);
+        countdownElement3.textContent = `販売終了まで ${days}日 ${hours}時間 ${minutes}分 ${seconds}秒`;
+    }
+    setInterval(updateCountdown3, 1000);
+    updateCountdown3();
 </script>
 </body>
 </html>
