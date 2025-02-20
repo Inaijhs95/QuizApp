@@ -318,8 +318,8 @@
         startCountdown(EARLY_BIRD_DEADLINE, countdownElement);
       }
 
-      // 早割チケットｰ3回払いの締切日時（新規追加：2月3日23:59まで）
-      const EARLY_BIRD_3_INSTALLMENTS_DEADLINE = new Date('2025-02-03T23:59:59');
+      // 早割チケットｰ3回払いの締切日時（新規追加：3月3日23:59まで）
+      const EARLY_BIRD_3_INSTALLMENTS_DEADLINE = new Date('2025-03-03T23:59:59');
       
       // ボタン要素の取得（早割チケットｰ3回払い）
       const earlyBird3Container = document.getElementById('early-bird-3-installments-ticket-container');
