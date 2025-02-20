@@ -7,69 +7,60 @@
   <style>
     /* 全体設定 */
     body {
-      font-family: 'Noto Sans JP', sans-serif; /* フォントをNoto Sans JPに変更 */
-      color: #333333; /* テキストカラーをダークグレーに */
-      background-color: #ffffff; /* 背景を白に */
+      font-family: 'Noto Sans JP', sans-serif;
+      color: #333333;
+      background-color: #ffffff;
       margin: 0;
       padding: 20px;
       line-height: 1.8;
-      text-align: center; /* 中央揃え */
+      text-align: center;
     }
-    
     /* ヘッダー */
     h1 {
       font-size: 1.8rem;
       margin-bottom: 20px;
       text-align: center;
-      color: #000000; /* タイトルを黒に */
+      color: #000000;
     }
-    
     h2 {
       font-size: 1.4rem;
       margin-top: 20px;
-      color: #555555; /* サブタイトルをミディアムダークグレーに */
+      color: #555555;
     }
-    
     .highlight {
-      color: #000000; /* リンクを黒に */
-      text-decoration: none; /* リンクの下線を非表示 */
+      color: #000000;
+      text-decoration: none;
     }
-    
     .highlight:hover {
-      text-decoration: underline; /* ホバー時に下線を表示 */
-      color: #333333; /* ホバー時にダークグレーに */
+      text-decoration: underline;
+      color: #333333;
     }
-    
     p, li {
       margin: 10px 0;
-      color: #333333; /* テキストカラーをダークグレーに */
+      color: #333333;
     }
-    
-    .regulation-list { /* クラスを追加 */
-      list-style-type: disc; /* 箇条書きのマーカーを表示 */
-      padding-left: 20px; /* 左側の余白を設定 */
-      color: #333333; /* テキストカラーをダークグレーに */
-      background-color: #f0f0f0; /* 背景を薄いグレーに */
+    .regulation-list {
+      list-style-type: disc;
+      padding-left: 20px;
+      color: #333333;
+      background-color: #f0f0f0;
       padding: 10px;
       border-radius: 5px;
     }
-    
     ul.regulation-list li {
-      /* 必要に応じてリストアイテムのスタイルを追加 */
+      /* 必要に応じて */
     }
-    
     footer {
       text-align: center;
       margin-top: 30px;
       font-size: 0.9rem;
-      color: #555555; /* フッターのテキストカラーをミディアムダークグレーに */
+      color: #555555;
     }
-    
     /* モーダルのデザイン */
     .modal {
-      width: 80%; /* 画面幅の80% */
-      max-width: 400px; /* 最大幅 */
-      display: none; /* デフォルトでは非表示 */
+      width: 80%;
+      max-width: 400px;
+      display: none;
       flex-direction: column;
       justify-content: center;
       align-items: center;
@@ -77,60 +68,54 @@
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
-      background: #ffffff; /* モーダル背景を白に */
+      background: #ffffff;
       padding: 20px;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5); /* シャドウを追加 */
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
       border-radius: 10px;
-      border: 1px solid #333333; /* 境界線をダークグレーに */
+      border: 1px solid #333333;
       z-index: 1000;
     }
-    
     /* オーバーレイのデザイン */
     .overlay {
-      display: none; /* デフォルトでは非表示 */
+      display: none;
       position: fixed;
       top: 0;
       left: 0;
       width: 100%;
       height: 100%;
-      background: rgba(0, 0, 0, 0.5); /* オーバーレイの背景色を半透明の黒に */
+      background: rgba(0, 0, 0, 0.5);
       z-index: 999;
     }
-    
     /* ボタンのデザイン */
     .button {
       padding: 10px 20px;
-      background-color: #333333; /* ボタン背景をダークグレーに */
-      color: #ffffff; /* ボタンテキストを白に */
+      background-color: #333333;
+      color: #ffffff;
       border: none;
       border-radius: 5px;
       cursor: pointer;
       margin: 10px;
       transition: background-color 0.3s ease, color 0.3s ease;
-      text-decoration: none; /* リンクの場合の下線を削除 */
+      text-decoration: none;
       display: inline-block;
     }
-    
     .button:hover {
-      background-color: #555555; /* ホバー時のボタン背景をミディアムグレーに */
-      color: #ffffff; /* ホバー時のボタンテキストを白に */
+      background-color: #555555;
+      color: #ffffff;
     }
-    
     /* 見出しのデザイン */
     h2.modal-heading {
-      font-size: 1.5rem; /* 基本サイズ */
-      max-width: 90%; /* スマホ対応 */
-      margin: 0 auto; /* 中央揃え */
-      line-height: 1.5; /* 行間調整 */
-      color: #333333; /* 見出しテキストをダークグレーに */
+      font-size: 1.5rem;
+      max-width: 90%;
+      margin: 0 auto;
+      line-height: 1.5;
+      color: #333333;
     }
-    
     @media (max-width: 600px) {
       h2.modal-heading {
-        font-size: 1.2rem; /* スマホ用フォントサイズ */
+        font-size: 1.2rem;
       }
     }
-    
     /* 購入ボタン用のスタイル */
     .purchase-button-container {
       overflow: auto;
@@ -144,9 +129,8 @@
       box-shadow: -2px 10px 5px rgba(0, 0, 0, 0);
       border-radius: 10px;
       font-family: 'SQ Market', Helvetica, Arial, sans-serif;
-      margin: 20px auto; /* 中央揃えと上下の余白 */
+      margin: 20px auto;
     }
-    
     .purchase-button-container a {
       display: inline-block;
       font-size: 18px;
@@ -158,16 +142,14 @@
       text-align: center;
       box-shadow: 0 0 0 1px rgba(0,0,0,.1) inset;
       border-radius: 50px;
-      text-decoration: none; /* 下線を削除 */
+      text-decoration: none;
       transition: background-color 0.3s ease;
       position: relative;
       overflow: hidden;
     }
-    
     .purchase-button-container a:hover {
-      background-color: #0051cc; /* ホバー時の色変更 */
+      background-color: #0051cc;
     }
-    
     /* VIPボタン専用のスタイル */
     .vip-button {
       background: linear-gradient(135deg, #FFD700 25%, #FFDF00 50%, #FFD700 75%);
@@ -175,9 +157,8 @@
       animation: shine 3s linear infinite;
       position: relative;
       overflow: hidden;
-      color: #ffffff !important; /* テキストを白に */
+      color: #ffffff !important;
     }
-    
     .vip-button::before {
       content: '';
       position: absolute;
@@ -189,47 +170,54 @@
       transform: skewX(-25deg);
       animation: sparkle 3s linear infinite;
     }
-    
     @keyframes shine {
       0% { background-position: 0% 50%; }
       100% { background-position: 100% 50%; }
     }
-    
     @keyframes sparkle {
       0% { left: -50%; }
       100% { left: 100%; }
     }
-    
     /* VIPチケットの説明スタイル */
     .ticket-description {
       font-size: 0.9rem;
       color: #555555;
       margin-top: 10px;
     }
-    
     /* カウントダウンタイマーのスタイル */
     .countdown {
       margin-top: 10px;
       font-size: 14px;
-      color: #777777; /* グレー色 */
+      color: #777777;
     }
-    
     /* 無効化ボタンのスタイル */
     .button.disabled, .purchase-button-container.disabled a {
       background-color: #cccccc !important;
       color: #666666 !important;
       cursor: not-allowed;
-      pointer-events: none; /* クリック無効化 */
+      pointer-events: none;
       text-decoration: none;
     }
   </style>
 </head>
 <body>
+  <!-- 既存のオーバーレイ -->
   <div id="overlay" class="overlay"></div>
+
+  <!-- 出欠回答用モーダル -->
   <div id="modal" class="modal">
     <h2>出欠回答は<br>お済みですか？</h2>
     <button class="button" onclick="handleAttendanceResponse('yes')">回答済み</button>
     <button class="button" onclick="handleAttendanceResponse('no')">まだ</button>
+  </div>
+
+  <!-- 早割3回払い用のモーダル（新規追加） -->
+  <div id="subscription-modal" class="modal">
+    <h2 class="modal-heading">
+      ご購入オプションはサブスクリプションをお選びください。<br>
+      1回払いを選択した場合、購入は無効となります。
+    </h2>
+    <button class="button" id="subscription-confirm-button">分かりました</button>
   </div>
 
   <div class="container">
@@ -289,44 +277,32 @@
           window.location.href = "attendance-form.html";
         }
       }
-
       function hideModal() {
         document.getElementById("modal").style.display = "none";
         document.getElementById("overlay").style.display = "none";
       }
-
       function showModal() {
         document.getElementById("modal").style.display = "flex";
         document.getElementById("overlay").style.display = "block";
       }
-
       window.onload = showModal;
 
       // 早割チケット〆切日時（変更なし）
       const EARLY_BIRD_DEADLINE = new Date('2025-04-03T23:59:59');
-      
-      // ボタン要素の取得（早割チケット）
       const earlyBirdContainer = document.getElementById('early-bird-ticket-container');
       const countdownElement   = document.getElementById('countdown');
       const earlyBirdButton    = document.getElementById('early-bird-button');
-
-      // 締切後の処理（早割チケット）
       if (now >= EARLY_BIRD_DEADLINE) {
         earlyBirdContainer.style.display = 'none';
       } else {
-        // カウントダウンタイマーを開始
         startCountdown(EARLY_BIRD_DEADLINE, countdownElement);
       }
 
       // 早割チケットｰ3回払いの締切日時（新規追加：3月3日23:59まで）
       const EARLY_BIRD_3_INSTALLMENTS_DEADLINE = new Date('2025-03-03T23:59:59');
-      
-      // ボタン要素の取得（早割チケットｰ3回払い）
       const earlyBird3Container = document.getElementById('early-bird-3-installments-ticket-container');
       const countdown3Element   = document.getElementById('countdown-3-installments');
       const earlyBird3Button    = document.getElementById('early-bird-3-installments-button');
-
-      // 締切後の処理（早割チケットｰ3回払い）
       if (now >= EARLY_BIRD_3_INSTALLMENTS_DEADLINE) {
         earlyBird3Container.style.display = 'none';
       } else {
@@ -342,26 +318,37 @@
         function updateCountdown() {
           const nowTime = new Date().getTime();
           const distance = endTime.getTime() - nowTime;
-
           if (distance < 0) {
             clearInterval(interval);
             element.innerHTML = "受付は終了しました。";
-            // 対象のボタンを無効化する場合は以下の行を有効にしてください
-            // buttonElement.classList.add('disabled');
             return;
           }
-
           const days    = Math.floor(distance / (1000 * 60 * 60 * 24));
           const hours   = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
           const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
           const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
           element.innerHTML = `販売終了まで: ${days}日 ${hours}時間 ${minutes}分 ${seconds}秒`;
         }
-
-        updateCountdown(); // 初回実行
+        updateCountdown();
         const interval = setInterval(updateCountdown, 1000);
       }
+
+      // 早割3回払いボタンをクリック時の動作
+      earlyBird3Button.addEventListener('click', function(event) {
+        event.preventDefault(); // リンク先へ直行を防ぐ
+        // 早割3回払い用モーダルを表示
+        document.getElementById("subscription-modal").style.display = "flex";
+        document.getElementById("overlay").style.display = "block";
+      });
+      
+      // モーダル内「分かりました」ボタンの動作
+      document.getElementById("subscription-confirm-button").addEventListener('click', function() {
+        // モーダルとオーバーレイを非表示
+        document.getElementById("subscription-modal").style.display = "none";
+        document.getElementById("overlay").style.display = "none";
+        // 早割3回払いボタンのリンク先へ遷移（新規タブで開く）
+        window.open(earlyBird3Button.href, '_blank');
+      });
     }
   </script>
 </body>
