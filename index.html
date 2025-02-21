@@ -1,379 +1,330 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>稲井中学校 同窓会メインメニュー</title>
-   <link href="https://fonts.googleapis.com/css2?family=Source+Han+Serif+JP:wght@400;700&display=swap" rel="stylesheet">
-<style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>稲井中学校 同窓会メインメニュー</title>
+  <link href="https://fonts.googleapis.com/css2?family=Source+Han+Serif+JP:wght@400;700&display=swap" rel="stylesheet">
+  <style>
     /* 全体設定 */
     body {
-        font-family: 'Source Han Serif JP', serif; /* フォントはそのまま */
-        color: #333333; /* テキストカラーをダークグレーに変更 */
-        background-color: #ffffff; /* 背景を白に変更 */
-        margin: 0;
-        padding: 0;
+      font-family: 'Source Han Serif JP', serif;
+      color: #333333;
+      background-color: #ffffff;
+      margin: 0;
+      padding: 0;
     }
-
     header {
-        margin: 0;
-        padding: 0;
+      margin: 0;
+      padding: 0;
     }
-
     header img {
-        display: block;
-        width: 100%; /* 横幅を画面サイズいっぱいに設定 */
-        height: auto; /* アスペクト比を保ちながら高さを調整 */
-        margin: 0; /* 上下の余白をなくす */
+      display: block;
+      width: 100%;
+      height: auto;
+      margin: 0;
     }
-
     .message {
-        position: relative;
-        background-color: #f9f9f9; /* メッセージ背景を薄いグレーに変更 */
-        color: #333333; /* テキストカラーをダークグレーに変更 */
-        margin: 20px auto;
-        padding: 20px;
-        width: 90%;
-        max-width: 800px;
-        text-align: left;
-        border: 1px solid #dddddd; /* 薄いグレーの枠線を追加 */
-        border-radius: 5px; /* 角を丸める */
+      position: relative;
+      background-color: #f9f9f9;
+      color: #333333;
+      margin: 20px auto;
+      padding: 20px;
+      width: 90%;
+      max-width: 800px;
+      text-align: left;
+      border: 1px solid #dddddd;
+      border-radius: 5px;
     }
-
     .message::before {
-        content: '';
-        background: url('images/kosho.png') no-repeat center;
-        opacity: 0.05; /* 透過度を下げて背景画像を控えめに */
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        z-index: -1;
+      content: '';
+      background: url('images/kosho.png') no-repeat center;
+      opacity: 0.05;
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      z-index: -1;
     }
-
     .title {
-        margin: 0; /* タイトルの余白を削除 */
-        padding: 0;
-        text-align: center;
-        font-size: 1.5rem;
-        font-weight: bold;
-        line-height: 1; /* タイトルの高さを詰める */
-        color: #333333; /* タイトルカラーをダークグレーに変更 */
+      margin: 0;
+      padding: 20px 0;
+      text-align: center;
+      font-size: 1.8rem;
+      font-weight: bold;
+      line-height: 1;
+      color: #333333;
     }
-
+    main {
+      width: 90%;
+      max-width: 800px;
+      margin: 0 auto;
+    }
     .section {
-        background-color: #f2f2f2; /* セクション背景を薄いグレーに変更 */
-        color: #333333; /* テキストカラーをダークグレーに変更 */
-        padding: 20px;
-        margin: 20px auto;
-        width: 90%;
-        max-width: 800px;
-        text-align: left;
-        border: 1px solid #dddddd; /* 薄いグレーの枠線を追加 */
-        border-radius: 5px; /* 角を丸める */
+      background-color: #f2f2f2;
+      color: #333333;
+      padding: 20px;
+      margin: 20px 0;
+      text-align: left;
+      border: 1px solid #dddddd;
+      border-radius: 5px;
     }
-
     .section h2 {
-        margin-top: 0;
-        font-size: 1.2rem;
-        border-bottom: 1px solid #cccccc; /* ボーダーカラーを薄いグレーに変更 */
-        padding-bottom: 5px;
-        color: #333333; /* 見出しカラーをダークグレーに変更 */
+      margin-top: 0;
+      font-size: 1.4rem;
+      border-bottom: 1px solid #cccccc;
+      padding-bottom: 5px;
+      color: #333333;
     }
-
     .section p {
-        margin: 10px 0;
+      margin: 10px 0;
+      line-height: 1.5;
     }
-
     .button {
-        display: block;
-        width: 90%;
-        max-width: 200px;
-        background-color: #cccccc; /* ボタン背景を薄いグレーに変更 */
-        color: #333333; /* ボタンテキストをダークグレーに変更 */
-        text-align: center;
-        padding: 10px;
-        margin: 20px auto;
-        text-decoration: none;
-        border-radius: 5px;
-        font-weight: bold;
-        transition: background-color 0.3s ease;
+      display: block;
+      width: 90%;
+      max-width: 200px;
+      background-color: #007BFF;
+      color: #ffffff;
+      text-align: center;
+      padding: 10px;
+      margin: 20px auto;
+      text-decoration: none;
+      border-radius: 5px;
+      font-weight: bold;
+      transition: background-color 0.3s ease;
     }
-
     .button:hover {
-        background-color: #aaaaaa; /* ホバー時の背景を少し濃いグレーに変更 */
-        color: #ffffff; /* ホバー時のテキストを白に変更 */
+      background-color: #0056b3;
     }
-
     .banner {
-        display: block;
-        width: 90%;
-        max-width: 800px;
-        margin: 20px auto;
+      display: block;
+      width: 90%;
+      max-width: 800px;
+      margin: 20px auto;
     }
-
-    .footer {
-        text-align: center;
-        font-size: 0.8rem;
-        color: #666666; /* フッターのテキストカラーをミディアムグレーに変更 */
-        margin: 20px 0;
+    footer {
+      text-align: center;
+      font-size: 0.8rem;
+      color: #666666;
+      margin: 20px 0;
     }
-
-    .sidebar {
-        margin: 20px;
-        padding: 20px;
-        background-color: #f9f9f9; /* サイドバー背景を薄いグレーに変更 */
-        border-left: 5px solid #cccccc; /* 枠線カラーを薄いグレーに変更 */
-        border-radius: 5px; /* 角を丸める */
-    }
-
-    .sidebar h3 {
-        margin-top: 0;
-        color: #333333; /* サイドバー見出しカラーをダークグレーに変更 */
-    }
-
-    /* サイドメニュー全体 */
+    /* サイドバーとサイドメニュー */
     .sidebar-menu {
-        position: fixed;
-        top: 0;
-        right: -300px; /* 初期状態では隠れる */
-        width: 300px;
-        height: 100%;
-        background-color: #ffffff; /* サイドメニュー背景を白に変更 */
-        color: #333333; /* テキストカラーをダークグレーに変更 */
-        box-shadow: -2px 0 5px rgba(0, 0, 0, 0.1); /* シャドウを薄くして自然な感じに */
-        overflow-y: auto;
-        transition: right 0.3s ease;
-        z-index: 1000;
+      position: fixed;
+      top: 0;
+      right: -300px;
+      width: 300px;
+      height: 100%;
+      background-color: #ffffff;
+      color: #333333;
+      box-shadow: -2px 0 5px rgba(0, 0, 0, 0.1);
+      overflow-y: auto;
+      transition: right 0.3s ease;
+      z-index: 1000;
+      padding: 20px;
     }
-
-    /* メニュー項目 */
     .sidebar-menu h3 {
-        margin: 20px;
-        font-size: 1.2rem;
-        border-bottom: 1px solid #cccccc; /* ボーダーカラーを薄いグレーに変更 */
-        padding-bottom: 10px;
-        color: #333333; /* 見出しカラーをダークグレーに変更 */
+      margin-top: 0;
+      font-size: 1.4rem;
+      border-bottom: 1px solid #cccccc;
+      padding-bottom: 10px;
+      color: #333333;
     }
-
     .sidebar-menu ul {
-        list-style: none;
-        padding: 0;
-        margin: 20px;
+      list-style: none;
+      padding: 0;
+      margin: 20px 0;
     }
-
     .sidebar-menu ul li {
-        margin: 10px 0;
+      margin: 10px 0;
     }
-
     .sidebar-menu ul li a {
-        color: #333333; /* リンクカラーをダークグレーに変更 */
-        text-decoration: none;
-        transition: color 0.3s ease;
+      color: #333333;
+      text-decoration: none;
+      transition: color 0.3s ease;
     }
-
     .sidebar-menu ul li a:hover {
-        color: #000000; /* ホバー時のリンクカラーを黒に変更 */
+      color: #000000;
     }
-
-    /* トリガーボタン */
     .menu-toggle {
-        position: fixed;
-        top: 20px;
-        right: 20px;
-        width: 50px;
-        height: 50px;
-        background-color: #cccccc; /* トリガーボタン背景を薄いグレーに変更 */
-        color: #ffffff; /* トリガーボタンテキストを白に変更 */
-        border: none;
-        border-radius: 5px;
-        font-size: 1.2rem;
-        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* シャドウを薄く変更 */
-        z-index: 1100;
-        cursor: pointer;
-        transition: background-color 0.3s ease, color 0.3s ease;
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      width: 50px;
+      height: 50px;
+      background-color: #007BFF;
+      color: #ffffff;
+      border: none;
+      border-radius: 5px;
+      font-size: 1.2rem;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      z-index: 1100;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
     }
-
     .menu-toggle:hover {
-        background-color: #aaaaaa; /* ホバー時の背景を少し濃いグレーに変更 */
-        color: #ffffff; /* ホバー時のテキストを白に変更 */
+      background-color: #0056b3;
     }
-
-    /* サイドメニュー表示時 */
     .sidebar-menu.open {
-        right: 0;
+      right: 0;
     }
-
     .policy {
-        background-color: #f9f9f9; /* 背景色を薄いグレーに変更 */
-        border: 1px solid #cccccc; /* 枠線カラーを薄いグレーに変更 */
-        padding: 20px;
-        border-radius: 5px;
-        margin-top: 20px;
+      background-color: #f9f9f9;
+      border: 1px solid #cccccc;
+      padding: 20px;
+      border-radius: 5px;
+      margin-top: 20px;
     }
-
     .policy-item {
-        margin-bottom: 20px;
+      margin-bottom: 20px;
     }
-
     .policy-item h3 {
-        font-size: 1.2rem;
-        color: #333333; /* 見出しをダークグレーに変更 */
-        margin-bottom: 10px;
+      font-size: 1.2rem;
+      color: #333333;
+      margin-bottom: 10px;
     }
-
     .policy-item p, .policy-item ul {
-        margin: 0;
-        font-size: 1rem;
-        color: #333333; /* テキストをダークグレーに変更 */
-        line-height: 1.6;
+      margin: 0;
+      font-size: 1rem;
+      color: #333333;
+      line-height: 1.6;
     }
-
     .policy-item ul {
-        padding-left: 20px;
-        list-style-type: disc;
+      padding-left: 20px;
+      list-style-type: disc;
     }
-
     .policy-item ul li strong {
-        color: #333333; /* 強調ポイントをダークグレーに変更 */
+      color: #333333;
     }
-
     #countdown, #countdown3 {
-        white-space: nowrap; /* 折り返しを防止 */
-        margin-left: 10px; /* 左側の余白を少なめに */
-        font-size: 0.9rem; /* 小さいフォントサイズ */
-        font-weight: normal; /* 通常の太さに調整 */
-        color: #333333; /* 強調色をダークグレーに変更 */
+      white-space: nowrap;
+      margin-left: 10px;
+      font-size: 0.9rem;
+      font-weight: normal;
+      color: #333333;
     }
-</style>
+  </style>
 </head>
 <body>
-    <header>
-        <img src="images/kosha.png" alt="稲井中学校ロゴ">
-    </header>
-    <!-- サイドメニュートリガーボタン -->
-    <button class="menu-toggle" onclick="toggleMenu()">☰</button>
+  <header>
+    <img src="images/kosha.png" alt="稲井中学校ロゴ">
+  </header>
 
-    <!-- サイドメニュー -->
-    <div class="sidebar-menu" id="sidebar-menu">
-        <h3>稲井中学校同窓会</h3>
-        <ul>
-            <li><a href="attendance-summary.html">現在までの参加人数</a></li>
-            <li><a href="attendance-form.html">出欠回答</a></li>
-            <li><a href="InaiJhs-Reunion-Tickets">チケット購入</a></li>
-            <li><a href="dosokai-regulation.html">稲井中学校同窓会規約</a></li>
-            <li><a href="mondaisoko.html">キャッシュバックに参加</a></li>
-        </ul>
-    </div>
+  <!-- サイドメニュートリガーボタン -->
+  <button class="menu-toggle" onclick="toggleMenu()">☰</button>
 
-    <div class="title">稲井中学校同窓会</div>
+  <!-- サイドメニュー -->
+  <nav class="sidebar-menu" id="sidebar-menu">
+    <h3>稲井中学校同窓会</h3>
+    <ul>
+      <li><a href="attendance-summary.html">現在までの参加人数</a></li>
+      <li><a href="attendance-form.html">出欠回答</a></li>
+      <li><a href="InaiJhs-Reunion-Tickets">チケット購入</a></li>
+      <li><a href="dosokai-regulation.html">同窓会規約</a></li>
+      <li><a href="mondaisoko.html">キャッシュバックに参加</a></li>
+    </ul>
+  </nav>
 
-    <div class="section">
-        <h2>日時</h2>
-        <p>2025年5月3日（土）</p>
-        <p>18時30分　受付</p>
-        <p>19時00分　開宴</p>
-    </div>
+  <div class="title">稲井中学校同窓会</div>
 
-    <div class="section">
-        <h2>場所</h2>
-        <p>未定（石巻駅周辺を予定）</p>
-    </div>
+  <main>
+    <section class="section">
+      <h2>日時</h2>
+      <p>2025年5月3日（土）</p>
+      <p>18時30分　受付</p>
+      <p>19時00分　開宴</p>
+    </section>
 
-    <div class="section">
-        <h2>チケット種別</h2>
-        <p>
-            ▶早割　6,000円
-            <span id="countdown"></span>
-        </p>
-        <p>
-            ▶早割-3回払い-　2025円×3回
-            <span id="countdown3"></span>
-        </p>
-        <p>▶一般　　　7,000円</p>
-        <p>▶VIP　　　10,000円</p>
-    </div>
+    <section class="section">
+      <h2>場所</h2>
+      <p>未定（石巻駅周辺を予定）</p>
+    </section>
+
+    <section class="section">
+      <h2>チケット種別</h2>
+      <p>▶ 早割　6,000円<span id="countdown"></span></p>
+      <p>▶ 早割-3回払い-　2025円×3回<span id="countdown3"></span></p>
+      <p>▶ 一般　　　7,000円</p>
+      <p>▶ VIP　　　10,000円</p>
+    </section>
 
     <a href="attendance-form.html" class="button">出欠回答はこちら</a>
 
-    <div class="section">
-        <h2>出席キャンセルに関するポリシー</h2>
-        <div class="policy">
-            <div class="policy-item">
-                <h3>1. キャンセル料金について</h3>
-                <p>出席確定後、キャンセル時に料金が発生する場合があります。詳細は以下をご確認ください。</p>
-            </div>
-            <div class="policy-item">
-                <h3>2. キャンセル料金の発生タイミング</h3>
-                <ul>
-                   予約した飲食店のキャンセルポリシーに準じます。開催場所が確定次第更新します。
-                </ul>
-            </div>
-            <div class="policy-item">
-                <h3>3. キャンセル手続きについて</h3>
-                <p>キャンセルを希望される場合は、公式LINEを通じてご連絡ください。</p>
-            </div>
-            <div class="policy-item">
-                <h3>4. その他</h3>
-                <p>緊急事態や特別な事情がある場合は、キャンセルポリシーの対象外となる場合があります。その際は別途ご案内いたします。</p>
-            </div>
+    <section class="section">
+      <h2>出席キャンセルに関するポリシー</h2>
+      <div class="policy">
+        <div class="policy-item">
+          <h3>1. キャンセル料金について</h3>
+          <p>出席確定後、キャンセル時に料金が発生する場合があります。詳細は以下をご確認ください。</p>
         </div>
-    </div>
+        <div class="policy-item">
+          <h3>2. キャンセル料金の発生タイミング</h3>
+          <p>予約した飲食店のキャンセルポリシーに準じます。開催場所が確定次第更新します。</p>
+        </div>
+        <div class="policy-item">
+          <h3>3. キャンセル手続きについて</h3>
+          <p>キャンセルを希望される場合は、公式LINEを通じてご連絡ください。</p>
+        </div>
+        <div class="policy-item">
+          <h3>4. その他</h3>
+          <p>緊急事態や特別な事情がある場合は、キャンセルポリシーの対象外となる場合があります。その際は別途ご案内いたします。</p>
+        </div>
+      </div>
+    </section>
+  </main>
 
-    <a href="mondaisoko.html">
-        <img src="images/kokoku2.png" alt="広告2" class="banner">
-    </a>
+  <a href="mondaisoko.html">
+    <img src="images/kokoku2.png" alt="広告2" class="banner">
+  </a>
 
-    <div class="footer">
-        Copyright © Inai-Jhs-dosokai . All Rights Reserved
-    </div>
+  <footer>
+    Copyright © Inai-Jhs-dosokai. All Rights Reserved
+  </footer>
 
-<script>
+  <script>
     function toggleMenu() {
-        const menu = document.getElementById('sidebar-menu');
-        menu.classList.toggle('open');
+      const menu = document.getElementById('sidebar-menu');
+      menu.classList.toggle('open');
     }
-
     // 早割（通常）のカウントダウン設定
     const countdownElement = document.getElementById('countdown');
-    const deadline = new Date('2025-04-03T23:59:59'); // 早割締切日時
-
+    const deadline = new Date('2025-04-03T23:59:59');
     function updateCountdown() {
-        const now = new Date();
-        const timeRemaining = deadline - now;
-        if (timeRemaining <= 0) {
-            countdownElement.textContent = '販売終了';
-            return;
-        }
-        const days = Math.floor(timeRemaining / (1000 * 60 * 60 * 24));
-        const hours = Math.floor((timeRemaining % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-        const minutes = Math.floor((timeRemaining % (1000 * 60 * 60)) / (1000 * 60));
-        const seconds = Math.floor((timeRemaining % (1000 * 60)) / 1000);
-        countdownElement.textContent = `販売終了まで ${days}日 ${hours}時間 ${minutes}分 ${seconds}秒`;
+      const now = new Date();
+      const timeRemaining = deadline - now;
+      if (timeRemaining <= 0) {
+        countdownElement.textContent = '販売終了';
+        return;
+      }
+      const days = Math.floor(timeRemaining / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((timeRemaining % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((timeRemaining % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((timeRemaining % (1000 * 60)) / 1000);
+      countdownElement.textContent = ` 販売終了まで ${days}日 ${hours}時間 ${minutes}分 ${seconds}秒`;
     }
     setInterval(updateCountdown, 1000);
     updateCountdown();
-
+    
     // 早割-3回払い- のカウントダウン設定
     const countdownElement3 = document.getElementById('countdown3');
-    const deadline3 = new Date('2025-03-03T23:59:59'); // 早割-3回払い- 締切日時
-
+    const deadline3 = new Date('2025-03-03T23:59:59');
     function updateCountdown3() {
-        const now = new Date();
-        const timeRemaining = deadline3 - now;
-        if (timeRemaining <= 0) {
-            countdownElement3.textContent = '販売終了';
-            return;
-        }
-        const days = Math.floor(timeRemaining / (1000 * 60 * 60 * 24));
-        const hours = Math.floor((timeRemaining % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-        const minutes = Math.floor((timeRemaining % (1000 * 60 * 60)) / (1000 * 60));
-        const seconds = Math.floor((timeRemaining % (1000 * 60)) / 1000);
-        countdownElement3.textContent = `販売終了まで ${days}日 ${hours}時間 ${minutes}分 ${seconds}秒`;
+      const now = new Date();
+      const timeRemaining = deadline3 - now;
+      if (timeRemaining <= 0) {
+        countdownElement3.textContent = '販売終了';
+        return;
+      }
+      const days = Math.floor(timeRemaining / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((timeRemaining % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((timeRemaining % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((timeRemaining % (1000 * 60)) / 1000);
+      countdownElement3.textContent = ` 販売終了まで ${days}日 ${hours}時間 ${minutes}分 ${seconds}秒`;
     }
     setInterval(updateCountdown3, 1000);
     updateCountdown3();
-</script>
+  </script>
 </body>
 </html>
