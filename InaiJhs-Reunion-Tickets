@@ -226,7 +226,7 @@
     <!-- VIPチケットボタン -->
     <div class="purchase-button-container" id="vip-ticket-container">
       <div style="padding: 20px;">
-        <a target="_blank" href="https://square.link/u/1ywMaePm" class="vip-button">VIPチケット</a>
+        <a target="_blank" href="https://square.link/u/HdGKS3uK" class="vip-button">VIPチケット</a>
         <div class="ticket-description">
           特典をお選びいただけます。詳細はリンク先をご確認ください。
         </div>
@@ -236,14 +236,14 @@
     <!-- 一般チケットボタン -->
     <div class="purchase-button-container" id="general-ticket-button-container">
       <div style="padding: 20px;">
-        <a target="_blank" href="https://square.link/u/1xTdvVOQ">一般チケット</a>
+        <a target="_blank" href="https://square.link/u/6MLgRlS2">一般チケット</a>
       </div>
     </div>
 
     <!-- 早割チケットボタン -->
     <div class="purchase-button-container" id="early-bird-ticket-container">
       <div style="padding: 20px;">
-        <a target="_blank" href="https://square.link/u/wynaVGmI" id="early-bird-button">早割チケット</a>
+        <a target="_blank" href="https://square.link/u/r8cUBjox" id="early-bird-button">早割チケット</a>
       </div>
       <!-- カウントダウンタイマー -->
       <div id="countdown" class="countdown"></div>
@@ -252,7 +252,7 @@
     <!-- 早割チケットｰ3回払いボタン（新規追加） -->
     <div class="purchase-button-container" id="early-bird-3-installments-ticket-container">
       <div style="padding: 20px;">
-        <a target="_blank" href="https://square.link/u/zm829ps6" id="early-bird-3-installments-button">早割チケットｰ3回払い-</a>
+        <a target="_blank" href="https://square.link/u/ue6HkD47" id="early-bird-3-installments-button">早割チケットｰ3回払い-</a>
       </div>
       <!-- カウントダウンタイマー -->
       <div id="countdown-3-installments" class="countdown"></div>
