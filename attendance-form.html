@@ -9,9 +9,9 @@
     <style>
         /* 全体設定 */
         body {
-            font-family: 'Source Han Serif JP', 'Arial', sans-serif; /* リンクしたフォントを優先的に使用 */
-            background-color: #ffffff; /* 背景を白に変更 */
-            color: #333333; /* テキストカラーをダークグレーに変更 */
+            font-family: 'Source Han Serif JP', 'Arial', sans-serif;
+            background-color: #ffffff;
+            color: #333333;
             margin: 0;
             padding: 0;
             display: flex;
@@ -19,123 +19,115 @@
             align-items: center;
             min-height: 100vh; /* 縦中央寄せ */
         }
-
         /* コンテナのデザイン */
         .container {
             max-width: 500px;
             width: 100%;
-            background: #f9f9f9; /* コンテナ背景を薄いグレーに変更 */
+            background: #f9f9f9;
             padding: 40px 30px;
-            border-radius: 16px; /* 角丸 */
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* シャドウを軽減 */
+            border-radius: 16px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
             text-align: center;
-            border: 1px solid #dddddd; /* 境界線を薄いグレーに変更 */
+            border: 1px solid #dddddd;
         }
-
         /* ヘッダー */
         .container h1 {
             font-size: 2rem;
-            color: #333333; /* タイトルをダークグレーに変更 */
+            color: #333333;
             margin-bottom: 20px;
             font-weight: bold;
             letter-spacing: 0.05em;
         }
-
         /* フォームグループ */
         .form-group {
             margin-bottom: 20px;
-            text-align: left; /* ラベルを左寄せ */
+            text-align: left;
         }
-
         /* ラベル */
         .form-group label {
             font-size: 1rem;
-            color: #555555; /* ラベル色をミディアムグレーに変更 */
+            color: #555555;
             margin-bottom: 8px;
             display: block;
         }
-
         /* テキスト入力欄 */
         .form-group input[type="text"] {
             font-size: 1rem;
             width: 100%;
             padding: 12px;
-            border: 1px solid #cccccc; /* 境界線を薄いグレーに変更 */
+            border: 1px solid #cccccc;
             border-radius: 10px;
-            background-color: #ffffff; /* 入力欄の背景を白に変更 */
-            color: #333333; /* 入力テキストをダークグレーに変更 */
-            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.05); /* 影を軽減 */
+            background-color: #ffffff;
+            color: #333333;
+            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.05);
             transition: border-color 0.3s ease, background-color 0.3s ease;
         }
-
-        /* テキスト入力欄フォーカス時のスタイル */
         .form-group input[type="text"]:focus {
-            border-color: #999999; /* フォーカス時の境界線をミディアムグレーに変更 */
-            background-color: #f0f0f0; /* フォーカス時の背景色を薄いグレーに変更 */
+            border-color: #999999;
+            background-color: #f0f0f0;
             outline: none;
         }
-
-        /* ラジオボタンのラッパー */
+        /* ラジオボタンのグループ */
         .radio-group {
             display: flex;
             gap: 20px;
         }
-
-        /* ラジオボタンとラベルのスタイル */
         .radio-option {
             display: flex;
             align-items: center;
         }
-
         .radio-option input[type="radio"] {
             margin-right: 8px;
-            accent-color: #555555; /* ラジオボタンの色をミディアムグレーに変更 */
+            accent-color: #555555;
         }
-
-        /* ボタン */
+        /* 送信ボタン */
         .button {
             display: inline-block;
-            background: linear-gradient(135deg, #cccccc, #dddddd); /* 薄いグレーのグラデーション */
-            color: #333333; /* ボタンテキストをダークグレーに変更 */
+            background: linear-gradient(135deg, #cccccc, #dddddd);
+            color: #333333;
             padding: 12px 20px;
             font-size: 1rem;
-            text-transform: uppercase; /* 大文字はそのまま */
+            text-transform: uppercase;
             border: none;
             border-radius: 12px;
             cursor: pointer;
             transition: all 0.3s ease, background 0.3s ease;
             margin-top: 20px;
         }
-
         .button:hover {
-            background: linear-gradient(135deg, #dddddd, #cccccc); /* ホバー時にグラデーションを逆転 */
-            color: #ffffff; /* ホバー時のテキストを白に変更 */
+            background: linear-gradient(135deg, #dddddd, #cccccc);
+            color: #ffffff;
         }
-
+        /* active 状態：すべての入力が完了している場合 */
+        .button.active {
+            background: #007BFF;
+            color: #ffffff;
+            background-image: none;
+        }
+        .button.active:hover {
+            background: #0056b3;
+            color: #ffffff;
+        }
         /* 更新タイム */
         .update-time {
             font-size: 0.9rem;
-            color: #555555; /* テキストカラーをミディアムグレーに変更 */
+            color: #555555;
             margin-top: 20px;
-            border-top: 1px solid #cccccc; /* 境界線を薄いグレーに変更 */
+            border-top: 1px solid #cccccc;
             padding-top: 20px;
             font-style: italic;
         }
-
         /* メディアクエリ（レスポンシブ対応） */
         @media (max-width: 768px) {
             .container {
                 padding: 30px 20px;
             }
-
             .container h1 {
                 font-size: 1.8rem;
             }
-
             .button {
-                width: 100%; /* 小画面ではボタンを幅いっぱいに */
+                width: 100%;
             }
-
             .radio-group {
                 flex-direction: column;
                 gap: 10px;
@@ -183,7 +175,7 @@
         </form>
     </div>
 
-    <!-- Firebase SDK (最新バージョンに更新) -->
+    <!-- Firebase SDK (最新バージョン) -->
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
@@ -194,7 +186,7 @@
              apiKey: "AIzaSyD30sxoHhSnpH7xMwGj55SSjRkMRa0oRX8",
              authDomain: "inai95.firebaseapp.com",
              projectId: "inai95",
-             storageBucket: "inai95.appspot.com", // 正しい形式に修正
+             storageBucket: "inai95.appspot.com",
              messagingSenderId: "418002209728",
              appId: "1:418002209728:web:dc034e538d3bf0fae15625",
              measurementId: "G-58LP3ZDTLJ"
@@ -221,44 +213,53 @@
         window.onload = () => {
             const answered = localStorage.getItem('attendanceResponse');
             const formContainer = document.getElementById('attendance-form');
-            const now = new Date(); // 現在時刻をここで取得
-
-            // 期限切れの場合
+            const now = new Date();
             if (now > earlyBirdDeadline) {
-                formContainer.innerHTML = `
-                    <p style="color: red; font-weight: bold;">回答期間が終了しました。</p>`;
+                formContainer.innerHTML = `<p style="color: red; font-weight: bold;">回答期間が終了しました。</p>`;
                 return;
             }
-
-            // 回答済みの場合
             if (answered) {
-                formContainer.innerHTML = `
-                    <p style="color: gray; font-weight: bold;">既に回答済みです。再回答はできません。</p>`;
+                formContainer.innerHTML = `<p style="color: gray; font-weight: bold;">既に回答済みです。再回答はできません。</p>`;
                 return;
             }
         };
 
-        // フォーム送信処理
         const form = document.getElementById('attendance-form');
         const submitButton = document.getElementById('submit-button');
 
+        // 各入力状態をチェックし、すべて入力済みの場合にボタンを active にする
+        function updateButtonState() {
+            const name = form.name.value.trim();
+            const gender = form.gender.value;
+            const attendance = form.attendance.value;
+            if (name && gender && attendance) {
+                submitButton.classList.add('active');
+            } else {
+                submitButton.classList.remove('active');
+            }
+        }
+        // 入力イベントの設定
+        form.name.addEventListener('input', updateButtonState);
+        const genderRadios = document.getElementsByName('gender');
+        genderRadios.forEach(radio => radio.addEventListener('change', updateButtonState));
+        const attendanceRadios = document.getElementsByName('attendance');
+        attendanceRadios.forEach(radio => radio.addEventListener('change', updateButtonState));
+
+        // フォーム送信処理
         submitButton.addEventListener('click', async () => {
-            submitButton.disabled = true; // 送信ボタンを無効化
+            updateButtonState();
+            if (!submitButton.classList.contains('active')) {
+                alert("すべての項目を入力してください。");
+                return;
+            }
+            submitButton.disabled = true;
             submitButton.textContent = "送信中...";
 
             const name = form.name.value.trim();
             const gender = form.gender.value;
             const attendance = form.attendance.value;
-            const now = new Date(); // 送信時の現在時刻を取得
+            const now = new Date();
             const timestamp = now;
-
-            // バリデーション
-            if (!name || !gender || !attendance) {
-                alert("すべての項目を入力してください。");
-                submitButton.disabled = false;
-                submitButton.textContent = "送信する";
-                return;
-            }
 
             if (name.length > 50) {
                 alert("お名前は50文字以内で入力してください。");
@@ -270,38 +271,31 @@
             try {
                 // Firestore で共通の ID を生成
                 const uniqueId = db.collection('attendance_responses').doc().id;
-
-                // `personal_data` に保存
+                // personal_data に保存
                 await db.collection('personal_data').doc(uniqueId).set({
                     name,
                     gender,
                     attendance,
                     timestamp
                 });
-
-                // `attendance_responses` に保存
+                // attendance_responses に保存
                 await db.collection('attendance_responses').doc(uniqueId).set({
                     gender,
                     attendance,
                     timestamp
                 });
-
                 // 回答済みフラグをローカルストレージに保存
                 localStorage.setItem('attendanceResponse', 'true');
 
-                // 出欠に応じた処理
                 if (attendance === '出席') {
-                    const redirectUrl = now < earlyBirdDeadline 
+                    const redirectUrl = now < earlyBirdDeadline
                         ? "https://square.link/u/a2RyhiAS" // 早割リンク
                         : "https://square.link/u/mclmviX8"; // 一般リンク
-                    window.location.href = redirectUrl; // リダイレクト
+                    window.location.href = redirectUrl;
                 } else {
                     const formContainer = document.getElementById('attendance-form');
-                    formContainer.innerHTML = `
-                        <p style="color: gray; font-weight: bold;">またの機会にお願いします！</p>`;
+                    formContainer.innerHTML = `<p style="color: gray; font-weight: bold;">またの機会にお願いします！</p>`;
                 }
-
-                // フォームのリセットは不要（フォームが置き換えられるため）
             } catch (error) {
                 console.error("送信エラー:", error);
                 if (error.code === 'permission-denied') {
