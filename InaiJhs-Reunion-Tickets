@@ -4,10 +4,12 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>同窓会チケット購入</title>
+  <!-- Source Han Serif JP フォントを適用 -->
+  <link href="https://fonts.googleapis.com/css2?family=Source+Han+Serif+JP:wght@400;700&display=swap" rel="stylesheet">
   <style>
     /* グローバルスタイル */
     body {
-      font-family: 'Noto Sans JP', sans-serif;
+      font-family: 'Source Han Serif JP', serif;
       color: #333;
       background-color: #f9f9f9;
       margin: 0;
@@ -325,7 +327,7 @@
           const hours   = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
           const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
           const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-          element.innerHTML = `販売終了まで: ${days}日 ${hours}時間 ${minutes}分 ${seconds}秒`;
+          element.innerHTML = `販売終了まで:<br>${days}日 ${hours}時間 ${minutes}分 ${seconds}秒`;
         }
         updateCountdown();
         const interval = setInterval(updateCountdown, 1000);
