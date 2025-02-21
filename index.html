@@ -175,11 +175,11 @@
     }
     /* カウントダウン */
     #countdown, #countdown3 {
-      white-space: nowrap;
       margin-left: 10px;
       font-size: 0.8rem;
       font-weight: normal;
       color: #333333;
+      white-space: normal; /* 改行を許可 */
     }
     /* チケットセクション（LINEカード風） */
     .ticket-section {
@@ -350,14 +350,14 @@
       const now = new Date();
       const timeRemaining = deadline - now;
       if (timeRemaining <= 0) {
-        countdownElement.textContent = '販売終了';
+        countdownElement.innerHTML = '販売終了';
         return;
       }
       const days = Math.floor(timeRemaining / (1000 * 60 * 60 * 24));
       const hours = Math.floor((timeRemaining % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
       const minutes = Math.floor((timeRemaining % (1000 * 60 * 60)) / (1000 * 60));
       const seconds = Math.floor((timeRemaining % (1000 * 60)) / 1000);
-      countdownElement.textContent = ` 販売終了まで ${days}日 ${hours}時間 ${minutes}分 ${seconds}秒`;
+      countdownElement.innerHTML = `販売終了まで<br>${days}日 ${hours}時間 ${minutes}分 ${seconds}秒`;
     }
     setInterval(updateCountdown, 1000);
     updateCountdown();
@@ -369,14 +369,14 @@
       const now = new Date();
       const timeRemaining = deadline3 - now;
       if (timeRemaining <= 0) {
-        countdownElement3.textContent = '販売終了';
+        countdownElement3.innerHTML = '販売終了';
         return;
       }
       const days = Math.floor(timeRemaining / (1000 * 60 * 60 * 24));
       const hours = Math.floor((timeRemaining % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
       const minutes = Math.floor((timeRemaining % (1000 * 60 * 60)) / (1000 * 60));
       const seconds = Math.floor((timeRemaining % (1000 * 60)) / 1000);
-      countdownElement3.textContent = ` 販売終了まで ${days}日 ${hours}時間 ${minutes}分 ${seconds}秒`;
+      countdownElement3.innerHTML = `販売終了まで<br>${days}日 ${hours}時間 ${minutes}分 ${seconds}秒`;
     }
     setInterval(updateCountdown3, 1000);
     updateCountdown3();
