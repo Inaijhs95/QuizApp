@@ -207,7 +207,7 @@
       });
 
     // 期限の設定
-    const earlyBirdDeadline = new Date('2025-04-04T00:00:00');
+    const earlyBirdDeadline = new Date('2025-05-04T00:00:00');
 
     // ページ読み込み時の期限チェックと回答済みチェック
     window.onload = () => {
@@ -289,8 +289,8 @@
 
         if (attendance === '出席') {
           const redirectUrl = now < earlyBirdDeadline
-            ? "https://square.link/u/a2RyhiAS" // 早割リンク
-            : "https://square.link/u/mclmviX8"; // 一般リンク
+            ? "https://inai95.web.app/InaiJhs-Reunion-Tickets" // 早割リンク
+            : "https://inai95.web.app/InaiJhs-Reunion-Tickets"; // 一般リンク
           window.location.href = redirectUrl;
         } else {
           const formContainer = document.getElementById('attendance-form');
