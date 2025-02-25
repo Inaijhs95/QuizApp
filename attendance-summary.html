@@ -109,19 +109,6 @@
       }
     }
 
-    /* 「人」のスタイル */
-    .unit {
-      font-weight: bold;
-      color: #555555;
-      padding: 2px 6px;
-      background: #dddddd;
-      border-radius: 4px;
-      margin-left: 5px;
-      display: inline-block;
-      min-width: 30px;
-      text-align: center;
-    }
-
     /* ローディングスピナー */
     #loading {
       position: fixed;
@@ -152,20 +139,31 @@
 
   <div class="container" style="display: none;" id="main-container">
     <h1>参加人数</h1>
+
+    <!-- 男性数 -->
     <div class="count">
       <i class="fa-solid fa-mars"></i> 男性: <span id="male-count">0</span>
     </div>
+    <!-- 女性数 -->
     <div class="count">
       <i class="fa-solid fa-venus"></i> 女性: <span id="female-count">0</span>
     </div>
+    <!-- 開催決定まであと何人 -->
     <div class="count">
       <i class="fa-solid fa-hourglass-half"></i> 開催決定まであと: <span id="remaining-count">20</span>
     </div>
+    <!-- 回答者数 -->
+    <div class="count">
+      <i class="fa-solid fa-users"></i> 回答者数: <span id="response-count">0</span>
+    </div>
+
+    <!-- 更新日時 -->
     <div class="update-time">
       更新: <span id="update-time">-</span>
     </div>
+
     <!-- リンクボタン -->
-    <a href="https://inai95.web.app/attendance-form.html" class="attendance-btn">まだ出欠回答がお済み出ない方はこちら</a>
+    <a href="https://inai95.web.app/attendance-form.html" class="attendance-btn">まだ出欠回答がお済みでない方はこちら</a>
   </div>
 
   <!-- Firebase SDK -->
@@ -194,6 +192,8 @@
     const femaleCountElement = document.getElementById('female-count');
     const remainingCountElement = document.getElementById('remaining-count');
     const updateTimeElement = document.getElementById('update-time');
+    const responseCountElement = document.getElementById('response-count');
+
     const loadingElement = document.getElementById('loading');
     const mainContainer = document.getElementById('main-container');
 
@@ -202,22 +202,31 @@
       const formattedTime = `${now.getMonth() + 1}月${now.getDate()}日 ${now.getHours()}時${now.getMinutes()}分`;
       updateTimeElement.textContent = formattedTime;
 
-      db.collection('attendance_responses')
-        .where('attendance', '==', '出席')
-        .get()
+      // コレクション全体を取得して、回答者数 (snapshot.size) を計算し、
+      // その中で出席の男性・女性を集計
+      db.collection('attendance_responses').get()
         .then(snapshot => {
+          // 回答者数
+          const totalResponses = snapshot.size;
+          responseCountElement.textContent = totalResponses;
+
+          // 出席者の男性・女性カウント
           let maleCount = 0;
           let femaleCount = 0;
 
           snapshot.forEach(doc => {
             const data = doc.data();
-            if (data.gender === '男性') maleCount++;
-            if (data.gender === '女性') femaleCount++;
+            // attendance が '出席' の人だけ男女カウント
+            if (data.attendance === '出席') {
+              if (data.gender === '男性') maleCount++;
+              if (data.gender === '女性') femaleCount++;
+            }
           });
 
           maleCountElement.textContent = maleCount;
           femaleCountElement.textContent = femaleCount;
 
+          // 開催決定の残り人数を表示（例: 20名到達で開催とする）
           const totalCount = maleCount + femaleCount;
           remainingCountElement.textContent = Math.max(20 - totalCount, 0);
 
@@ -232,6 +241,7 @@
         });
     }
 
+    // 匿名認証後にデータ取得
     firebase.auth().signInAnonymously()
       .then(() => {
         console.log("匿名認証に成功しました");
