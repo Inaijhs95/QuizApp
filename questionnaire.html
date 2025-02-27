@@ -2,38 +2,115 @@
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>LINE送信用フォーム</title>
   <style>
-    body { font-family: sans-serif; margin: 20px; }
-    label { display: inline-block; width: 120px; }
-    input, button { margin-bottom: 10px; }
+    html, body {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+      background-color: #f7f7f7;
+    }
+    /* 画面全体を使って中央に配置 */
+    .container {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100%;
+      padding: 20px;
+      box-sizing: border-box;
+    }
+    /* フォームの見た目を整える */
+    .form-box {
+      width: 100%;
+      max-width: 400px;
+      background-color: #fff;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      padding: 20px;
+      box-sizing: border-box;
+    }
+    .form-box h2 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    .form-group {
+      margin-bottom: 15px;
+    }
+    .form-group label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: bold;
+    }
+    .form-group input[type="text"],
+    .form-group input[type="date"] {
+      width: 100%;
+      padding: 10px;
+      font-size: 16px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      box-sizing: border-box;
+    }
+    .radio-group {
+      display: flex;
+      justify-content: space-between;
+    }
+    .radio-group label {
+      font-weight: normal;
+      margin-right: 10px;
+    }
+    .btn-submit {
+      width: 100%;
+      padding: 12px;
+      font-size: 18px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    .btn-submit:active {
+      background-color: #45a049;
+    }
   </style>
 </head>
 <body>
-  <h2>参加確認フォーム</h2>
-  <form id="lineForm">
-    <div>
-      <label for="name">氏名：</label>
-      <input type="text" id="name" name="name" required>
+  <div class="container">
+    <div class="form-box">
+      <h2>参加確認フォーム</h2>
+      <form id="lineForm">
+        <div class="form-group">
+          <label for="name">氏名：</label>
+          <input type="text" id="name" name="name" required placeholder="例：山口三郎">
+        </div>
+        <div class="form-group">
+          <label for="date">回答可能時期：</label>
+          <input type="date" id="date" name="date" required>
+        </div>
+        <div class="form-group">
+          <label>現在の意向：</label>
+          <div class="radio-group">
+            <div>
+              <input type="radio" id="participate" name="intention" value="参加予定" required>
+              <label for="participate">参加予定</label>
+            </div>
+            <div>
+              <input type="radio" id="notParticipate" name="intention" value="不参加予定">
+              <label for="notParticipate">不参加予定</label>
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <button type="button" class="btn-submit" onclick="submitForm()">次へ進む</button>
+        </div>
+      </form>
     </div>
-    <div>
-      <label for="date">回答可能時期：</label>
-      <input type="date" id="date" name="date" required>
-    </div>
-    <div>
-      <label>現在の意向：</label>
-      <input type="radio" id="participate" name="intention" value="参加予定" required>
-      <label for="participate">参加予定</label>
-      <input type="radio" id="notParticipate" name="intention" value="不参加予定">
-      <label for="notParticipate">不参加予定</label>
-    </div>
-    <div>
-      <button type="button" onclick="submitForm()">次へ進む</button>
-    </div>
-  </form>
+  </div>
 
   <script>
-    // 本日の日付を取得してフォーマットする関数
+    // 本日の日付をフォーマットする関数
     function formatDate(dateObj) {
       const yyyy = dateObj.getFullYear();
       const mm = String(dateObj.getMonth() + 1).padStart(2, '0');
@@ -41,16 +118,14 @@
       return `${yyyy}-${mm}-${dd}`;
     }
 
-    // 日付入力の最小値（本日）と最大値（今年または来年の5月3日）を設定
+    // 日付入力の最小値（本日）と最大値（5月3日）を設定
     (function setDateLimits() {
       const today = new Date();
       const minDate = formatDate(today);
       document.getElementById("date").setAttribute("min", minDate);
 
-      // 5月3日の設定（JavaScriptでは月は0～11なので5月は4）
       let maxYear = today.getFullYear();
-      // もし本日が今年の5月3日より後なら、来年の5月3日に設定
-      if (today > new Date(maxYear, 4, 3)) {
+      if (today > new Date(maxYear, 4, 3)) {  // JavaScriptでは月は0～11
         maxYear++;
       }
       const maxDate = `${maxYear}-05-03`;
@@ -58,38 +133,25 @@
     })();
 
     function submitForm() {
-      // 入力値の取得
-      var name = document.getElementById("name").value.trim();
-      var date = document.getElementById("date").value;
-      var intentionElements = document.getElementsByName("intention");
-      var intention = "";
-      for (var i = 0; i < intentionElements.length; i++) {
+      const name = document.getElementById("name").value.trim();
+      const date = document.getElementById("date").value;
+      const intentionElements = document.getElementsByName("intention");
+      let intention = "";
+      for (let i = 0; i < intentionElements.length; i++) {
         if (intentionElements[i].checked) {
           intention = intentionElements[i].value;
           break;
         }
       }
-      
-      // 入力内容のチェック（未入力なら中断）
       if (!name || !date || !intention) {
         alert("すべての項目に入力・選択してください。");
         return;
       }
-      
-      // フォーム入力の値を結合してメッセージ文字列を作成
-      var message = "氏名：" + name + "\n回答可能時期：" + date + "\n現在の意向：" + intention;
-      
-      // URLに付加できるようにエンコード（※URLデコードではなくエンコードして整合性を保ちます）
-      var encodedMessage = encodeURIComponent(message);
-      
-      // 基本のURLにエンコードした文字列を付加
-      var baseURL = "https://line.me/R/oaMessage/%40069urbrx/";
-      var finalURL = baseURL + encodedMessage;
-      
-      // ポップアップでメッセージ表示
+      const message = "氏名：" + name + "\n回答可能時期：" + date + "\n現在の意向：" + intention;
+      const encodedMessage = encodeURIComponent(message);
+      const baseURL = "https://line.me/R/oaMessage/%40069urbrx/";
+      const finalURL = baseURL + encodedMessage;
       alert("そのままLINEで送信してください");
-      
-      // 生成したURLへリダイレクト
       window.location.href = finalURL;
     }
   </script>
