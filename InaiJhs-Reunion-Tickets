@@ -299,7 +299,7 @@
       }
 
       // 早割3回払いの〆切
-      const EARLY_BIRD_3_INSTALLMENTS_DEADLINE = new Date('2025-03-03T23:59:59');
+      const EARLY_BIRD_3_INSTALLMENTS_DEADLINE = new Date('2025-04-03T23:59:59');
       const earlyBird3Container = document.getElementById('early-bird-3-installments-ticket-container');
       const countdown3Element   = document.getElementById('countdown-3-installments');
       const earlyBird3Button    = document.getElementById('early-bird-3-installments-button');
