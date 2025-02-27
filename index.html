@@ -227,6 +227,23 @@
         grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
       }
     }
+    /* Googleマップレスポンシブ対応 */
+    .map-container {
+      position: relative;
+      padding-bottom: 56.25%; /* 16:9のアスペクト比 */
+      height: 0;
+      overflow: hidden;
+      max-width: 100%;
+      margin: 10px 0;
+    }
+    .map-container iframe {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border: 0;
+    }
   </style>
 </head>
 <body>
@@ -264,7 +281,10 @@
       <h2>場所</h2>
       <p>飛翔閣（石巻市山下町1丁目19-6）</p>
       <p>石巻駅から徒歩10分</p>
-      <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3739.7465291700873!2d141.2968693!3d38.4351766!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x5f89a37cff54ba23%3A0xe85c3dc0a87e9246!2z6aOb57-U6Zaj!5e1!3m2!1sja!2sjp!4v1740623001299!5m2!1sja!2sjp" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+      <!-- Googleマップレスポンシブ対応 -->
+      <div class="map-container">
+        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3739.7465291700873!2d141.2968693!3d38.4351766!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x5f89a37cff54ba23%3A0xe85c3dc0a87e9246!2z6aOb57-U6Zaj!5e1!3m2!1sja!2sjp!4v1740623001299!5m2!1sja!2sjp" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+      </div>
     </section>
 
     <!-- チケットセクション：LINEカード風 -->
@@ -320,7 +340,7 @@
         <div class="policy-item">
           <h3>2. キャンセル料金の発生タイミング</h3>
           <p>前日まで：原則なし</p>
-            <p>当日：全額</p>
+          <p>当日：全額</p>
         </div>
         <div class="policy-item">
           <h3>3. キャンセル手続きについて</h3>
