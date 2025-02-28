@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>配送先送信用フォーム</title>
+  <style>
+    html, body {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+      background-color: #f7f7f7;
+    }
+    .container {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100%;
+      padding: 20px;
+      box-sizing: border-box;
+    }
+    .form-box {
+      width: 100%;
+      max-width: 500px;
+      background-color: #fff;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      padding: 20px;
+      box-sizing: border-box;
+    }
+    .form-box h2 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    .form-group {
+      margin-bottom: 15px;
+    }
+    .form-group label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: bold;
+    }
+    .form-group input[type="text"],
+    .form-group input[type="tel"] {
+      width: 100%;
+      padding: 10px;
+      font-size: 16px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      box-sizing: border-box;
+    }
+    .btn-submit {
+      width: 100%;
+      padding: 12px;
+      font-size: 18px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    .btn-submit:active {
+      background-color: #45a049;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="form-box">
+      <h2>配送先フォーム</h2>
+      <form id="deliveryForm">
+        <div class="form-group">
+          <label for="postal">郵便番号（7桁）：</label>
+          <!-- 半角数字キーボード表示・7桁入力 -->
+          <input type="tel" id="postal" name="postal" required pattern="\d{7}" maxlength="7" inputmode="numeric" placeholder="例：1234567">
+        </div>
+        <div class="form-group">
+          <label for="city">市町村：</label>
+          <input type="text" id="city" name="city" required placeholder="例：東京都新宿区">
+        </div>
+        <div class="form-group">
+          <label for="address">丁目・番地・号：</label>
+          <input type="text" id="address" name="address" required placeholder="例：西新宿2-8-1">
+        </div>
+        <div class="form-group">
+          <label for="building">建物名・部屋番号：</label>
+          <input type="text" id="building" name="building" placeholder="例：新宿ビル 101号室">
+        </div>
+        <div class="form-group">
+          <label for="name">氏名：</label>
+          <input type="text" id="name" name="name" required placeholder="例：山田太郎">
+        </div>
+        <div class="form-group">
+          <label for="phone">電話番号：</label>
+          <input type="tel" id="phone" name="phone" required placeholder="例：0312345678">
+        </div>
+        <div class="form-group">
+          <button type="button" class="btn-submit" onclick="submitForm()">LINEで送信</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    function submitForm() {
+      // 入力値を取得
+      let postal = document.getElementById("postal").value.trim();
+      const city = document.getElementById("city").value.trim();
+      const address = document.getElementById("address").value.trim();
+      const building = document.getElementById("building").value.trim();
+      const name = document.getElementById("name").value.trim();
+      const phone = document.getElementById("phone").value.trim();
+      
+      // 必須項目のチェック
+      if(!postal || !city || !address || !name || !phone) {
+        alert("必須項目をすべて入力してください。");
+        return;
+      }
+      
+      // 郵便番号の形式整形（7桁の場合、XXX-XXXX形式へ）
+      if(postal.length === 7) {
+        postal = postal.substring(0, 3) + "-" + postal.substring(3);
+      }
+      
+      // 住所を結合（建物名・部屋番号が入力されていれば追加）
+      let fullAddress = city + " " + address;
+      if(building) {
+        fullAddress += " " + building;
+      }
+      
+      // LINE送信用メッセージの作成
+      let message = "■配送先\n";
+      message += "郵便番号：" + postal + "\n";
+      message += "住所：" + fullAddress + "\n";
+      message += "氏名：" + name + "\n";
+      message += "電話番号：" + phone;
+      
+      // URLエンコードしてLINE送信URLに付加
+      const encodedMessage = encodeURIComponent(message);
+      const baseURL = "https://line.me/R/oaMessage/%40069urbrx/"; // 必要に応じて変更してください
+      const finalURL = baseURL + encodedMessage;
+      
+      alert("表示された内容をそのままLINEで送信してください");
+      window.location.href = finalURL;
+    }
+  </script>
+</body>
+</html>
