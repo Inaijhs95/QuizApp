@@ -78,7 +78,7 @@
         </div>
         <div class="form-group">
           <label for="city">市町村：</label>
-          <input type="text" id="city" name="city" required placeholder="例：東京都新宿区">
+          <input type="text" id="city" name="city" required placeholder="郵便番号入力で自動入力">
         </div>
         <div class="form-group">
           <label for="address">丁目・番地・号：</label>
@@ -104,6 +104,29 @@
   </div>
 
   <script>
+    // 郵便番号入力後に住所（市町村）を自動入力する処理
+    document.getElementById("postal").addEventListener("input", function() {
+      const postalInput = this.value.trim();
+      // 7桁入力されたらAPIを呼び出す
+      if(postalInput.length === 7) {
+        fetch('http://zipcloud.ibsnet.co.jp/api/search?zipcode=' + postalInput)
+          .then(response => response.json())
+          .then(data => {
+            if (data.results && data.results.length > 0) {
+              const result = data.results[0];
+              // APIから得た市町村情報（都道府県＋市区町村＋町域）を結合
+              document.getElementById("city").value = result.address1 + result.address2 + result.address3;
+            } else {
+              alert("郵便番号から住所が見つかりませんでした。");
+            }
+          })
+          .catch(error => {
+            console.error('Error:', error);
+            alert("住所取得中にエラーが発生しました。");
+          });
+      }
+    });
+
     function submitForm() {
       // 入力値を取得
       let postal = document.getElementById("postal").value.trim();
