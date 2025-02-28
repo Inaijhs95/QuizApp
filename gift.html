@@ -72,28 +72,28 @@
       <h2>配送先フォーム</h2>
       <form id="deliveryForm">
         <div class="form-group">
-          <label for="postal">郵便番号（7桁）：</label>
-          <input type="tel" id="postal" name="postal" required pattern="\d{7}" maxlength="7" inputmode="numeric" placeholder="例：1234567">
+          <label for="postal">郵便番号（ハイフン不要）</label>
+          <input type="tel" id="postal" name="postal" required pattern="\d{7}" maxlength="7" inputmode="numeric" placeholder="例：9860002">
         </div>
         <div class="form-group">
-          <label for="city">市町村：</label>
+          <label for="city">市町村</label>
           <input type="text" id="city" name="city" required placeholder="郵便番号入力で自動入力">
         </div>
         <div class="form-group">
           <label for="address">丁目・番地・号：</label>
-          <input type="text" id="address" name="address" required placeholder="例：西新宿2-8-1">
+          <input type="text" id="address" name="address" required placeholder="例：八ノ坪116-1">
         </div>
         <div class="form-group">
           <label for="building">建物名・部屋番号：</label>
-          <input type="text" id="building" name="building" placeholder="例：新宿ビル 101号室">
+          <input type="text" id="building" name="building" placeholder="例：稲井マンション　171号室">
         </div>
         <div class="form-group">
           <label for="name">氏名：</label>
-          <input type="text" id="name" name="name" required placeholder="例：山田太郎">
+          <input type="text" id="name" name="name" required placeholder="例：稲井太郎">
         </div>
         <div class="form-group">
           <label for="phone">電話番号：</label>
-          <input type="tel" id="phone" name="phone" required placeholder="例：0312345678">
+          <input type="tel" id="phone" name="phone" required placeholder="例：0225-91-2314">
         </div>
         <div class="form-group">
           <button type="button" class="btn-submit" onclick="submitForm()">LINEで送信</button>
