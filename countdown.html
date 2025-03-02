@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>状況確認</title>
+    <!-- Google Fontsの追加 -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Montserrat:wght@500&display=swap" rel="stylesheet">
+    <style>
+        /* 全体のスタイル */
+        body {
+            font-family: 'Roboto', sans-serif;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #f5f7fa, #c3cfe2);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: #333;
+            overflow: hidden;
+        }
+
+        /* コンテナのスタイル */
+        .container {
+            background: rgba(255, 255, 255, 0.85);
+            padding: 30px 20px;
+            border-radius: 15px;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+            max-width: 600px;
+            width: 90%;
+            animation: fadeIn 1s ease-in-out;
+            position: relative;
+        }
+
+        /* タイトルのスタイル */
+        h1 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 2.2em;
+            margin-bottom: 10px;
+            color: #2c3e50;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.1);
+        }
+
+        /* メッセージのスタイル */
+        #message {
+            font-size: 1.1em;
+            margin-bottom: 15px;
+            color: #555;
+            transition: color 0.3s ease;
+        }
+
+        /* カウントダウンのスタイル */
+        #countdown {
+            font-size: 1.8em;
+            margin-top: 10px;
+            color: #27ae60;
+            font-weight: bold;
+            letter-spacing: 1px;
+            transition: color 0.3s ease;
+        }
+
+        /* TIPSセクションのスタイル */
+        .tips-container {
+            margin-top: 20px;
+            padding: 15px 10px;
+            background: #f0f4f8;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            max-width: 550px;
+            width: 100%;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .tips {
+            font-size: 0.95em;
+            color: #2c3e50;
+            opacity: 0;
+            transition: opacity 0.5s ease-in-out;
+            position: absolute;
+            width: 100%;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            white-space: nowrap;
+        }
+
+        .tips.active {
+            opacity: 1;
+        }
+
+        /* フッターのスタイル */
+        footer {
+            position: absolute;
+            bottom: 10px;
+            font-size: 0.8em;
+            color: #777;
+        }
+
+        /* アニメーション */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.95); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        /* レスポンシブデザイン */
+        @media (max-width: 768px) {
+            .container {
+                padding: 25px 15px;
+                max-width: 90%;
+            }
+            h1 {
+                font-size: 2em;
+            }
+            #countdown {
+                font-size: 1.6em;
+            }
+            .tips-container {
+                padding: 12px 8px;
+                max-width: 90%;
+            }
+            .tips {
+                font-size: 0.9em;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 20px 10px;
+            }
+            h1 {
+                font-size: 1.8em;
+            }
+            #countdown {
+                font-size: 1.4em;
+            }
+            .tips-container {
+                padding: 10px 5px;
+                max-width: 100%;
+            }
+            .tips {
+                font-size: 0.85em;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>状況確認</h1>
+        <div id="message"></div>
+        <div id="countdown">Loading...</div>
+
+        <!-- TIPSセクションの追加 -->
+        <div class="tips-container">
+            <div class="tips active">TIPS 1: 正解数が多いほどキャッシュバック確率アップ！</div>
+            <div class="tips">TIPS 2: 難しいと感じたらヒントをどんどん使おう！</div>
+            <div class="tips">TIPS 3: とあるキャラのSNSは要チェック⁉</div>
+            <div class="tips">TIPS 4: ポイントは最大20Pt獲得できるらしい</div>
+            <div class="tips">TIPS 5: 3日おきに問題を配信！</div>
+            <div class="tips">TIPS 6: ハズレてもOK！正解するまで何度もトライ！</div>
+            <div class="tips">TIPS 7: 3番目の正解で+1Pt！駆け引きが勝負！</div>
+            <div class="tips">TIPS 8: 色んなワードに反応するよ！どんどんトークを送信してみよう</div>
+            <div class="tips">TIPS 9: 隠しチャレンジも見つけた？</div>
+            <div class="tips">TIPS 1♡: あんなところに隠れていたのか</div>
+            <div class="tips">TIPS 11: ゲームコマンドって流行ったよね～！</div>
+            <div class="tips">TIPS 12: ○○い文字は反対から読むと何かが起こる！</div>
+            <div class="tips">TIPS 13: 問題は4問以上？</div>
+            <div class="tips">TIPS 14: メモは隅々までよく確認！</div>
+            <div class="tips">TIPS 15: 話しかけることで何かが起こる！</div>
+          
+        </div>
+    </div>
+
+    <footer>
+        © 2025 Inai-Jhs-dosokai. All rights reserved.
+    </footer>
+
+    <script>
+        // カウントダウン対象の日時とメッセージを配列で定義
+        const countdownTargets = [
+            {
+                date: new Date('2025-04-18T19:00:00'),
+                message: '第1問配信開始まで'
+            },
+            {
+                date: new Date('2025-04-21T19:00:00'),
+                message: '第2問配信開始まで'
+            },
+            {
+                date: new Date('2025-04-24T19:00:00'),
+                message: '第3問配信開始まで'
+            },
+            {
+                date: new Date('2025-04-27T19:00:00'),
+                message: '第4問配信開始まで'
+            },
+            {
+                date: new Date('2025-04-30T23:59:59'),
+                message: 'キャンペーン開催終了（第4問回答受付終了）まで'
+            }
+        ];
+
+        // 最終メッセージ
+        const finalMessage = 'キャンペーンは終了しました<br>同窓会での抽選をお楽しみに！';
+
+        // カウントダウンを更新する関数
+        function updateCountdown() {
+            const now = new Date();
+            let target = null;
+            let currentMessage = '';
+
+            // 次のターゲット日時を見つける
+            for (let i = 0; i < countdownTargets.length; i++) {
+                if (now < countdownTargets[i].date) {
+                    target = countdownTargets[i].date;
+                    currentMessage = countdownTargets[i].message;
+                    break;
+                }
+            }
+
+            const countdownElement = document.getElementById('countdown');
+            const messageElement = document.getElementById('message');
+
+            if (target) {
+                // ターゲットまでの差をミリ秒で計算
+                const diff = target - now;
+
+                // 日、時間、分、秒を計算
+                const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+                const minutes = Math.floor((diff / (1000 * 60)) % 60);
+                const seconds = Math.floor((diff / 1000) % 60);
+
+                // メッセージとカウントダウンを表示
+                messageElement.innerHTML = currentMessage;
+                countdownElement.innerHTML = `${days}日 ${hours}時間 ${minutes}分 ${seconds}秒`;
+
+                // カウントダウンの色を変化
+                if (diff <= 86400000) { // 1日未満
+                    countdownElement.style.color = '#e74c3c';
+                } else if (diff <= 604800000) { // 1週間未満
+                    countdownElement.style.color = '#f39c12';
+                } else {
+                    countdownElement.style.color = '#27ae60';
+                }
+
+                // 最終ターゲットを過ぎた場合の処理
+                if (target.getTime() === countdownTargets[countdownTargets.length -1].date.getTime() && diff <= 0) {
+                    messageElement.innerHTML = finalMessage;
+                    countdownElement.innerHTML = '';
+                }
+
+            } else {
+                // すべてのターゲット日時を過ぎた場合、最終メッセージを表示
+                messageElement.innerHTML = finalMessage;
+                countdownElement.innerHTML = '';
+            }
+        }
+
+        // TIPSの要素を取得
+        const tipsElements = document.querySelectorAll('.tips');
+        const totalTips = tipsElements.length;
+
+        // 初期のactiveクラスを持つTIPSのインデックスを取得
+        let currentTipIndex = Array.from(tipsElements).findIndex(tip => tip.classList.contains('active'));
+
+        // もしactiveクラスを持つTIPSがなければ、初期値を0に設定
+        if (currentTipIndex === -1) {
+            currentTipIndex = 0;
+            tipsElements[currentTipIndex].classList.add('active');
+        }
+
+        // TIPSを切り替える関数（ランダム）
+        function rotateTips() {
+            let newTipIndex;
+            do {
+                newTipIndex = Math.floor(Math.random() * totalTips);
+            } while (newTipIndex === currentTipIndex && totalTips > 1); // 同じTIPSが連続しないように
+
+            // すべてのTIPSからactiveクラスを削除
+            tipsElements.forEach(tip => tip.classList.remove('active'));
+
+            // 新しいTIPSにactiveクラスを追加
+            tipsElements[newTipIndex].classList.add('active');
+
+            // 現在のTIPSインデックスを更新
+            currentTipIndex = newTipIndex;
+        }
+
+        // 初回実行
+        updateCountdown();
+        setInterval(updateCountdown, 1000);
+
+        // TIPSの自動切り替え（ランダム）
+        setInterval(rotateTips, 6000); // 6秒に設定
+    </script>
+
+</body>
+</html>
