@@ -161,11 +161,15 @@
     <div class="update-time">
       更新: <span id="update-time">-</span>
     </div>
+    <!-- 回答期日カウントダウン（更新日時の1行下） -->
+    <div class="update-time">
+      回答期日：3月31日 23時59分まで: <span id="countdown">-</span>
+    </div>
 
     <!-- リンクボタン -->
     <a href="https://inai95.web.app/attendance-form.html" class="attendance-btn">出欠回答する方はこちら</a>
-<!-- 新規追加のボタン -->
-<a href="https://inai95.web.app/questionnaire.html" class="attendance-btn">まだ出欠回答できない方はこちら</a>
+    <!-- 新規追加のボタン -->
+    <a href="https://inai95.web.app/questionnaire.html" class="attendance-btn">まだ出欠回答できない方はこちら</a>
 
   </div>
 
@@ -196,6 +200,7 @@
     const remainingCountElement = document.getElementById('remaining-count');
     const updateTimeElement = document.getElementById('update-time');
     const responseCountElement = document.getElementById('response-count');
+    const countdownElement = document.getElementById('countdown');
 
     const loadingElement = document.getElementById('loading');
     const mainContainer = document.getElementById('main-container');
@@ -243,6 +248,32 @@
           loadingElement.style.display = 'none';
         });
     }
+
+    // 回答期日カウントダウンの更新処理
+    function updateCountdown() {
+      const now = new Date();
+      // 締切日時の設定（JSでは月が0-indexedなので、3月は2）
+      let deadline = new Date(now.getFullYear(), 2, 31, 23, 59, 59);
+      // もし締切を過ぎていたら次の年の3月31日に設定
+      if (now > deadline) {
+        deadline = new Date(now.getFullYear() + 1, 2, 31, 23, 59, 59);
+      }
+      const diff = deadline - now;
+
+      if(diff <= 0) {
+        countdownElement.textContent = "回答期日終了";
+        return;
+      }
+      const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+      countdownElement.textContent = days + "日 " + hours + "時 " + minutes + "分 " + seconds + "秒";
+    }
+
+    // 初回カウントダウン更新と1秒ごとの更新設定
+    updateCountdown();
+    setInterval(updateCountdown, 1000);
 
     // 匿名認証後にデータ取得
     firebase.auth().signInAnonymously()
