@@ -266,6 +266,53 @@
       height: 100%;
       border: 0;
     }
+    /* ポップアップ用スタイル */
+    #popupModal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0,0,0,0.5);
+      justify-content: center;
+      align-items: center;
+      z-index: 1200;
+    }
+    #popupModal .modal-content {
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 5px;
+      max-width: 90%;
+      text-align: center;
+    }
+    #popupModal .modal-content p {
+      margin: 0;
+      font-size: 1rem;
+      color: #333333;
+    }
+    #popupModal .modal-content .buttons {
+      margin-top: 20px;
+    }
+    #popupModal .modal-content .buttons a,
+    #popupModal .modal-content .buttons button {
+      display: inline-block;
+      margin: 0 10px;
+      padding: 10px 20px;
+      border-radius: 5px;
+      text-decoration: none;
+      font-weight: bold;
+      cursor: pointer;
+      border: none;
+    }
+    #popupModal .modal-content .buttons a {
+      background-color: #007BFF;
+      color: #fff;
+    }
+    #popupModal .modal-content .buttons button {
+      background-color: #aaa;
+      color: #fff;
+    }
   </style>
 </head>
 <body>
@@ -413,6 +460,17 @@
     Copyright © Inai-Jhs-dosokai. All Rights Reserved
   </footer>
 
+  <!-- ポップアップモーダル -->
+  <div id="popupModal">
+    <div class="modal-content">
+      <p>出欠回答は3月末までにお願いします。</p>
+      <div class="buttons">
+        <a href="https://inai95.web.app/attendance-form.html">回答する</a>
+        <button id="closePopup">閉じる</button>
+      </div>
+    </div>
+  </div>
+
   <script>
     function toggleMenu() {
       const menu = document.getElementById('sidebar-menu');
@@ -455,6 +513,19 @@
     }
     setInterval(updateCountdown3, 1000);
     updateCountdown3();
+
+    // ポップアップ表示（1日1回）
+    document.addEventListener('DOMContentLoaded', function() {
+      const today = new Date().toISOString().slice(0, 10);
+      const popupShownDate = localStorage.getItem('popupShownDate');
+      if (popupShownDate !== today) {
+        document.getElementById('popupModal').style.display = 'flex';
+        localStorage.setItem('popupShownDate', today);
+      }
+      document.getElementById('closePopup').addEventListener('click', function() {
+        document.getElementById('popupModal').style.display = 'none';
+      });
+    });
   </script>
 </body>
 </html>
