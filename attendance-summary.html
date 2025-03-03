@@ -163,7 +163,7 @@
     </div>
     <!-- 回答期日カウントダウン（更新日時の1行下） -->
     <div class="update-time">
-      回答期日：3月31日 23時59分まで: <span id="countdown">-</span>
+      回答〆切まで: <span id="countdown">-</span>
     </div>
 
     <!-- リンクボタン -->
@@ -252,12 +252,8 @@
     // 回答期日カウントダウンの更新処理
     function updateCountdown() {
       const now = new Date();
-      // 締切日時の設定（JSでは月が0-indexedなので、3月は2）
-      let deadline = new Date(now.getFullYear(), 2, 31, 23, 59, 59);
-      // もし締切を過ぎていたら次の年の3月31日に設定
-      if (now > deadline) {
-        deadline = new Date(now.getFullYear() + 1, 2, 31, 23, 59, 59);
-      }
+      // 締切日時を2025年3月31日23時59分59秒に固定（JSでは月が0-indexedなので、3月は2）
+      const deadline = new Date(2025, 2, 31, 23, 59, 59);
       const diff = deadline - now;
 
       if(diff <= 0) {
