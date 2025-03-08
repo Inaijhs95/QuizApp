@@ -24,6 +24,10 @@
       --radius-lg: 0.75rem;
       --transition: all 0.3s ease;
       --container-width: 1100px;
+      --early-bird-color: #ef4444;
+      --early-bird-dark: #b91c1c;
+      --vip-gold-light: #FFD700;
+      --vip-gold-dark: #b8860b;
     }
 
     * {
@@ -271,20 +275,21 @@
 
     /* VIPカード */
     .ticket-card.vip .card-header {
-      background-color: #9333ea;
+      background: linear-gradient(135deg, var(--vip-gold-light), var(--vip-gold-dark));
+      color: var(--text-color);
     }
 
     .ticket-card.vip .price {
-      color: #7e22ce;
+      color: var(--vip-gold-dark);
     }
 
     /* 早割カード */
     .ticket-card.early .card-header {
-      background-color: #10b981;
+      background: linear-gradient(135deg, var(--early-bird-color), var(--early-bird-dark));
     }
 
     .ticket-card.early .price {
-      color: #059669;
+      color: var(--early-bird-dark);
     }
 
     /* ボタン */
