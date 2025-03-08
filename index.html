@@ -24,10 +24,6 @@
       --radius-lg: 0.75rem;
       --transition: all 0.3s ease;
       --container-width: 1100px;
-      --early-bird-color: #ef4444;
-      --early-bird-dark: #b91c1c;
-      --vip-gold-light: #FFD700;
-      --vip-gold-dark: #b8860b;
     }
 
     * {
@@ -275,21 +271,20 @@
 
     /* VIPカード */
     .ticket-card.vip .card-header {
-      background: linear-gradient(135deg, var(--vip-gold-light), var(--vip-gold-dark));
-      color: var(--text-color);
+      background-color: #9333ea;
     }
 
     .ticket-card.vip .price {
-      color: var(--vip-gold-dark);
+      color: #7e22ce;
     }
 
     /* 早割カード */
     .ticket-card.early .card-header {
-      background: linear-gradient(135deg, var(--early-bird-color), var(--early-bird-dark));
+      background-color: #10b981;
     }
 
     .ticket-card.early .price {
-      color: var(--early-bird-dark);
+      color: #059669;
     }
 
     /* ボタン */
@@ -609,7 +604,7 @@
       <div class="ticket-cards">
         <div class="ticket-card early">
           <div class="card-header">
-            <h3><i class="fas fa-clock"></i> 早割</h3>
+            <h3>早割</h3>
           </div>
           <div class="card-body">
             <p class="price">6,000円</p>
@@ -618,7 +613,7 @@
         </div>
         <div class="ticket-card early">
           <div class="card-header">
-            <h3><i class="fas fa-money-bill-wave"></i> 早割-3回払い-</h3>
+            <h3>早割-3回払い-</h3>
           </div>
           <div class="card-body">
             <p class="price">2,025円×3回</p>
@@ -627,7 +622,7 @@
         </div>
         <div class="ticket-card">
           <div class="card-header">
-            <h3><i class="fas fa-ticket-alt"></i> 一般</h3>
+            <h3>一般</h3>
           </div>
           <div class="card-body">
             <p class="price">7,000円</p>
@@ -635,7 +630,7 @@
         </div>
         <div class="ticket-card vip">
           <div class="card-header">
-            <h3><i class="fas fa-crown"></i> VIP</h3>
+            <h3>VIP</h3>
           </div>
           <div class="card-body">
             <p class="price">10,000円</p>
@@ -759,4 +754,15 @@
       }
       
       const days = Math.floor(timeRemaining / (1000 * 60 * 60 * 24));
-      const hours = Math.floor((timeRemaining % (1000 * 60 *
+      const hours = Math.floor((timeRemaining % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((timeRemaining % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((timeRemaining % (1000 * 60)) / 1000);
+      
+      countdownElement3.innerHTML = `販売終了まで<br>${days}日 ${hours}時間 ${minutes}分 ${seconds}秒`;
+    }
+    
+    setInterval(updateCountdown3, 1000);
+    updateCountdown3();
+  </script>
+</body>
+</html>
