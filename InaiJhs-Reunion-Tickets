@@ -550,13 +550,12 @@
   </div>
 
   <script>
-    // ページアクセス制限（2024/03/21 0:00 ～ 2025/05/03 21:00）
-    const pageAccessStart = new Date('2024-03-21T00:00:00');
-    const pageAccessEnd   = new Date('2025-05-03T21:00:00');
+    // ページアクセス制限：2025年5月3日12時以降は販売を一時見合わせる
+    const restrictionDate = new Date('2025-05-03T12:00:00');
     const now = new Date();
-    
-    if (now < pageAccessStart || now > pageAccessEnd) {
-      document.body.innerHTML = '<div style="display: flex; justify-content: center; align-items: center; height: 100vh; text-align: center;"><div><h1 style="font-family: \'Noto Serif JP\', serif; color: #1e3a8a; font-size: 1.5rem; margin-bottom: 1rem;">ページアクセス期間外です</h1><p style="font-family: \'Noto Sans JP\', sans-serif; color: #64748b;">またのご参加をお待ちしております。</p></div></div>';
+
+    if (now >= restrictionDate) {
+      document.body.innerHTML = '<div style="display: flex; justify-content: center; align-items: center; height: 100vh; text-align: center;"><div><h1 style="font-family: \'Noto Serif JP\', serif; color: #1e3a8a; font-size: 1.5rem; margin-bottom: 1rem;">開催について未確定のため、ただいま販売を一時見合わせております。</h1></div></div>';
     } else {
       // モーダル表示／非表示用関数（CSSクラスでフェード効果）
       function showModalElement(modalId) {
