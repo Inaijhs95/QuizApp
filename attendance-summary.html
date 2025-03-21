@@ -430,7 +430,7 @@
     function updateCountdown() {
       const now = new Date();
       // 締切日時を2025年3月31日23時59分59秒に固定（JSでは月が0-indexedなので、3月は2）
-      const deadline = new Date(2025, 1, 31, 23, 59, 59);
+      const deadline = new Date(2025, 2, 31, 23, 59, 59);
       const diff = deadline - now;
 
       if(diff <= 0) {
