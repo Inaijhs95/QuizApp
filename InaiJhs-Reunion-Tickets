@@ -551,7 +551,7 @@
 
   <script>
     // ページアクセス制限：2025年5月3日12時以降は販売を一時見合わせる
-    const restrictionDate = new Date('2025-05-03T12:00:00');
+    const restrictionDate = new Date('2025-04-03T12:00:00');
     const now = new Date();
 
     if (now >= restrictionDate) {
