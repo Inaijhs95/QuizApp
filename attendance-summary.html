@@ -313,7 +313,7 @@
         <!-- 開催決定まであと何人 -->
         <div class="count remaining-count">
           <div class="count-label"><i class="fa-solid fa-hourglass-half"></i> 開催決定まであと</div>
-          <div class="count-value" id="remaining-count">20</div>
+          <div class="count-value" id="remaining-count">15</div>
         </div>
       </div>
       
@@ -413,7 +413,7 @@
 
           // 開催決定の残り人数を表示（例: 20名到達で開催とする）
           const totalCount = maleCount + femaleCount;
-          remainingCountElement.textContent = Math.max(20 - totalCount, 0);
+          remainingCountElement.textContent = Math.max(15 - totalCount, 0);
 
           // 読み込み完了：ローディングを非表示にしてメインコンテナを表示
           loadingElement.style.display = 'none';
@@ -430,7 +430,7 @@
     function updateCountdown() {
       const now = new Date();
       // 締切日時を2025年3月31日23時59分59秒に固定（JSでは月が0-indexedなので、3月は2）
-      const deadline = new Date(2025, 2, 31, 23, 59, 59);
+      const deadline = new Date(2025, 1, 31, 23, 59, 59);
       const diff = deadline - now;
 
       if(diff <= 0) {
