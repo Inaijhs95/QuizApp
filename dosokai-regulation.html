@@ -3,382 +3,66 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>稲井中学校同窓会規約</title>
-  <!-- Google Fonts - Noto Sans Japanese & Noto Serif Japanese -->
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700&family=Noto+Serif+JP:wght@400;700&display=swap" rel="stylesheet">
-  <!-- Font Awesome -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-puUu4t3Tz0bXKpqHya5OKfUsfO6p5VIF7F/RCd5RnP1AIGfVU8F1RzotE6XzM2GkR+gGk/08yf1S1YWk+HCJ3Q==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <title>エラー171 - このページは表示できません</title>
   <style>
-    :root {
-      --primary: #2563eb;
-      --primary-dark: #1d4ed8;
-      --secondary: #3b82f6;
-      --accent: #60a5fa;
-      --light: #f0f9ff;
-      --dark: #1e3a8a;
-      --text: #1e293b;
-      --text-light: #64748b;
-      --success: #10b981;
-      --warning: #f59e0b;
-      --shadow: rgba(0, 0, 0, 0.08);
-      --radius-md: 0.5rem;
-      --radius-lg: 0.75rem;
-      --transition: all 0.3s ease;
-    }
-
-    /* 全体設定 */
     body {
+      background-color: #f3f4f6;
+      color: #1f2937;
       font-family: 'Noto Sans JP', sans-serif;
-      background-color: #f8fafc;
-      color: var(--text);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
       margin: 0;
-      padding: 0;
-      line-height: 1.8;
-    }
-
-    /* コンテナ */
-    .container {
-      max-width: 800px;
-      margin: 40px auto;
+      flex-direction: column;
+      text-align: center;
       padding: 0 20px;
     }
-
-    /* ヘッダー */
-    .header {
-      text-align: center;
-      margin-bottom: 50px;
-      position: relative;
+    .error-container {
+      background-color: white;
+      border-radius: 8px;
+      padding: 2rem;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      max-width: 500px;
+      width: 100%;
     }
-
+    .error-code {
+      font-size: 4rem;
+      font-weight: bold;
+      color: #ef4444;
+      margin: 0;
+    }
     h1 {
-      font-family: 'Noto Serif JP', serif;
-      font-size: 2.2rem;
-      color: var(--dark);
-      margin-bottom: 12px;
-      font-weight: 700;
-      letter-spacing: 0.03em;
-      position: relative;
+      font-size: 1.8rem;
+      margin: 1rem 0;
+    }
+    p {
+      font-size: 1rem;
+      color: #6b7280;
+      margin-bottom: 1.5rem;
+    }
+    .home-button {
+      background-color: #3b82f6;
+      color: white;
+      border: none;
+      padding: 0.5rem 1rem;
+      border-radius: 4px;
+      font-size: 1rem;
+      cursor: pointer;
+      text-decoration: none;
       display: inline-block;
     }
-
-    h1::after {
-      content: '';
-      position: absolute;
-      bottom: -8px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 60px;
-      height: 3px;
-      background: var(--primary);
-      border-radius: 2px;
-    }
-
-    /* セクション */
-    .section {
-      background: #ffffff;
-      padding: 30px;
-      border-radius: var(--radius-lg);
-      box-shadow: 0 10px 30px var(--shadow);
-      margin-bottom: 30px;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .section::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: 5px;
-      background: linear-gradient(to right, var(--primary), var(--accent));
-    }
-
-    h2 {
-      font-family: 'Noto Serif JP', serif;
-      font-size: 1.5rem;
-      color: var(--primary-dark);
-      margin-top: 0;
-      margin-bottom: 20px;
-      padding-bottom: 10px;
-      border-bottom: 1px solid #e5e7eb;
-    }
-
-    /* 条項 */
-    .article {
-      margin-bottom: 25px;
-    }
-
-    .article-title {
-      font-weight: 700;
-      margin-bottom: 10px;
-    }
-
-    p {
-      margin: 0 0 15px;
-    }
-
-    .highlight {
-      color: var(--primary);
-      text-decoration: none;
-      font-weight: 500;
-      transition: var(--transition);
-    }
-
-    .highlight:hover {
-      color: var(--primary-dark);
-      text-decoration: underline;
-    }
-
-    /* リスト */
-    .regulation-list {
-      list-style-type: none;
-      padding: 0;
-      margin: 15px 0;
-    }
-
-    .regulation-list li {
-      position: relative;
-      padding: 10px 15px;
-      margin-bottom: 10px;
-      background-color: var(--light);
-      border-radius: var(--radius-md);
-      padding-left: 30px;
-    }
-
-    .regulation-list li::before {
-      content: '\f00c';
-      font-family: 'Font Awesome 5 Free';
-      font-weight: 900;
-      position: absolute;
-      left: 10px;
-      color: var(--primary);
-    }
-
-    /* フッター */
-    footer {
-      text-align: center;
-      padding: 30px 0;
-      color: var(--text-light);
-      font-size: 0.9rem;
-      margin-top: 50px;
-      border-top: 1px solid #e5e7eb;
-    }
-
-    /* レスポンシブ対応 */
-    @media (max-width: 768px) {
-      .container {
-        padding: 0 15px;
-        margin: 20px auto;
-      }
-      h1 {
-        font-size: 1.8rem;
-      }
-      .section {
-        padding: 25px 20px;
-      }
-      h2 {
-        font-size: 1.3rem;
-      }
-    }
-
-    /* 装飾要素 */
-    .decoration {
-      position: absolute;
-      width: 200px;
-      height: 200px;
-      border-radius: 50%;
-      background: linear-gradient(135deg, rgba(96, 165, 250, 0.1), rgba(37, 99, 235, 0.05));
-      z-index: -1;
-    }
-
-    .decoration-1 {
-      top: -100px;
-      right: -100px;
-    }
-
-    .decoration-2 {
-      bottom: -100px;
-      left: -100px;
-    }
-
-    /* 文章装飾 */
-    strong {
-      font-weight: 600;
-      color: var(--dark);
+    .home-button:hover {
+      background-color: #2563eb;
     }
   </style>
 </head>
 <body>
-  <div class="container">
-    <div class="header">
-      <h1>稲井中学校同窓会規約</h1>
-    </div>
-
-    <div class="section">
-      <!-- 装飾要素 -->
-      <div class="decoration decoration-1"></div>
-      
-      <h2><i class="fas fa-book"></i> 第1章 総則</h2>
-      
-      <div class="article">
-        <p class="article-title"><strong>第1条（名称）</strong></p>
-        <p>本会は、稲井中学校同窓会（以下、「本会」という）と称する。</p>
-      </div>
-
-      <div class="article">
-        <p class="article-title"><strong>第2条（目的）</strong></p>
-        <p>本会は、会員相互の親睦を図り、母校および社会の発展に寄与することを目的とする。これを達成するために、全国規模での催事を定期的に開催し、会員間の情報交換と連携を促進する。また、母校の教育環境の改善や部活動・生徒会の充実を支援する活動を通じて、未来を担う人材の育成に貢献する。さらに、国全体の発展に寄与するため、政府や地方自治体と連携し、教育政策の改善や社会福祉活動を推進する。災害支援や環境保護活動など、国家的な課題に対しても積極的に取り組み、国民全体の生活の質の向上を目指す。これらの活動を通じて、日本の持続可能な発展と国際社会における地位向上に寄与することを目指す。</p>
-      </div>
-
-      <div class="article">
-        <p class="article-title"><strong>第3条（所在地）</strong></p>
-        <p>本会の事務局は、会員それぞれの心の奥<strong><a id="sokoLink" href="https://lin.ee/sY56GJr" class="highlight">そこ</a></strong>に存在する。</p>
-      </div>
-    </div>
-
-    <div class="section">
-      <!-- 装飾要素 -->
-      <div class="decoration decoration-2"></div>
-      
-      <h2><i class="fas fa-users"></i> 第2章 会員</h2>
-      
-      <div class="article">
-        <p class="article-title"><strong>第4条（会員資格）</strong></p>
-        <p>本会の会員は、次の各号、全てに該当する者とする。</p>
-        <ul class="regulation-list">
-          <li>1995年度生まれ</li>
-          <li>稲井小学校・稲井中学校のいずれかに在籍したことがあるもの</li>
-        </ul>
-      </div>
-
-      <div class="article">
-        <p class="article-title"><strong>第5条（会費）</strong></p>
-        <p>会員は、会が催される都度、会長が定める会費を納入しなければならない。なお、会を欠席する場合、納入は免除されるものとする。</p>
-      </div>
-    </div>
-
-    <div class="section">
-      <h2><i class="fas fa-user-tie"></i> 第3章 役員</h2>
-      
-      <div class="article">
-        <p class="article-title"><strong>第6条（役員の種類）</strong></p>
-        <p>本会に次の役員を置く。</p>
-        <ul class="regulation-list">
-          <li>会長 1名</li>
-          <li>副会長 1名</li>
-          <li>幹事 2名</li>
-          <li>会計 1名</li>
-          <li>監査 1名</li>
-        </ul>
-      </div>
-
-      <div class="article">
-        <p class="article-title"><strong>第7条（役員の選出）</strong></p>
-        <p>会長及び副会長は稲井中学校生徒会において同等の役職を務めたものとする。その他役員は、総会により選出されることはなく、会長が指名するものとする。指名されたものは、拒否権を有しない。なお、幹事、会計及び監査は他役職との兼任を可とし、会長が自身を指名することも可とする。</p>
-      </div>
-
-      <div class="article">
-        <p class="article-title"><strong>第8条（役員の任期）</strong></p>
-        <p>役員の任期は30年とし、再任を妨げない。</p>
-      </div>
-    </div>
-
-    <div class="section">
-      <h2><i class="fas fa-handshake"></i> 第4章 総会</h2>
-      
-      <div class="article">
-        <p class="article-title"><strong>第9条（総会の構成）</strong></p>
-        <p>総会は、全会員をもって構成する。</p>
-      </div>
-
-      <div class="article">
-        <p class="article-title"><strong>第10条（総会の種類）</strong></p>
-        <p>総会は、定期総会および酒宴総会とする。</p>
-      </div>
-
-      <div class="article">
-        <p class="article-title"><strong>第11条（総会の開催）</strong></p>
-        <p>定期総会は50年に1度開催し、酒宴総会は必要に応じて会長が招集する。</p>
-      </div>
-
-      <div class="article">
-        <p class="article-title"><strong>第12条（総会の議決事項）</strong></p>
-        <p>総会は、次の事項を議決する。</p>
-        <ul class="regulation-list">
-          <li>規約の変更</li>
-          <li>予算および決算の承認</li>
-          <li>役員の選任</li>
-          <li>その他酒宴に係る重要事項</li>
-        </ul>
-      </div>
-    </div>
-
-    <div class="section">
-      <h2><i class="fas fa-calculator"></i> 第5章 会計</h2>
-      
-      <div class="article">
-        <p class="article-title"><strong>第13条（会計年度）</strong></p>
-        <p>本会の会計年度は、毎年4月1日に始まり、翌年3月31日に終わる。</p>
-      </div>
-
-      <div class="article">
-        <p class="article-title"><strong>第14条（予算および決算）</strong></p>
-        <p>予算および決算は総会の承認を経なくともよい。活動実績がない年の会計報告は虚偽報告できるものとする。</p>
-      </div>
-
-      <div class="article">
-        <p class="article-title"><strong>第15条（監査）</strong></p>
-        <p>会計は、監査の確認を受けなければならない。</p>
-      </div>
-    </div>
-
-    <div class="section">
-      <h2><i class="fas fa-clipboard-list"></i> 第6章 補則</h2>
-      
-      <div class="article">
-        <p class="article-title"><strong>第16条（規約の改正）</strong></p>
-        <p>本規約の改正は、会長の独断による。</p>
-      </div>
-
-      <div class="article">
-        <p class="article-title"><strong>第17条（施行）</strong></p>
-        <p>本規約は、会長の独断において改正された日から施行する。</p>
-      </div>
-
-      <div class="article">
-        <p class="article-title"><strong>第18条（虚構）</strong></p>
-        <p>本規約は、虚構のものであり、現実の人物・団体とは関係がない。</p>
-      </div>
-
-      <div class="article">
-        <p class="article-title"><strong>附則</strong></p>
-        <p>この規約は令和元年4月1日より施工する。</p>
-      </div>
-    </div>
-
-    <footer>
-      Copyright © Inai-Jhs-dosokai . All Rights Reserved
-    </footer>
+  <div class="error-container">
+    <p class="error-code">Error 171</p>
+    <h1>このページは表示できません</h1>
+    <p>URLが間違っているか、ページが削除された可能性があります。以下のボタンをクリックしてアカウントに戻ってください。</p>
+    <a href="https://lin.ee/uuam5Av" class="home-button">アカウントに戻る</a>
   </div>
-
-  <script>
-    document.addEventListener('DOMContentLoaded', function(){
-      // アクセス可能日時（例：2025年3月21日0時）
-      const accessDate = new Date('2055-03-21T00:00:00');
-      const now = new Date();
-      if(now < accessDate) {
-        const sokoLink = document.getElementById('sokoLink');
-        if(sokoLink) {
-          // リンクを無効化（href属性を除去）
-          sokoLink.removeAttribute('href');
-          // スタイルを調整してクリック不可であることを明示
-          sokoLink.style.color = '#999999';
-          sokoLink.style.cursor = 'default';
-          sokoLink.title = '同窓会開催決定後アクセス可能';
-        }
-      }
-    });
-  </script>
 </body>
 </html>
