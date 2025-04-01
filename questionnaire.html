@@ -3,445 +3,66 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>LINE送信用フォーム</title>
+  <title>エラー171 - このページは表示できません</title>
   <style>
-    :root {
-      --primary-color: #06C755; /* LINE公式カラー */
-      --secondary-color: #f8f8f8;
-      --text-color: #333333;
-      --border-color: #e1e1e1;
-      --shadow-color: rgba(0, 0, 0, 0.08);
-      --error-color: #ff3b30;
-      --success-color: #34c759;
-    }
-    
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-    
-    body, html {
-      height: 100%;
-      font-family: 'Hiragino Sans', 'Hiragino Kaku Gothic ProN', 'Noto Sans JP', Meiryo, sans-serif;
-      background-color: var(--secondary-color);
-      color: var(--text-color);
-      line-height: 1.6;
-    }
-    
-    .container {
+    body {
+      background-color: #f3f4f6;
+      color: #1f2937;
+      font-family: 'Noto Sans JP', sans-serif;
       display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
       flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      min-height: 100%;
-      padding: 20px;
-    }
-    
-    .form-container {
-      width: 100%;
-      max-width: 450px;
-      background-color: white;
-      border-radius: 16px;
-      box-shadow: 0 8px 24px var(--shadow-color);
-      overflow: hidden;
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-    }
-    
-    .form-container:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 12px 28px rgba(0, 0, 0, 0.12);
-    }
-    
-    .form-header {
-      background-color: var(--primary-color);
-      color: white;
-      padding: 24px 20px;
       text-align: center;
-      position: relative;
+      padding: 0 20px;
     }
-    
-    .form-header h1 {
-      font-size: 24px;
-      font-weight: 700;
+    .error-container {
+      background-color: white;
+      border-radius: 8px;
+      padding: 2rem;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      max-width: 500px;
+      width: 100%;
+    }
+    .error-code {
+      font-size: 4rem;
+      font-weight: bold;
+      color: #ef4444;
       margin: 0;
     }
-    
-    .form-header p {
-      margin-top: 8px;
-      font-size: 14px;
-      opacity: 0.9;
+    h1 {
+      font-size: 1.8rem;
+      margin: 1rem 0;
     }
-    
-    .form-icon {
-      width: 60px;
-      height: 60px;
-      background-color: white;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin: 0 auto 15px;
+    p {
+      font-size: 1rem;
+      color: #6b7280;
+      margin-bottom: 1.5rem;
     }
-    
-    .form-content {
-      padding: 30px;
-    }
-    
-    .form-group {
-      margin-bottom: 24px;
-      position: relative;
-    }
-    
-    .form-group:last-child {
-      margin-bottom: 10px;
-    }
-    
-    .form-group label {
-      display: block;
-      font-size: 15px;
-      font-weight: 600;
-      margin-bottom: 8px;
-      color: var(--text-color);
-    }
-    
-    .form-control {
-      width: 100%;
-      height: 50px;
-      padding: 12px 16px;
-      font-size: 16px;
-      border: 2px solid var(--border-color);
-      border-radius: 8px;
-      transition: border-color 0.3s, box-shadow 0.3s;
-      appearance: none;
-      background-color: white;
-    }
-    
-    .form-control:focus {
-      outline: none;
-      border-color: var(--primary-color);
-      box-shadow: 0 0 0 3px rgba(6, 199, 85, 0.2);
-    }
-    
-    .form-control::placeholder {
-      color: #aaa;
-    }
-    
-    .radio-group {
-      display: flex;
-      justify-content: flex-start;
-      gap: 20px;
-      margin-top: 10px;
-    }
-    
-    .radio-option {
-      display: flex;
-      align-items: center;
-      cursor: pointer;
-    }
-    
-    .radio-option input[type="radio"] {
-      position: absolute;
-      opacity: 0;
-    }
-    
-    .radio-control {
-      position: relative;
-      display: inline-block;
-      width: 20px;
-      height: 20px;
-      margin-right: 8px;
-      border: 2px solid var(--border-color);
-      border-radius: 50%;
-      transition: all 0.2s;
-    }
-    
-    .radio-option:hover .radio-control {
-      border-color: #ccc;
-    }
-    
-    .radio-option input[type="radio"]:checked + .radio-control {
-      border-color: var(--primary-color);
-      border-width: 6px;
-    }
-    
-    .radio-option input[type="radio"]:focus + .radio-control {
-      box-shadow: 0 0 0 3px rgba(6, 199, 85, 0.2);
-    }
-    
-    .radio-label {
-      font-size: 15px;
-    }
-    
-    .btn-submit {
-      display: block;
-      width: 100%;
-      height: 54px;
-      background-color: var(--primary-color);
+    .home-button {
+      background-color: #3b82f6;
       color: white;
       border: none;
-      border-radius: 8px;
-      font-size: 16px;
-      font-weight: 600;
+      padding: 0.5rem 1rem;
+      border-radius: 4px;
+      font-size: 1rem;
       cursor: pointer;
-      transition: background-color 0.2s, transform 0.1s;
-      position: relative;
-      overflow: hidden;
+      text-decoration: none;
+      display: inline-block;
     }
-    
-    .btn-submit:hover {
-      background-color: #05b64c;
-    }
-    
-    .btn-submit:active {
-      transform: scale(0.98);
-    }
-    
-    .btn-submit::after {
-      content: '';
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      width: 5px;
-      height: 5px;
-      background: rgba(255, 255, 255, 0.5);
-      opacity: 0;
-      border-radius: 100%;
-      transform: scale(1, 1) translate(-50%);
-      transform-origin: 50% 50%;
-    }
-    
-    .btn-submit:active::after {
-      animation: ripple 0.6s ease-out;
-    }
-    
-    @keyframes ripple {
-      0% {
-        transform: scale(0, 0);
-        opacity: 0.5;
-      }
-      100% {
-        transform: scale(20, 20);
-        opacity: 0;
-      }
-    }
-    
-    .error-message {
-      color: var(--error-color);
-      font-size: 14px;
-      margin-top: 5px;
-      display: none;
-    }
-    
-    .form-control.error {
-      border-color: var(--error-color);
-    }
-
-    .form-footer {
-      text-align: center;
-      font-size: 13px;
-      color: #777;
-      margin-top: 20px;
-    }
-    
-    @media (max-width: 480px) {
-      .form-content {
-        padding: 25px 20px;
-      }
-      
-      .form-group {
-        margin-bottom: 20px;
-      }
+    .home-button:hover {
+      background-color: #2563eb;
     }
   </style>
 </head>
 <body>
-  <div class="container">
-    <div class="form-container">
-      <div class="form-header">
-        <div class="form-icon">
-          <svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M27.5 12.9C27.5 7.37 22.13 2.9 15.49 2.9C8.85 2.9 3.48 7.37 3.48 12.9C3.48 17.7 7.45 21.76 12.94 22.73C13.4 22.84 14.02 23.07 14.19 23.46C14.34 23.82 14.29 24.36 14.24 24.73C14.24 24.73 14.05 25.71 14.01 25.93C13.94 26.31 13.72 27.27 15.49 26.73C17.26 26.19 23.2 22.52 25.57 19.53C27.09 17.7 27.5 15.36 27.5 12.9Z" fill="#06C755"/>
-            <path d="M12.38 11.12H11.4C11.21 11.12 11.06 11.27 11.06 11.46V16.19C11.06 16.38 11.21 16.53 11.4 16.53H12.38C12.57 16.53 12.72 16.38 12.72 16.19V11.46C12.72 11.27 12.57 11.12 12.38 11.12Z" fill="white"/>
-            <path d="M19.59 11.12H18.61C18.42 11.12 18.27 11.27 18.27 11.46V14.01L15.85 11.2C15.85 11.19 15.84 11.19 15.84 11.18C15.83 11.17 15.83 11.17 15.82 11.16C15.82 11.16 15.81 11.15 15.81 11.15C15.8 11.15 15.8 11.14 15.79 11.14C15.79 11.14 15.78 11.13 15.78 11.13C15.77 11.13 15.77 11.13 15.76 11.12C15.76 11.12 15.75 11.12 15.75 11.12C15.74 11.12 15.74 11.12 15.73 11.12C15.73 11.12 15.72 11.12 15.71 11.12H14.73C14.54 11.12 14.39 11.27 14.39 11.46V16.19C14.39 16.38 14.54 16.53 14.73 16.53H15.71C15.9 16.53 16.05 16.38 16.05 16.19V13.64L18.48 16.46C18.5 16.48 18.52 16.5 18.55 16.51C18.55 16.51 18.56 16.51 18.56 16.51C18.58 16.52 18.6 16.53 18.62 16.53C18.62 16.53 18.62 16.53 18.62 16.53H19.59C19.78 16.53 19.93 16.38 19.93 16.19V11.46C19.93 11.27 19.78 11.12 19.59 11.12Z" fill="white"/>
-            <path d="M10.12 15.23H7.73V11.46C7.73 11.27 7.58 11.12 7.39 11.12H6.41C6.22 11.12 6.07 11.27 6.07 11.46V16.19C6.07 16.28 6.1 16.37 6.17 16.43C6.23 16.5 6.32 16.53 6.41 16.53H10.12C10.31 16.53 10.46 16.38 10.46 16.19V15.57C10.46 15.38 10.31 15.23 10.12 15.23Z" fill="white"/>
-            <path d="M23.59 12.42C23.78 12.42 23.93 12.27 23.93 12.08V11.46C23.93 11.27 23.78 11.12 23.59 11.12H19.88C19.79 11.12 19.7 11.15 19.64 11.22C19.57 11.28 19.54 11.37 19.54 11.46V16.19C19.54 16.28 19.57 16.37 19.64 16.43C19.7 16.5 19.79 16.53 19.88 16.53H23.59C23.78 16.53 23.93 16.38 23.93 16.19V15.57C23.93 15.38 23.78 15.23 23.59 15.23H21.2V14.42H23.59C23.78 14.42 23.93 14.27 23.93 14.08V13.46C23.93 13.27 23.78 13.12 23.59 13.12H21.2V12.42H23.59Z" fill="white"/>
-          </svg>
-        </div>
-        <h1>確認フォーム</h1>
-        <p>以下の情報を入力してLINEで送信します</p>
-      </div>
-      
-      <div class="form-content">
-        <form id="lineForm">
-          <div class="form-group">
-            <label for="name">氏名</label>
-            <input type="text" id="name" class="form-control" placeholder="例：稲井太郎" required>
-            <div class="error-message" id="name-error">氏名を入力してください</div>
-          </div>
-          
-          <div class="form-group">
-            <label for="date">出欠回答予定日時</label>
-            <input type="date" id="date" class="form-control" required>
-            <div class="error-message" id="date-error">日付を選択してください</div>
-          </div>
-          
-          <div class="form-group">
-            <label>現在の意向</label>
-            <div class="radio-group">
-              <label class="radio-option">
-                <input type="radio" name="intention" id="participate" value="参加予定" required>
-                <span class="radio-control"></span>
-                <span class="radio-label">参加予定</span>
-              </label>
-              
-              <label class="radio-option">
-                <input type="radio" name="intention" id="notParticipate" value="不参加予定">
-                <span class="radio-control"></span>
-                <span class="radio-label">不参加予定</span>
-              </label>
-            </div>
-            <div class="error-message" id="intention-error">参加/不参加を選択してください</div>
-          </div>
-          
-          <div class="form-group">
-            <button type="button" class="btn-submit" id="submitBtn">LINEで送信する</button>
-          </div>
-        </form>
-      </div>
-    </div>
-    
-    <div class="form-footer">
-      入力いただいた情報はLINEアカウント経由で送信ください。
-    </div>
+  <div class="error-container">
+    <p class="error-code">Error 171</p>
+    <h1>このページは表示できません</h1>
+    <p>URLが間違っているか、ページが削除された可能性があります。以下のボタンをクリックしてアカウントに戻ってください。</p>
+    <a href="https://lin.ee/uuam5Av" class="home-button">アカウントに戻る</a>
   </div>
-  
-  <script>
-    // フォーム要素の取得
-    const form = document.getElementById('lineForm');
-    const nameInput = document.getElementById('name');
-    const dateInput = document.getElementById('date');
-    const participateRadio = document.getElementById('participate');
-    const notParticipateRadio = document.getElementById('notParticipate');
-    const submitBtn = document.getElementById('submitBtn');
-    
-    // エラーメッセージ要素
-    const nameError = document.getElementById('name-error');
-    const dateError = document.getElementById('date-error');
-    const intentionError = document.getElementById('intention-error');
-    
-    // 日付の設定
-    function initDateLimits() {
-      // 本日の日付を取得
-      const today = new Date();
-      const yyyy = today.getFullYear();
-      const mm = String(today.getMonth() + 1).padStart(2, '0');
-      const dd = String(today.getDate()).padStart(2, '0');
-      const todayFormatted = `${yyyy}-${mm}-${dd}`;
-      
-      // 今日を最小値に設定
-      dateInput.setAttribute('min', todayFormatted);
-      
-      // 最大値（5月3日）を設定
-      let maxYear = today.getFullYear();
-      if (today > new Date(maxYear, 4, 3)) {  // 5月3日を過ぎていれば来年に設定
-        maxYear++;
-      }
-      const maxDate = `${maxYear}-05-03`;
-      dateInput.setAttribute('max', maxDate);
-      
-      // 初期値を今日に設定
-      dateInput.value = todayFormatted;
-    }
-    
-    // 日付の初期化
-    initDateLimits();
-    
-    // バリデーション関数
-    function validateForm() {
-      let isValid = true;
-      
-      // 名前のバリデーション
-      if (nameInput.value.trim() === '') {
-        nameInput.classList.add('error');
-        nameError.style.display = 'block';
-        isValid = false;
-      } else {
-        nameInput.classList.remove('error');
-        nameError.style.display = 'none';
-      }
-      
-      // 日付のバリデーション
-      if (dateInput.value === '') {
-        dateInput.classList.add('error');
-        dateError.style.display = 'block';
-        isValid = false;
-      } else {
-        dateInput.classList.remove('error');
-        dateError.style.display = 'none';
-      }
-      
-      // 意向のバリデーション
-      if (!participateRadio.checked && !notParticipateRadio.checked) {
-        intentionError.style.display = 'block';
-        isValid = false;
-      } else {
-        intentionError.style.display = 'none';
-      }
-      
-      return isValid;
-    }
-    
-    // フォーム送信処理
-    submitBtn.addEventListener('click', function() {
-      if (validateForm()) {
-        // フォームデータの取得
-        const name = nameInput.value.trim();
-        const date = dateInput.value;
-        let intention = '';
-        
-        if (participateRadio.checked) {
-          intention = participateRadio.value;
-        } else if (notParticipateRadio.checked) {
-          intention = notParticipateRadio.value;
-        }
-        
-        // LINE送信用のメッセージを作成
-        const message = `氏名：${name}\n回答可能時期：${date}\n現在の意向：${intention}`;
-        const encodedMessage = encodeURIComponent(message);
-        const baseURL = "https://line.me/R/oaMessage/%40069urbrx/";
-        const finalURL = baseURL + encodedMessage;
-        
-        // 送信前の確認
-        if (confirm('以下の内容でLINEに送信します。よろしいですか？\n\n' + message)) {
-          // LINEアプリを開く
-          window.location.href = finalURL;
-        }
-      }
-    });
-    
-    // 入力時にエラー表示を消す
-    nameInput.addEventListener('input', function() {
-      if (nameInput.value.trim() !== '') {
-        nameInput.classList.remove('error');
-        nameError.style.display = 'none';
-      }
-    });
-    
-    dateInput.addEventListener('change', function() {
-      if (dateInput.value !== '') {
-        dateInput.classList.remove('error');
-        dateError.style.display = 'none';
-      }
-    });
-    
-    participateRadio.addEventListener('change', function() {
-      intentionError.style.display = 'none';
-    });
-    
-    notParticipateRadio.addEventListener('change', function() {
-      intentionError.style.display = 'none';
-    });
-  </script>
 </body>
 </html>
